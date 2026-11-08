@@ -27,7 +27,7 @@ func sceneChooseHandler(w http.ResponseWriter,r *http.Request) {
  session.Mu.Lock()
  defer session.Mu.Unlock()
  if session.State==nil { http.Error(w,"game not started",409);return }
- if session.State.ActiveEvent!=nil || session.State.ActiveDialogue!=nil {
+ if session.State.ActiveEvent!=nil || session.State.ActiveDialogue!=nil || session.State.ActiveConversation!="" {
   http.Error(w,"finish active event or dialogue first",409);return
  }
  id:=r.URL.Query().Get("choiceID")
