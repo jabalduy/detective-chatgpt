@@ -2,6 +2,10 @@ package game
 
 func requirementMet(state *GameState, req Requirement) bool {
 	switch req.Type {
+	case "character_present":
+		c,ok:=state.Characters[req.ID];return ok && c.Present
+	case "character_absent":
+		c,ok:=state.Characters[req.ID];return ok && !c.Present
 	case "clue_found":
 		return state.FoundClues[req.ID]
 
