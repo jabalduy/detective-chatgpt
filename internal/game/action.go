@@ -15,7 +15,7 @@ func PerformAction(state *GameState, action Action) bool {
 	UpdateOpenDialogues(state)
 
 	timeCost := time.Duration(action.TimeCost)
-	state.Clock.Add(timeCost * time.Second)
+	if state.Clock!=nil {state.Clock.Add(timeCost * time.Second)}
 
 	return true
 }
