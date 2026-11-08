@@ -3,6 +3,8 @@ package game
 import "time"
 
 type GameState struct {
+ EndingRules []EndingRule
+ Ending *GameEnding
  Examinations []Examination
  ExaminationStarted map[string]time.Time
  ExaminationCompleted map[string]bool
