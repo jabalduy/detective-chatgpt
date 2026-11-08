@@ -87,6 +87,21 @@ func applySave(s *game.GameState,d saveData){
  s.ProcessedStations=d.ProcessedStations;s.TriggeredEvents=d.TriggeredEvents
  s.ExaminationStarted=d.ExaminationStarted;s.ExaminationCompleted=d.ExaminationCompleted
  s.PresentedEvidence=d.PresentedEvidence;s.Ending=d.Ending
+ // Older or minimal saves may omit empty maps. Restore writable maps so
+ // subsequent evidence and exploration effects cannot panic.
+ if s.FoundClues==nil{s.FoundClues=make(map[int]bool)}
+ if s.FoundFacts==nil{s.FoundFacts=make(map[int]bool)}
+ if s.FoundMotives==nil{s.FoundMotives=make(map[int]bool)}
+ if s.SearchedObjects==nil{s.SearchedObjects=make(map[int]bool)}
+ if s.SolvedDeductions==nil{s.SolvedDeductions=make(map[int]bool)}
+ if s.OpenLocations==nil{s.OpenLocations=make(map[int]bool)}
+ if s.OpenObjects==nil{s.OpenObjects=make(map[int]bool)}
+ if s.ProcessedStations==nil{s.ProcessedStations=make(map[string]bool)}
+ if s.TriggeredEvents==nil{s.TriggeredEvents=make(map[int]bool)}
+ if s.ExaminationStarted==nil{s.ExaminationStarted=make(map[string]time.Time)}
+ if s.ExaminationCompleted==nil{s.ExaminationCompleted=make(map[string]bool)}
+ if s.PresentedEvidence==nil{s.PresentedEvidence=make(map[string]bool)}
+ if s.Characters==nil{s.Characters=make(map[int]game.CharacterState)}
  if d.ClockPaused || d.ActiveConversation!="" || d.ActiveDialogue!=nil || d.Ending!=nil {s.Clock.Pause()}
  go s.Clock.RunTime()
 }
