@@ -98,6 +98,8 @@ func newGame(caseID string) (*game.GameState, error) {
 	gameState := &game.GameState{
 		Case: caseDef.CaseInfo,
 		Scenes: caseDef.Scenes,
+		Conversations: caseDef.Conversations,
+		Characters: caseDef.Characters,
 
 		Suspects:   caseDef.Suspects,
 		Clues:      caseDef.Clues,
