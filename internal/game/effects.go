@@ -2,6 +2,14 @@ package game
 
 func applyEffect(state *GameState, effect Effect) {
 	switch effect.Type {
+	case "character_trust_up":
+		c:=state.Characters[effect.ID];c.Trust++;state.Characters[effect.ID]=c
+	case "character_trust_down":
+		c:=state.Characters[effect.ID];c.Trust--;state.Characters[effect.ID]=c
+	case "character_leave":
+		c:=state.Characters[effect.ID];c.Present=false;state.Characters[effect.ID]=c
+	case "character_appear":
+		c:=state.Characters[effect.ID];c.Present=true;state.Characters[effect.ID]=c
 	case "discover_clue":
 		state.FoundClues[effect.ID] = true
 
