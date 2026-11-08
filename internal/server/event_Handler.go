@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 type EventResponse struct {
@@ -13,6 +14,7 @@ type EventResponse struct {
 	Title       string                `json:"event_title"`
 	Description string                `json:"event_description"`
 	TimeLimit   int                   `json:"time_limit"`
+	Deadline string `json:"deadline,omitempty"`
 	Options     []EventOptionResponse `json:"event_options"`
 }
 
@@ -47,6 +49,8 @@ func eventHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	game.TickTrain(state)
+	game.TickEvents(state)
 	if state.ActiveEvent == nil {
 		w.WriteHeader(http.StatusNoContent)
 		return
@@ -64,6 +68,7 @@ func eventHandler(w http.ResponseWriter, r *http.Request) {
 			Title:       event.Title,
 			Description: event.Description,
 			TimeLimit:   event.TimeLimit,
+			Deadline: state.EventDeadline.Format(time.RFC3339Nano),
 			Options:     []EventOptionResponse{},
 		}
 
@@ -131,6 +136,7 @@ func chooseOptionHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	game.TickEvents(state)
 	if !game.ChooseEventOption(state, optionID) {
 		http.Error(
 			w,
@@ -168,6 +174,9 @@ func expireEventHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Игра не запущена", http.StatusBadRequest)
 		return
 	}
-	session.State.ActiveEvent = nil
+	if !game.ExpireActiveEvent(session.State) {
+		http.Error(w,"event deadline has not passed",http.StatusConflict)
+		return
+	}
 	w.WriteHeader(http.StatusNoContent)
 }
