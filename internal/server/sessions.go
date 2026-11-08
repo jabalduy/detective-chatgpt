@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"net/http"
 	"sync"
+ "time"
 )
 
 var games = make(map[string]*Session)
@@ -101,6 +102,11 @@ func newGame(caseID string) (*game.GameState, error) {
 		Conversations: caseDef.Conversations,
 		Characters: caseDef.Characters,
 		Stations: caseDef.Stations,
+ Examinations:caseDef.Examinations,
+ EvidencePresentations:caseDef.EvidencePresentations,
+ ExaminationStarted:make(map[string]time.Time),
+ ExaminationCompleted:make(map[string]bool),
+ PresentedEvidence:make(map[string]bool),
 		RouteStart: caseDef.StartTime.StartTime,
 		ProcessedStations: make(map[string]bool),
 		TriggeredEvents: make(map[int]bool),
