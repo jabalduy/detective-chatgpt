@@ -10,6 +10,8 @@ func NewHandler() http.Handler {
  mux := http.NewServeMux()
 	mux.HandleFunc("/", homeHandler)
 	mux.HandleFunc("/start", startHandler)
+ mux.HandleFunc("/save", saveHandler)
+ mux.HandleFunc("/load", loadHandler)
 	mux.HandleFunc("/time", timeHandler)
 	mux.HandleFunc("/train", trainHandler)
  mux.HandleFunc("/examinations", examinationsHandler)
