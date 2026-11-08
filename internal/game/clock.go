@@ -84,3 +84,9 @@ func (c *Clock) Add(duration time.Duration) {
 
 	c.currentTime = c.currentTime.Add(duration)
 }
+
+func (c *Clock) IsPaused() bool {
+ c.mu.RLock()
+ defer c.mu.RUnlock()
+ return c.isPaused
+}
