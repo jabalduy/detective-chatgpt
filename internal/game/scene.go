@@ -55,7 +55,7 @@ func CurrentSceneView(state *GameState) (SceneView, error) {
 
 func ChooseSceneOption(state *GameState, id string) error {
  if state.Ending!=nil {return fmt.Errorf("game finished")}
- if state.ActiveConversation!="" {return fmt.Errorf("finish conversation first")}
+ if state.ActiveConversation!="" || state.ActiveDialogue!=nil || state.ActiveEvent!=nil {return fmt.Errorf("finish active interaction first")}
  scene := SceneByID(state, state.CurrentScene)
  if scene == nil { return fmt.Errorf("current scene not found") }
  for _, choice := range scene.Choices {
