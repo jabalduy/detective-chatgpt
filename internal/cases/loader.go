@@ -97,6 +97,12 @@ func LoadCase(path string) (*CaseDefinition, error) {
 	stations,err:=LoadStations(filepath.Join(path,"stations.json"))
 	if err!=nil && !errors.Is(err,os.ErrNotExist){return nil,err}
 	caseDef.Stations=stations
+ examinations,err:=LoadExaminations(filepath.Join(path,"examinations.json"))
+ if err!=nil && !errors.Is(err,os.ErrNotExist){return nil,err}
+ caseDef.Examinations=examinations
+ presentations,err:=LoadEvidencePresentations(filepath.Join(path,"evidence_presentations.json"))
+ if err!=nil && !errors.Is(err,os.ErrNotExist){return nil,err}
+ caseDef.EvidencePresentations=presentations
 
 	return &caseDef, nil
 }
@@ -280,5 +286,16 @@ func LoadCharacters(path string)(map[int]game.CharacterState,error){
 func LoadStations(path string)([]game.Station,error){
  data,err:=os.ReadFile(path);if err!=nil{return nil,err}
  var items []game.Station
+ err=json.Unmarshal(data,&items);return items,err
+}
+
+func LoadExaminations(path string)([]game.Examination,error){
+ data,err:=os.ReadFile(path);if err!=nil{return nil,err}
+ var items []game.Examination
+ err=json.Unmarshal(data,&items);return items,err
+}
+func LoadEvidencePresentations(path string)([]game.EvidencePresentation,error){
+ data,err:=os.ReadFile(path);if err!=nil{return nil,err}
+ var items []game.EvidencePresentation
  err=json.Unmarshal(data,&items);return items,err
 }
