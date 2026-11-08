@@ -1,12 +1,10 @@
 package game
 
-import "fmt"
 
 func requirementMet(state *GameState, req Requirement) bool {
 	switch req.Type {
  case "examination_completed":
-  for _,e:=range state.Examinations {if e.ID==fmt.Sprint(req.ID){return state.ExaminationCompleted[e.ID]}}
-  return false
+  return state.ExaminationCompleted[req.Key]
 	case "character_present":
 		c,ok:=state.Characters[req.ID];return ok && c.Present
 	case "character_absent":
