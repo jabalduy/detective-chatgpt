@@ -10,6 +10,8 @@ func StartServer() {
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/start", startHandler)
 	http.HandleFunc("/time", timeHandler)
+	http.HandleFunc("/scene", sceneHandler)
+	http.HandleFunc("/scene/choose", sceneChooseHandler)
 	http.HandleFunc("/dialogue/finish", finishDialogueHandler)
 	http.HandleFunc("/locations", locationsHandler)
 	http.HandleFunc("/objects", objectsHandler)
