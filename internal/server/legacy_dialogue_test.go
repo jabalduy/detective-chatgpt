@@ -35,4 +35,12 @@ func TestLegacyDialogueFailureDoesNotMarkAsked(t *testing.T){
  if !session.State.AskedDialogues[key] || !session.State.FoundFacts[11]{
   t.Fatal("successful dialogue not recorded")
  }
+ session.State.Ending=&game.GameEnding{Type:"win"}
+ r=requestWithCookie(handler,cookie,http.MethodPost,path,nil)
+ if r.Code!=http.StatusConflict{t.Fatalf("repeated dialogue after ending: %d %s",r.Code,r.Body.String())}
+ session.State.Ending=nil
+ eventID:=4
+ session.State.ActiveEvent=&eventID
+ r=requestWithCookie(handler,cookie,http.MethodPost,path,nil)
+ if r.Code!=http.StatusConflict{t.Fatalf("repeated dialogue during event: %d %s",r.Code,r.Body.String())}
 }
