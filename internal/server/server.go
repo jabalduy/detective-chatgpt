@@ -47,7 +47,7 @@ func NewHandler() http.Handler {
 	fileServer := http.FileServer(http.Dir("static"))
 	mux.Handle("/static/", http.StripPrefix("/static/", fileServer))
 
- return mux
+ return saveAfterMutation(mux)
 }
 
 func StartServer() {
