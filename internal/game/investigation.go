@@ -39,7 +39,7 @@ func StartExamination(s *GameState,id string)error {
  return nil
 }
 func TickExaminations(s *GameState){
- if s.Clock==nil{return}
+ if s.Clock==nil || s.Ending!=nil{return}
  if s.ExaminationCompleted==nil{s.ExaminationCompleted=make(map[string]bool)}
  for _,e:=range s.Examinations {
   started,ok:=s.ExaminationStarted[e.ID]
