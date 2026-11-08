@@ -1,6 +1,10 @@
 package game
 
 type GameState struct {
+	Conversations []Conversation
+	Characters map[int]CharacterState
+	ActiveConversation string
+	ConversationNode string
 	Scenes []Scene
 	CurrentScene string
 	Case CaseInfo
