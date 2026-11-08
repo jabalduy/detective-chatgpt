@@ -10,6 +10,7 @@ func StartServer() {
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/start", startHandler)
 	http.HandleFunc("/time", timeHandler)
+	http.HandleFunc("/train", trainHandler)
 	http.HandleFunc("/scene", sceneHandler)
 	http.HandleFunc("/conversation/start", conversationStartHandler)
 	http.HandleFunc("/conversation", conversationHandler)
