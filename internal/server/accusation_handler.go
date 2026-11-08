@@ -1,129 +1,24 @@
 package server
 
 import (
-	"encoding/json"
-	"log"
-	"net/http"
-	"slices"
+ "detective/internal/game"
+ "encoding/json"
+ "net/http"
 )
 
-type AccusationRequest struct {
-	SuspectID int   `json:"suspect_id"`
-	MotiveID  int   `json:"motive_id"`
-	FactIDs   []int `json:"fact_ids"`
-}
+type AccusationRequest = game.Accusation
 
-// ОБВИНЕНИЕ
-func accuseHandler(w http.ResponseWriter, r *http.Request) {
-	session, err := getGame(w, r)
-	if err != nil {
-		log.Printf("new game: %v", err)
-		http.Error(w, "Не удалось загрузить игру", http.StatusInternalServerError)
-		return
-	}
-
-	session.Mu.RLock()
-	defer session.Mu.RUnlock()
-	state := session.State
-
-	if state == nil {
-		http.Error(w, "Игра не запущена", http.StatusBadRequest)
-		return
-	}
-
-	if r.Method != http.MethodPost {
-		http.Error(w, "Некорректная команда", http.StatusMethodNotAllowed)
-		return
-	}
-
-	var accusationRequest AccusationRequest
-	err = json.NewDecoder(r.Body).Decode(&accusationRequest)
-	if err != nil {
-		http.Error(
-			w,
-			"Не удалось прочитать accusationRequest",
-			http.StatusBadRequest,
-		)
-		return
-	}
-
-	if !state.FoundMotives[accusationRequest.MotiveID] {
-		http.Error(
-			w,
-			"Отправленный мотив еще не был найден",
-			http.StatusBadRequest,
-		)
-		return
-	}
-
-	for _, factID := range accusationRequest.FactIDs {
-		if !state.FoundFacts[factID] {
-			http.Error(
-				w,
-				"Один из отправленных фактов еще не был найден",
-				http.StatusBadRequest,
-			)
-			return
-		}
-	}
-
-	foundMotive := false
-	for _, motive := range state.Motives {
-		if motive.ID == accusationRequest.MotiveID {
-			foundMotive = true
-
-			if motive.SuspectID != accusationRequest.SuspectID {
-				http.Error(
-					w,
-					"Мотив принадлежит другому персонажу",
-					http.StatusBadRequest,
-				)
-				return
-			}
-
-			break
-		}
-	}
-
-	if !foundMotive {
-		http.Error(
-			w,
-			"Мотив не найден",
-			http.StatusBadRequest,
-		)
-		return
-	}
-
-	solution := state.Case.Solution
-
-	allFactsCorrect := true
-	for _, rightFact := range solution.FactIDs {
-		if !slices.Contains(accusationRequest.FactIDs, rightFact) {
-			allFactsCorrect = false
-			break
-		}
-	}
-
-	response := AccuseResponse{}
-	switch {
-	case accusationRequest.SuspectID != solution.SuspectID:
-		response.TypeEnd = "fail"
-		response.TextEnd = state.Case.Endings.Fail
-	case accusationRequest.MotiveID != solution.MotiveID:
-		response.TypeEnd = "unsolved"
-		response.TextEnd = state.Case.Endings.Unsolved
-	case !allFactsCorrect:
-		response.TypeEnd = "unsolved"
-		response.TextEnd = state.Case.Endings.Unsolved
-	default:
-		response.TypeEnd = "win"
-		response.TextEnd = state.Case.Endings.Win
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	err = json.NewEncoder(w).Encode(response)
-	if err != nil {
-		http.Error(w, "Не удалось отправить обвинение", http.StatusInternalServerError)
-		return
-	}
+func accuseHandler(w http.ResponseWriter,r *http.Request){
+ if r.Method!=http.MethodPost {http.Error(w,"method not allowed",405);return}
+ session,err:=getGame(w,r)
+ if err!=nil {http.Error(w,"session error",500);return}
+ session.Mu.Lock()
+ defer session.Mu.Unlock()
+ if session.State==nil {http.Error(w,"game not started",409);return}
+ var request game.Accusation
+ if err:=json.NewDecoder(http.MaxBytesReader(w,r.Body,1<<20)).Decode(&request);err!=nil {http.Error(w,"invalid accusation",400);return}
+ ending,err:=game.SubmitAccusation(session.State,request)
+ if err!=nil {http.Error(w,err.Error(),409);return}
+ w.Header().Set("Content-Type","application/json")
+ _=json.NewEncoder(w).Encode(map[string]any{"type_end":ending.Type,"text_end":ending.Text,"title":ending.Title})
 }
