@@ -1,6 +1,8 @@
 package game
 
 type GameState struct {
+	Scenes []Scene
+	CurrentScene string
 	Case CaseInfo
 
 	Suspects    []Suspect
