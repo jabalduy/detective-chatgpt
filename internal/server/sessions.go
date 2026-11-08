@@ -8,6 +8,8 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+ "log"
+ "os"
 	"sync"
  "time"
 )
@@ -63,11 +65,21 @@ func getGame(w http.ResponseWriter, r *http.Request) (*Session, error) {
 		return session, nil
 	}
 
-	session = &Session{
-		State: nil,
-	}
-
-	games[sessionID] = session
+	session = &Session{State:nil}
+ // Restore an existing browser session after a server restart.
+ saved,readErr:=readSave(savePath(sessionID))
+ if readErr==nil {
+  restored,loadErr:=newGame(saved.CaseID)
+  if loadErr==nil {
+   applySave(restored,saved)
+   session.State=restored
+  } else {
+   log.Printf("restore session: case unavailable: %v",loadErr)
+  }
+ } else if !errors.Is(readErr,os.ErrNotExist) {
+  log.Printf("restore session: invalid save: %v",readErr)
+ }
+ games[sessionID] = session
 
 	return session, nil
 }
