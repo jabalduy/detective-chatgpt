@@ -5,6 +5,10 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"errors"
+	"fmt"
+	"strings"
+	"time"
 )
 
 func LoadCase(path string) (*CaseDefinition, error) {
@@ -66,7 +70,7 @@ func LoadCase(path string) (*CaseDefinition, error) {
 	}
 
 	events, err := LoadEvents(filepath.Join(path, "events.json"))
-	if err != nil {
+	if err != nil && !errors.Is(err, os.ErrNotExist) {
 		return nil, err
 	}
 
@@ -213,19 +217,16 @@ func LoadMotives(path string) ([]game.Motive, error) {
 }
 
 func LoadStartTime(path string) (game.StartTime, error) {
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return game.StartTime{}, err
-	}
-
-	var startTime game.StartTime
-
-	err = json.Unmarshal(data, &startTime)
-	if err != nil {
-		return game.StartTime{}, err
-	}
-
-	return startTime, nil
+ data, err := os.ReadFile(path)
+ if err != nil { return game.StartTime{}, err }
+ var raw struct { StartTime string `json:"start_time"` }
+ if err := json.Unmarshal(data, &raw); err != nil { return game.StartTime{}, err }
+ value := strings.TrimSpace(raw.StartTime)
+ for _, layout := range []string{"15:04", time.RFC3339} {
+  parsed, err := time.Parse(layout, value)
+  if err == nil { return game.StartTime{StartTime: parsed}, nil }
+ }
+ return game.StartTime{}, fmt.Errorf("invalid start_time %q: expected HH:MM or RFC3339", value)
 }
 
 func LoadEvents(path string) ([]game.Event, error) {
