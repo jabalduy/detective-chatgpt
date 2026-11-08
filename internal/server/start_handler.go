@@ -70,6 +70,9 @@ func startHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	session.Mu.Lock()
+	if session.State != nil && session.State.Clock != nil {
+		session.State.Clock.StopTime()
+	}
 	session.State = state
 	session.Mu.Unlock()
 
