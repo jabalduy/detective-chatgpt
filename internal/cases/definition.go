@@ -3,6 +3,7 @@ package cases
 import "detective/internal/game"
 
 type CaseDefinition struct {
+	Scenes []game.Scene `json:"-"`
 	game.CaseInfo
 
 	Clues      []game.Clue      `json:"-"`
