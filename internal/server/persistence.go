@@ -23,6 +23,7 @@ type saveData struct {
  ConversationNode string `json:"conversation_node"`
  ActiveEvent *int `json:"active_event"`
  EventDeadline time.Time `json:"event_deadline"`
+ EventRemainingSeconds float64 `json:"event_remaining_seconds,omitempty"`
  ActiveDialogue *game.DialogueID `json:"active_dialogue"`
  FoundClues map[int]bool `json:"found_clues"`
  FoundFacts map[int]bool `json:"found_facts"`
@@ -53,10 +54,12 @@ func dialogueMap(keys []game.DialogueID)map[game.DialogueID]bool{
  return out
 }
 func snapshot(s *game.GameState)saveData{
+ remaining:=0.0
+ if s.ActiveEvent!=nil && !s.EventDeadline.IsZero(){remaining=time.Until(s.EventDeadline).Seconds();if remaining<0{remaining=0}}
  return saveData{
   Version:saveVersion,CaseID:s.Case.ID,ClockTime:s.Clock.GetTime(),ClockPaused:s.Clock.IsPaused(),
   CurrentScene:s.CurrentScene,Characters:s.Characters,ActiveConversation:s.ActiveConversation,ConversationNode:s.ConversationNode,
-  ActiveEvent:s.ActiveEvent,EventDeadline:s.EventDeadline,ActiveDialogue:s.ActiveDialogue,
+  ActiveEvent:s.ActiveEvent,EventDeadline:s.EventDeadline,EventRemainingSeconds:remaining,ActiveDialogue:s.ActiveDialogue,
   FoundClues:s.FoundClues,FoundFacts:s.FoundFacts,FoundMotives:s.FoundMotives,
   SearchedObjects:s.SearchedObjects,SolvedDeductions:s.SolvedDeductions,OpenLocations:s.OpenLocations,OpenObjects:s.OpenObjects,
   AskedDialogues:dialogueKeys(s.AskedDialogues),OpenDialogues:dialogueKeys(s.OpenDialogues),ConfrontedDialogues:dialogueKeys(s.ConfrontedDialogues),
@@ -71,6 +74,10 @@ func applySave(s *game.GameState,d saveData){
  s.Characters=d.Characters
  s.ActiveConversation=d.ActiveConversation;s.ConversationNode=d.ConversationNode
  s.ActiveEvent=d.ActiveEvent;s.EventDeadline=d.EventDeadline;s.ActiveDialogue=d.ActiveDialogue
+ // Preserve the remaining decision time rather than counting server downtime.
+ if d.ActiveEvent!=nil && !d.EventDeadline.IsZero(){
+  if d.EventRemainingSeconds>0 {s.EventDeadline=time.Now().Add(time.Duration(d.EventRemainingSeconds*float64(time.Second)))} else {s.EventDeadline=time.Now()}
+ }
  s.FoundClues=d.FoundClues;s.FoundFacts=d.FoundFacts;s.FoundMotives=d.FoundMotives
  s.SearchedObjects=d.SearchedObjects;s.SolvedDeductions=d.SolvedDeductions
  s.OpenLocations=d.OpenLocations;s.OpenObjects=d.OpenObjects
