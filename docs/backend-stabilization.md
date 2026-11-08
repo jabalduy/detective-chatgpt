@@ -43,3 +43,13 @@ autosave, and prevention of post-ending station/examination effects.
 
 Passing CI establishes regression-test health, **not** that every possible
 story branch is solvable or that the finished game is ready to run.
+
+## Final CI verification
+
+The last code change in the stabilization phase, commit `f07ce64`,
+passed GitHub Actions (unit/integration tests, race detector and vet).
+The following documentation commit `f95e0f5` also passed.
+
+**Milestone:** the planned backend foundation and stabilization phase are
+complete. This is **not** a claim that the final authored case or frontend
+is complete; the limitations listed above remain open for the next phase.
