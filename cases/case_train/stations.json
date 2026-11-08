@@ -1,0 +1,18 @@
+[
+  {
+    "id": "station_1",
+    "name": "Техническая станция",
+    "arrival": "00:15",
+    "departure": "00:17",
+    "arrive_effects": [],
+    "depart_effects": []
+  },
+  {
+    "id": "station_2",
+    "name": "Конечная",
+    "arrival": "00:45",
+    "departure": "00:50",
+    "arrive_effects": [],
+    "depart_effects": []
+  }
+]
