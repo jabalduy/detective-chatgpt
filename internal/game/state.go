@@ -3,6 +3,11 @@ package game
 import "time"
 
 type GameState struct {
+ Examinations []Examination
+ ExaminationStarted map[string]time.Time
+ ExaminationCompleted map[string]bool
+ EvidencePresentations []EvidencePresentation
+ PresentedEvidence map[string]bool
 	Stations []Station
 	RouteStart time.Time
 	ProcessedStations map[string]bool
