@@ -11,7 +11,7 @@ import (
 // handler has released it.
 func saveAfterMutation(next http.Handler) http.Handler {
  return http.HandlerFunc(func(w http.ResponseWriter,r *http.Request){
-  if r.Method!=http.MethodPost || r.URL.Path=="/save" || r.URL.Path=="/load" {
+  if !shouldAutosave(r) {
    next.ServeHTTP(w,r);return
   }
   recorder:=&statusWriter{ResponseWriter:w}
@@ -46,3 +46,15 @@ type statusWriter struct{
 }
 func (w *statusWriter)WriteHeader(code int){if w.status==0{w.status=code};w.ResponseWriter.WriteHeader(code)}
 func (w *statusWriter)Write(b []byte)(int,error){if w.status==0{w.status=200};return w.ResponseWriter.Write(b)}
+
+
+// Some legacy GET endpoints advance scheduled events or finish examinations.
+// Their resulting state changes must survive a server restart as well.
+func shouldAutosave(r *http.Request) bool {
+ if r.Method==http.MethodPost{return r.URL.Path!="/save" && r.URL.Path!="/load"}
+ if r.Method!=http.MethodGet{return false}
+ switch r.URL.Path{
+ case "/event","/train","/examinations":return true
+ default:return false
+ }
+}
