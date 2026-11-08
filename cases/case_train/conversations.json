@@ -1,0 +1,56 @@
+[
+  {
+    "id": "conductor_intro",
+    "character_id": 1,
+    "start_node": "hello",
+    "nodes": [
+      {
+        "id": "hello",
+        "text": "Вы хотели что-то спросить?",
+        "emotion": "neutral",
+        "choices": [
+          {
+            "id": "ask",
+            "text": "Спокойно расспросить",
+            "kind": "speech",
+            "next_node": "answer",
+            "time_cost": 30,
+            "effects": [
+              {
+                "type": "character_trust_up",
+                "id": 1
+              }
+            ]
+          },
+          {
+            "id": "press",
+            "text": "Настойчиво потребовать ответа",
+            "kind": "action",
+            "next_node": "answer",
+            "time_cost": 20,
+            "effects": [
+              {
+                "type": "character_trust_down",
+                "id": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "answer",
+        "text": "Я расскажу всё, что знаю.",
+        "emotion": "nervous",
+        "choices": [
+          {
+            "id": "end",
+            "text": "Закончить разговор",
+            "kind": "action",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      }
+    ]
+  }
+]
