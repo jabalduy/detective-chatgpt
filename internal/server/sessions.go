@@ -97,6 +97,7 @@ func newGame(caseID string) (*game.GameState, error) {
 
 	gameState := &game.GameState{
 		Case: caseDef.CaseInfo,
+		Scenes: caseDef.Scenes,
 
 		Suspects:   caseDef.Suspects,
 		Clues:      caseDef.Clues,
@@ -122,6 +123,7 @@ func newGame(caseID string) (*game.GameState, error) {
 		OpenObjects:   game.InitOpenObjects(caseDef.Objects),
 	}
 
+	if len(gameState.Scenes)>0 { gameState.CurrentScene=gameState.Scenes[0].ID }
 	go clock.RunTime()
 
 	return gameState, nil
