@@ -84,7 +84,6 @@ type EvidenceView struct {
  CharacterID int `json:"character_id"`
  EvidenceType string `json:"evidence_type"`
  EvidenceID int `json:"evidence_id"`
- Response string `json:"response"`
 }
 func evidenceAvailable(s *GameState,p EvidencePresentation)bool{
  if s.PresentedEvidence[p.ID] || !RequirementsMet(s,p.Requirements){return false}
@@ -99,7 +98,7 @@ func evidenceAvailable(s *GameState,p EvidencePresentation)bool{
 func AvailableEvidence(s *GameState)[]EvidenceView{
  views:=make([]EvidenceView,0)
  for _,p:=range s.EvidencePresentations {
-  if evidenceAvailable(s,p){views=append(views,EvidenceView{p.ID,p.CharacterID,p.EvidenceType,p.EvidenceID,p.Response})}
+  if evidenceAvailable(s,p){views=append(views,EvidenceView{p.ID,p.CharacterID,p.EvidenceType,p.EvidenceID})}
  }
  return views
 }
