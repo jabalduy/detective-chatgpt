@@ -41,10 +41,12 @@ func ChooseEventOption(state *GameState,optionID int)bool{
  if !state.EventDeadline.IsZero() && !time.Now().Before(state.EventDeadline) {ExpireActiveEvent(state);return false}
  for _,option:=range event.Options {
   if option.ID!=optionID {continue}
-  if !PerformAction(state,option.Action){return false}
+  if !CanPerformAction(state,option.Action){return false}
+  // Release the current event before effects run: an effect may trigger
+  // a follow-up event, which must not be erased by cleanup here.
   state.ActiveEvent=nil
   state.EventDeadline=time.Time{}
-  return true
+  return PerformAction(state,option.Action)
  }
  return false
 }
