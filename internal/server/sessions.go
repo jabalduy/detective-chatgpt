@@ -103,6 +103,7 @@ func newGame(caseID string) (*game.GameState, error) {
 		Characters: caseDef.Characters,
 		Stations: caseDef.Stations,
  Examinations:caseDef.Examinations,
+ EndingRules:caseDef.EndingRules,
  EvidencePresentations:caseDef.EvidencePresentations,
  ExaminationStarted:make(map[string]time.Time),
  ExaminationCompleted:make(map[string]bool),
