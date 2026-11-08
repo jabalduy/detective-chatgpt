@@ -5,6 +5,7 @@ import "testing"
 func TestTrustUnlocksConversationChoice(t *testing.T){
  s:=&GameState{
   CurrentScene:"carriage",
+  FoundFacts:make(map[int]bool),
   Characters:map[int]CharacterState{7:{Location:"carriage",Present:true,Trust:0}},
   Conversations:[]Conversation{{ID:"witness",CharacterID:7,StartNode:"intro",Nodes:[]ConversationNode{
    {ID:"intro",Choices:[]ConversationChoice{
