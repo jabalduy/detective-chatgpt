@@ -1,0 +1,20 @@
+[
+  {
+    "id": "sample_analysis",
+    "title": "Проверка условного образца",
+    "duration_seconds": 120,
+    "requirements": [
+      {
+        "type": "clue_found",
+        "id": 1
+      }
+    ],
+    "result": "Технический результат тестовой экспертизы.",
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 1
+      }
+    ]
+  }
+]
