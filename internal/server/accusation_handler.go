@@ -20,5 +20,5 @@ func accuseHandler(w http.ResponseWriter,r *http.Request){
  ending,err:=game.SubmitAccusation(session.State,request)
  if err!=nil {http.Error(w,err.Error(),409);return}
  w.Header().Set("Content-Type","application/json")
- _=json.NewEncoder(w).Encode(map[string]any{"type_end":ending.Type,"text_end":ending.Text,"title":ending.Title})
+ _=json.NewEncoder(w).Encode(map[string]any{"typeEnd":ending.Type,"textEnd":ending.Text,"title":ending.Title})
 }
