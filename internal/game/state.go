@@ -1,6 +1,13 @@
 package game
 
+import "time"
+
 type GameState struct {
+	Stations []Station
+	RouteStart time.Time
+	ProcessedStations map[string]bool
+	TriggeredEvents map[int]bool
+	EventDeadline time.Time
 	Conversations []Conversation
 	Characters map[int]CharacterState
 	ActiveConversation string
