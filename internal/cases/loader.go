@@ -94,6 +94,9 @@ func LoadCase(path string) (*CaseDefinition, error) {
 	characters, err := LoadCharacters(filepath.Join(path, "characters.json"))
 	if err != nil && !errors.Is(err, os.ErrNotExist) { return nil, err }
 	caseDef.Characters = characters
+	stations,err:=LoadStations(filepath.Join(path,"stations.json"))
+	if err!=nil && !errors.Is(err,os.ErrNotExist){return nil,err}
+	caseDef.Stations=stations
 
 	return &caseDef, nil
 }
@@ -271,5 +274,11 @@ func LoadConversations(path string)([]game.Conversation,error){
 func LoadCharacters(path string)(map[int]game.CharacterState,error){
  data,err:=os.ReadFile(path);if err!=nil{return nil,err}
  var items map[int]game.CharacterState
+ err=json.Unmarshal(data,&items);return items,err
+}
+
+func LoadStations(path string)([]game.Station,error){
+ data,err:=os.ReadFile(path);if err!=nil{return nil,err}
+ var items []game.Station
  err=json.Unmarshal(data,&items);return items,err
 }
