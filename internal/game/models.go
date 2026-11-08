@@ -107,6 +107,7 @@ type Solution struct {
 
 type Requirement struct {
  Key string `json:"key,omitempty"`
+ MinTrust int `json:"min_trust,omitempty"`
 	Type   string `json:"type"`
 	ID     int    `json:"id"`
 	SusID  int    `json:"sus_id,omitempty"`
