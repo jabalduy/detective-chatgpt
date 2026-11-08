@@ -20,7 +20,7 @@ type TrainStatus struct {
 
 // TickTrain must be called with the session locked. It catches up after time jumps.
 func TickTrain(s *GameState) {
- if s.Clock==nil {return}
+ if s.Clock==nil || s.Ending!=nil {return}
  now:=s.Clock.GetTime()
  if s.ProcessedStations==nil {s.ProcessedStations=make(map[string]bool)}
  for _,st:=range s.Stations {
