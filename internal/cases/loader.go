@@ -88,6 +88,12 @@ func LoadCase(path string) (*CaseDefinition, error) {
 	scenes, err := LoadScenes(filepath.Join(path, "scenes.json"))
 	if err != nil && !errors.Is(err, os.ErrNotExist) { return nil, err }
 	caseDef.Scenes = scenes
+	conversations, err := LoadConversations(filepath.Join(path, "conversations.json"))
+	if err != nil && !errors.Is(err, os.ErrNotExist) { return nil, err }
+	caseDef.Conversations = conversations
+	characters, err := LoadCharacters(filepath.Join(path, "characters.json"))
+	if err != nil && !errors.Is(err, os.ErrNotExist) { return nil, err }
+	caseDef.Characters = characters
 
 	return &caseDef, nil
 }
@@ -255,4 +261,15 @@ func LoadScenes(path string) ([]game.Scene, error) {
  var scenes []game.Scene
  if err := json.Unmarshal(data, &scenes); err != nil { return nil, err }
  return scenes,nil
+}
+
+func LoadConversations(path string)([]game.Conversation,error){
+ data,err:=os.ReadFile(path);if err!=nil{return nil,err}
+ var items []game.Conversation
+ err=json.Unmarshal(data,&items);return items,err
+}
+func LoadCharacters(path string)(map[int]game.CharacterState,error){
+ data,err:=os.ReadFile(path);if err!=nil{return nil,err}
+ var items map[int]game.CharacterState
+ err=json.Unmarshal(data,&items);return items,err
 }
