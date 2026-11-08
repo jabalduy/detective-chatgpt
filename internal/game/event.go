@@ -18,6 +18,7 @@ type EventOption struct {
 }
 
 func TriggerEvent(state *GameState,eventID int) bool {
+ if state.Ending!=nil {return false}
  if state.ActiveEvent!=nil || state.ActiveConversation!="" || state.ActiveDialogue!=nil {return false}
  for _,event:=range state.Events {
   if event.ID!=eventID {continue}
@@ -66,6 +67,7 @@ func ExpireActiveEvent(s *GameState)bool{
 }
 // TickEvents checks story-clock triggers; pending events wait until dialogue ends.
 func TickEvents(s *GameState){
+ if s.Ending!=nil{return}
  ExpireActiveEvent(s)
  if s.ActiveEvent!=nil || s.ActiveConversation!="" || s.ActiveDialogue!=nil || s.Clock==nil {return}
  now:=s.Clock.GetTime()
