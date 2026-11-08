@@ -3,6 +3,8 @@ package cases
 import "detective/internal/game"
 
 type CaseDefinition struct {
+ Examinations []game.Examination `json:"-"`
+ EvidencePresentations []game.EvidencePresentation `json:"-"`
 	Stations []game.Station `json:"-"`
 	Conversations []game.Conversation `json:"-"`
 	Characters map[int]game.CharacterState `json:"-"`
