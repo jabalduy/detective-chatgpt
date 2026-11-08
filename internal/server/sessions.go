@@ -100,6 +100,10 @@ func newGame(caseID string) (*game.GameState, error) {
 		Scenes: caseDef.Scenes,
 		Conversations: caseDef.Conversations,
 		Characters: caseDef.Characters,
+		Stations: caseDef.Stations,
+		RouteStart: caseDef.StartTime.StartTime,
+		ProcessedStations: make(map[string]bool),
+		TriggeredEvents: make(map[int]bool),
 
 		Suspects:   caseDef.Suspects,
 		Clues:      caseDef.Clues,
