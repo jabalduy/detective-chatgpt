@@ -1,0 +1,16 @@
+[
+  {
+    "id": "show_sample",
+    "character_id": 1,
+    "evidence_type": "fact",
+    "evidence_id": 1,
+    "response": "Я должен проверить эти сведения.",
+    "time_cost": 20,
+    "effects": [
+      {
+        "type": "character_trust_down",
+        "id": 1
+      }
+    ]
+  }
+]
