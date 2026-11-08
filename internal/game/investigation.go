@@ -27,6 +27,7 @@ func examinationByID(s *GameState,id string)*Examination {
  return nil
 }
 func StartExamination(s *GameState,id string)error {
+ if s.Ending!=nil {return fmt.Errorf("game finished")}
  e:=examinationByID(s,id)
  if e==nil {return fmt.Errorf("examination not found")}
  if s.Clock==nil {return fmt.Errorf("game clock unavailable")}
@@ -103,6 +104,7 @@ func AvailableEvidence(s *GameState)[]EvidenceView{
  return views
 }
 func PresentEvidence(s *GameState,id string)(string,error){
+ if s.Ending!=nil {return "",fmt.Errorf("game finished")}
  if s.ActiveEvent!=nil || s.ActiveConversation!="" || s.ActiveDialogue!=nil {return "",fmt.Errorf("finish active interaction first")}
  for _,p:=range s.EvidencePresentations {
   if p.ID!=id{continue}
