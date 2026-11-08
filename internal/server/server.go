@@ -6,51 +6,56 @@ import (
 )
 
 // ЗАПУСК СЕРВЕРА
-func StartServer() {
-	http.HandleFunc("/", homeHandler)
-	http.HandleFunc("/start", startHandler)
-	http.HandleFunc("/time", timeHandler)
-	http.HandleFunc("/train", trainHandler)
- http.HandleFunc("/examinations", examinationsHandler)
- http.HandleFunc("/examinations/start", examinationStartHandler)
- http.HandleFunc("/evidence", evidenceHandler)
- http.HandleFunc("/evidence/present", evidencePresentHandler)
-	http.HandleFunc("/scene", sceneHandler)
-	http.HandleFunc("/conversation/start", conversationStartHandler)
-	http.HandleFunc("/conversation", conversationHandler)
-	http.HandleFunc("/conversation/choose", conversationChooseHandler)
-	http.HandleFunc("/characters", charactersHandler)
-	http.HandleFunc("/scene/choose", sceneChooseHandler)
-	http.HandleFunc("/dialogue/finish", finishDialogueHandler)
-	http.HandleFunc("/locations", locationsHandler)
-	http.HandleFunc("/objects", objectsHandler)
-	http.HandleFunc("/inspect-object", inspectObjectHandler)
-	http.HandleFunc("/suspects", suspectsHandler)
-	http.HandleFunc("/dialogues", dialoguesHandler)
-	http.HandleFunc("/ask-dialogue", askDialogueHandler)
-	http.HandleFunc("/case", caseHandler)
-	http.HandleFunc("/accuse", accuseHandler)
- http.HandleFunc("/ending", endingHandler)
-	http.HandleFunc("/cases", casesHandler)
-	http.HandleFunc("/deduce", deductionHandler)
-	http.HandleFunc("/facts", factsHandler)
-	http.HandleFunc("/motives", motivesHandler)
-	http.HandleFunc("/dialogue/start", startDialogueHandler)
-	http.HandleFunc("/confront", confrontationHandler)
-	http.HandleFunc("/event", eventHandler)
-	http.HandleFunc("/event/choose", chooseOptionHandler)
-	http.HandleFunc("/event/expire", expireEventHandler)
+func NewHandler() http.Handler {
+ mux := http.NewServeMux()
+	mux.HandleFunc("/", homeHandler)
+	mux.HandleFunc("/start", startHandler)
+	mux.HandleFunc("/time", timeHandler)
+	mux.HandleFunc("/train", trainHandler)
+ mux.HandleFunc("/examinations", examinationsHandler)
+ mux.HandleFunc("/examinations/start", examinationStartHandler)
+ mux.HandleFunc("/evidence", evidenceHandler)
+ mux.HandleFunc("/evidence/present", evidencePresentHandler)
+	mux.HandleFunc("/scene", sceneHandler)
+	mux.HandleFunc("/conversation/start", conversationStartHandler)
+	mux.HandleFunc("/conversation", conversationHandler)
+	mux.HandleFunc("/conversation/choose", conversationChooseHandler)
+	mux.HandleFunc("/characters", charactersHandler)
+	mux.HandleFunc("/scene/choose", sceneChooseHandler)
+	mux.HandleFunc("/dialogue/finish", finishDialogueHandler)
+	mux.HandleFunc("/locations", locationsHandler)
+	mux.HandleFunc("/objects", objectsHandler)
+	mux.HandleFunc("/inspect-object", inspectObjectHandler)
+	mux.HandleFunc("/suspects", suspectsHandler)
+	mux.HandleFunc("/dialogues", dialoguesHandler)
+	mux.HandleFunc("/ask-dialogue", askDialogueHandler)
+	mux.HandleFunc("/case", caseHandler)
+	mux.HandleFunc("/accuse", accuseHandler)
+ mux.HandleFunc("/ending", endingHandler)
+	mux.HandleFunc("/cases", casesHandler)
+	mux.HandleFunc("/deduce", deductionHandler)
+	mux.HandleFunc("/facts", factsHandler)
+	mux.HandleFunc("/motives", motivesHandler)
+	mux.HandleFunc("/dialogue/start", startDialogueHandler)
+	mux.HandleFunc("/confront", confrontationHandler)
+	mux.HandleFunc("/event", eventHandler)
+	mux.HandleFunc("/event/choose", chooseOptionHandler)
+	mux.HandleFunc("/event/expire", expireEventHandler)
 
 	fileServer := http.FileServer(http.Dir("static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fileServer))
+	mux.Handle("/static/", http.StripPrefix("/static/", fileServer))
 
+ return mux
+}
+
+func StartServer() {
 	port := os.Getenv("PORT")
 
 	if port == "" {
 		port = "8080"
 	}
 
-	err := http.ListenAndServe(":"+port, nil)
+	err := http.ListenAndServe(":"+port, NewHandler())
 	if err != nil {
 		panic(err)
 	}
