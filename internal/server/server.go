@@ -13,6 +13,7 @@ func NewHandler() http.Handler {
  mux.HandleFunc("/save", saveHandler)
  mux.HandleFunc("/load", loadHandler)
 	mux.HandleFunc("/time", timeHandler)
+ mux.HandleFunc("/state", stateHandler)
 	mux.HandleFunc("/train", trainHandler)
  mux.HandleFunc("/examinations", examinationsHandler)
  mux.HandleFunc("/examinations/start", examinationStartHandler)
