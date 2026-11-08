@@ -36,9 +36,9 @@ func newSessionID() string {
 func getSessionID(w http.ResponseWriter, r *http.Request) string {
 	cookie, err := r.Cookie("sessionID")
 
-	if err == nil {
-		return cookie.Value
-	}
+	if err == nil && len(cookie.Value)==32 {
+  if _,decodeErr:=hex.DecodeString(cookie.Value);decodeErr==nil {return cookie.Value}
+ }
 
 	sessionID := newSessionID()
 
