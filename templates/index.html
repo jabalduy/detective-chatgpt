@@ -1,0 +1,2593 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Дело №17 — Последний экземпляр</title>
+	<style>
+		:root {
+			--ink: #1d1713;
+			--ink-soft: #40362f;
+			--red-ink: #7b2d28;
+			--tab-rooms: #b39a69;
+			--tab-talks: #83908f;
+			--tab-case: #aa7c65;
+			--tab-accuse: #8b5f5b;
+			--hand: "Bradley Hand", "Segoe Print", "Comic Sans MS", cursive;
+			--serif: Georgia, "Times New Roman", serif;
+		}
+
+		* {
+			box-sizing: border-box
+		}
+
+		html,
+		body {
+			margin: 0;
+			min-height: 100%
+		}
+
+		body {
+			min-height: 100vh;
+			overflow: hidden;
+			color: var(--ink);
+			font-family: var(--hand);
+			background: linear-gradient(rgba(18, 11, 7, .18), rgba(18, 11, 7, .18)), url("/static/images/desk.jpeg") center/cover fixed;
+		}
+
+		button {
+			font: inherit
+		}
+
+		.desk {
+			min-height: 100vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 28px 96px 28px 34px
+		}
+
+		.notebook {
+			position: relative;
+			width: min(1180px, calc(100vw - 150px));
+			height: min(820px, calc(100vh - 56px));
+			min-height: 620px;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			filter: drop-shadow(0 28px 28px rgba(0, 0, 0, .36));
+		}
+
+		.page {
+			position: relative;
+			min-width: 0;
+			overflow: hidden;
+
+			background-color: #f4edcf;
+			background-image: url("/static/images/paper.jpeg");
+			background-position: center;
+			background-size: cover;
+			background-repeat: no-repeat;
+		}
+
+		.page-left {
+			border-radius: 12px 2px 2px 12px;
+			box-shadow: inset -28px 0 34px -32px rgba(43, 31, 20, .82), inset 5px 0 8px rgba(255, 255, 255, .22);
+			transform: perspective(1500px) rotateY(.7deg);
+			transform-origin: right center
+		}
+
+		.page-right {
+			border-radius: 2px 12px 12px 2px;
+			box-shadow: inset 28px 0 34px -32px rgba(43, 31, 20, .82), inset -5px 0 8px rgba(255, 255, 255, .20);
+			transform: perspective(1500px) rotateY(-.7deg);
+			transform-origin: left center
+		}
+
+		.page::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			pointer-events: none;
+
+			box-shadow:
+				inset 0 0 28px rgba(60, 40, 20, 0.08);
+		}
+
+		.spine {
+			position: absolute;
+			z-index: 8;
+			top: 8px;
+			bottom: 8px;
+			left: 50%;
+			width: 14px;
+			transform: translateX(-50%);
+			pointer-events: none;
+			background: linear-gradient(90deg, rgba(48, 34, 21, .16), rgba(255, 255, 255, .18) 35%, rgba(48, 34, 21, .22) 70%, transparent);
+			filter: blur(1.5px)
+		}
+
+		.page-content {
+			position: relative;
+			z-index: 2;
+			height: 100%;
+			padding: 56px 52px 48px 68px;
+			overflow: hidden
+		}
+
+		.page-right .page-content {
+			padding-left: 60px;
+			padding-right: 64px
+		}
+
+		.page-scroll {
+			height: 100%;
+			overflow-y: auto;
+			padding-right: 10px;
+			scrollbar-width: thin;
+			scrollbar-color: rgba(64, 48, 35, .32) transparent
+		}
+
+		.page-scroll::-webkit-scrollbar {
+			width: 7px
+		}
+
+		.page-scroll::-webkit-scrollbar-thumb {
+			background: rgba(64, 48, 35, .28);
+			border-radius: 20px
+		}
+
+		.paperclip {
+			position: absolute;
+			z-index: 15;
+			top: -22px;
+			left: 9%;
+			width: 70px;
+			max-height: 118px;
+			object-fit: contain;
+			transform: rotate(-8deg);
+			pointer-events: none;
+			filter: drop-shadow(3px 6px 3px rgba(0, 0, 0, .30))
+		}
+
+		.case-number {
+			margin: 0 0 4px;
+			font-family: var(--serif);
+			font-size: clamp(22px, 2.2vw, 36px);
+			font-weight: 700;
+			letter-spacing: .045em;
+			text-transform: uppercase
+		}
+
+		.case-title {
+			display: inline-block;
+			margin: 0 0 26px;
+			font-family: var(--serif);
+			font-size: clamp(20px, 2vw, 31px);
+			font-weight: 700;
+			font-style: italic;
+			line-height: 1.2;
+			border-bottom: 2px solid rgba(55, 39, 29, .62);
+			transform: rotate(-.35deg)
+		}
+
+		.kicker {
+			margin: 8px 0 10px;
+			color: var(--red-ink);
+			font-family: var(--serif);
+			font-size: 13px;
+			font-weight: 700;
+			letter-spacing: .14em;
+			text-transform: uppercase
+		}
+
+		.section-title {
+			display: inline-block;
+			margin: 0 0 20px;
+			font-family: var(--serif);
+			font-size: clamp(25px, 2.1vw, 34px);
+			font-weight: 700;
+			line-height: 1.1;
+			border-bottom: 2px solid rgba(50, 35, 25, .62);
+			transform: rotate(-.25deg)
+		}
+
+		.sub-title {
+			margin: 25px 0 10px;
+			font-family: var(--serif);
+			font-size: 18px;
+			font-weight: 700;
+			font-style: italic
+		}
+
+		.story {
+			font-family: var(--hand);
+			font-size: clamp(16px, 1.45vw, 21px);
+			line-height: 1.66;
+			white-space: pre-line
+		}
+
+		.story.compact {
+			font-size: clamp(14px, 1.2vw, 18px);
+			line-height: 1.55
+		}
+
+		.hand-note {
+			position: relative;
+			margin: 22px 0;
+			padding: 15px 18px 15px 22px;
+			font-size: clamp(15px, 1.25vw, 19px);
+			line-height: 1.55;
+			transform: rotate(-.35deg)
+		}
+
+		.hand-note::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+			border: 1px solid rgba(75, 53, 38, .28);
+			background: rgba(255, 248, 218, .25);
+			box-shadow: 2px 3px 0 rgba(68, 48, 35, .06);
+			pointer-events: none
+		}
+
+		.note-label {
+			display: block;
+			margin-bottom: 7px;
+			color: var(--red-ink);
+			font-family: var(--serif);
+			font-size: 12px;
+			font-weight: 700;
+			letter-spacing: .12em;
+			text-transform: uppercase
+		}
+
+		.ink-button,
+		.text-button,
+		.list-button,
+		.question-button,
+		.suspect-button {
+			border: 0;
+			color: var(--ink);
+			background: transparent;
+			cursor: pointer
+		}
+
+		.ink-button {
+			display: inline-block;
+			margin-top: 22px;
+			padding: 7px 2px 4px;
+			font-size: 19px;
+			font-weight: 700;
+			border-bottom: 2px solid currentColor;
+			transform: rotate(-.4deg)
+		}
+
+		.ink-button:hover {
+			color: var(--red-ink);
+			transform: rotate(0deg) translateY(-1px)
+		}
+
+		.ink-button.danger {
+			color: #68221f
+		}
+
+		.ink-button:disabled {
+			opacity: .45;
+			cursor: wait
+		}
+
+		.tabs {
+			position: absolute;
+			z-index: 6;
+			right: -105px;
+			top: 115px;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			transition: opacity 160ms ease
+		}
+
+		.tabs.hidden {
+			opacity: 0;
+			pointer-events: none
+		}
+
+		.tab {
+			width: 112px;
+			min-height: 52px;
+			padding: 9px 10px 9px 18px;
+			border: 0;
+			border-radius: 0 7px 7px 0;
+			color: #2e241e;
+			box-shadow: 3px 5px 8px rgba(0, 0, 0, .18);
+			font-family: var(--serif);
+			font-size: 12px;
+			font-weight: 700;
+			letter-spacing: .04em;
+			text-align: left;
+			text-transform: uppercase;
+			cursor: pointer;
+			transform-origin: left center;
+			transition: transform 120ms ease, filter 120ms ease
+		}
+
+		.tab:nth-child(1) {
+			background: var(--tab-rooms)
+		}
+
+		.tab:nth-child(2) {
+			background: var(--tab-talks)
+		}
+
+		.tab:nth-child(3) {
+			background: var(--tab-case)
+		}
+
+		.tab:nth-child(4) {
+			background: var(--tab-accuse)
+		}
+
+		.tab:hover,
+		.tab.active {
+			transform: translateX(8px);
+			filter: brightness(1.07)
+		}
+
+		.intro-layout {
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center
+		}
+
+		.landing-mark {
+			width: 104px;
+			height: 104px;
+			margin: 12px 0 26px;
+			display: grid;
+			place-items: center;
+			border: 2px solid rgba(55, 39, 29, .48);
+			border-radius: 50%;
+			font-family: var(--serif);
+			font-size: 13px;
+			font-weight: 700;
+			letter-spacing: .08em;
+			text-align: center;
+			text-transform: uppercase;
+			transform: rotate(-7deg);
+			opacity: .72
+		}
+
+		.list {
+			display: flex;
+			flex-direction: column;
+			gap: 5px;
+			margin-top: 14px
+		}
+
+		.list-button,
+		.suspect-button,
+		.question-button {
+			position: relative;
+			width: 100%;
+			padding: 8px 10px 8px 34px;
+			border-radius: 2px;
+			font-size: clamp(15px, 1.3vw, 19px);
+			line-height: 1.35;
+			text-align: left
+		}
+
+		.list-button::before,
+		.question-button::before {
+			content: "□";
+			position: absolute;
+			left: 6px;
+			top: 7px;
+			font-family: var(--serif);
+			font-size: 19px
+		}
+
+		.list-button.checked::before {
+			content: "✓";
+			font-size: 23px;
+			top: 3px;
+			transform: rotate(-7deg)
+		}
+
+		.list-button:hover,
+		.question-button:hover,
+		.suspect-button:hover {
+			background: rgba(106, 82, 55, .07)
+		}
+
+		.list-button.selected,
+		.question-button.selected,
+		.suspect-button.selected {
+			background: rgba(106, 82, 55, .10)
+		}
+
+		.suspect-button {
+			padding-left: 12px;
+			border-bottom: 1px solid rgba(78, 58, 42, .16)
+		}
+
+		.suspect-button::after {
+			content: "→";
+			float: right;
+			opacity: .45
+		}
+
+		.question-button {
+			padding-left: 20px;
+			border-bottom: 1px dashed rgba(62, 46, 33, .28)
+		}
+
+		.question-button::before {
+			content: "—";
+			left: 2px;
+			top: 7px
+		}
+
+		.question-button.asked {
+			opacity: .63
+		}
+
+		.question-button.new-question::after {
+			content: "новое";
+			float: right;
+			margin-left: 8px;
+			color: var(--red-ink);
+			font-family: var(--serif);
+			font-size: 10px;
+			font-weight: 700;
+			letter-spacing: .08em;
+			text-transform: uppercase
+		}
+
+		.object-description {
+			margin: 18px 0 2px;
+			font-size: clamp(16px, 1.35vw, 20px);
+			line-height: 1.55
+		}
+
+		.clue-note {
+			position: relative;
+			margin: 24px 6px 10px 18px;
+			padding: 18px 18px 16px 24px;
+			background: rgba(247, 222, 145, .28);
+			border: 1px solid rgba(111, 80, 44, .26);
+			box-shadow: 3px 4px 6px rgba(48, 34, 22, .08);
+			transform: rotate(-.8deg)
+		}
+
+		.clue-note::before {
+			content: "";
+			position: absolute;
+			top: -7px;
+			left: 37%;
+			width: 82px;
+			height: 18px;
+			background: rgba(225, 209, 166, .52);
+			transform: rotate(2deg)
+		}
+
+		.clue-title {
+			margin: 0 0 7px;
+			font-family: var(--serif);
+			font-size: 19px;
+			font-weight: 700
+		}
+
+		.unlock-note {
+			margin: 16px 0 0 22px;
+			color: var(--red-ink);
+			font-size: 15px;
+			font-weight: 700;
+			transform: rotate(-.5deg)
+		}
+
+		.suspect-head {
+			margin-bottom: 20px
+		}
+
+		.suspect-name {
+			margin: 0;
+			font-family: var(--serif);
+			font-size: clamp(27px, 2.2vw, 36px);
+			font-weight: 700
+		}
+
+		.suspect-meta {
+			margin: 4px 0 14px;
+			color: var(--ink-soft);
+			font-family: var(--serif);
+			font-size: 14px;
+			font-style: italic
+		}
+
+		.suspect-about {
+			margin: 0;
+			font-size: clamp(15px, 1.25vw, 18px);
+			line-height: 1.55
+		}
+
+		.answer-sheet {
+			height: 100%;
+			display: flex;
+			flex-direction: column
+		}
+
+		.answer-area {
+			flex: 1;
+			min-height: 0;
+			overflow-y: auto;
+			padding: 6px 6px 18px 2px
+		}
+
+		.answer-question {
+			margin: 6px 0 22px;
+			font-family: var(--serif);
+			font-size: clamp(18px, 1.6vw, 23px);
+			font-style: italic;
+			line-height: 1.45
+		}
+
+		.answer-text {
+			position: relative;
+			margin: 0 12px;
+			padding: 19px 22px;
+			font-size: clamp(16px, 1.35vw, 20px);
+			line-height: 1.65;
+			background: rgba(255, 250, 231, .25);
+			border-left: 2px solid rgba(73, 54, 38, .48)
+		}
+
+		.answer-text::before {
+			content: "«";
+			position: absolute;
+			left: -2px;
+			top: -25px;
+			font-family: var(--serif);
+			font-size: 48px;
+			opacity: .28
+		}
+
+		.empty-note {
+			margin-top: 36px;
+			color: var(--ink-soft);
+			font-size: 17px;
+			font-style: italic;
+			line-height: 1.6;
+			transform: rotate(-.6deg)
+		}
+
+		.progress-block {
+			margin: 18px 0 28px;
+			padding: 4px 0
+		}
+
+		.progress-row {
+			display: grid;
+			grid-template-columns: 1fr auto;
+			gap: 16px;
+			padding: 7px 2px;
+			border-bottom: 1px dashed rgba(63, 46, 33, .28);
+			font-size: 17px
+		}
+
+		.progress-value {
+			font-family: var(--serif);
+			font-weight: 700
+		}
+
+		.clue-list {
+			margin: 4px 0 26px;
+			padding: 0;
+			list-style: none
+		}
+
+		.clue-list li {
+			position: relative;
+			margin: 0 0 16px;
+			padding-left: 22px;
+			font-size: 16px;
+			line-height: 1.5
+		}
+
+		.clue-list li::before {
+			content: "•";
+			position: absolute;
+			left: 2px;
+			top: -2px;
+			font-size: 22px
+		}
+
+		.clue-list strong {
+			display: block;
+			font-family: var(--serif);
+			font-size: 17px
+		}
+
+		.statement-group {
+			margin: 0 0 22px
+		}
+
+		.statement-name {
+			display: inline-block;
+			margin: 0 0 7px;
+			font-family: var(--serif);
+			font-size: 19px;
+			font-weight: 700;
+			border-bottom: 1px solid rgba(50, 35, 25, .45)
+		}
+
+		.statement-list {
+			margin: 0;
+			padding: 0 0 0 22px;
+			list-style: none
+		}
+
+		.statement-list li {
+			position: relative;
+			margin-bottom: 7px;
+			font-size: 16px;
+			line-height: 1.5
+		}
+
+		.statement-list li::before {
+			content: "—";
+			position: absolute;
+			left: -20px
+		}
+
+		.accuse-list {
+			margin-top: 22px
+		}
+
+		.accuse-warning {
+			margin: 12px 0 24px;
+			color: var(--red-ink);
+			font-family: var(--serif);
+			font-size: 15px;
+			font-weight: 700;
+			line-height: 1.45;
+			transform: rotate(-.35deg)
+		}
+
+		.ending {
+			height: 100%;
+			overflow-y: auto;
+			padding-right: 8px
+		}
+
+		.ending-stamp {
+			display: inline-block;
+			margin: 10px 0 28px;
+			padding: 9px 15px 7px;
+			border: 3px double currentColor;
+			font-family: var(--serif);
+			font-size: 18px;
+			font-weight: 700;
+			letter-spacing: .12em;
+			text-transform: uppercase;
+			transform: rotate(-3deg)
+		}
+
+		.ending.win .ending-stamp {
+			color: #36573a
+		}
+
+		.ending.unsolved .ending-stamp {
+			color: #8a642f
+		}
+
+		.ending.fail .ending-stamp {
+			color: #762f2b
+		}
+
+		.toast {
+			position: fixed;
+			z-index: 100;
+			left: 50%;
+			bottom: 22px;
+			max-width: min(520px, calc(100vw - 30px));
+			padding: 10px 16px;
+			color: #f4ead7;
+			background: rgba(37, 25, 18, .94);
+			border: 1px solid rgba(255, 255, 255, .12);
+			border-radius: 4px;
+			font-family: var(--serif);
+			font-size: 14px;
+			box-shadow: 0 8px 22px rgba(0, 0, 0, .25);
+			transform: translate(-50%, 18px);
+			opacity: 0;
+			pointer-events: none;
+			transition: 160ms ease
+		}
+
+		.toast.show {
+			transform: translate(-50%, 0);
+			opacity: 1
+		}
+
+		.event-overlay {
+			position: fixed;
+			z-index: 200;
+			inset: 0;
+			display: grid;
+			place-items: center;
+			padding: 28px;
+			background: rgba(20, 12, 8, .72);
+			backdrop-filter: blur(3px);
+		}
+
+		.event-overlay.hidden {
+			display: none
+		}
+
+		.event-card {
+			width: min(720px, 94vw);
+			max-height: 88vh;
+			overflow-y: auto;
+			padding: 38px 42px;
+			color: var(--ink);
+			background-color: #f4edcf;
+			background-image: url("/static/images/paper.jpeg");
+			background-position: center;
+			background-size: cover;
+			border: 1px solid rgba(75, 53, 38, .55);
+			box-shadow: 0 24px 70px rgba(0, 0, 0, .5);
+			transform: rotate(-.2deg)
+		}
+
+		.event-heading {
+			margin: 0 0 10px;
+			color: var(--red-ink);
+			font-family: var(--serif);
+			font-size: 13px;
+			font-weight: 700;
+			letter-spacing: .16em;
+			text-transform: uppercase
+		}
+
+		.event-title {
+			margin: 0 0 18px;
+			font-family: var(--serif);
+			font-size: clamp(28px, 4vw, 42px);
+			line-height: 1.1
+		}
+
+		.event-description {
+			margin: 0 0 22px;
+			font-size: clamp(17px, 2vw, 22px);
+			line-height: 1.55
+		}
+
+		.event-timer {
+			display: inline-block;
+			margin-bottom: 24px;
+			padding: 8px 13px 6px;
+			color: var(--red-ink);
+			border: 2px solid currentColor;
+			font-family: var(--serif);
+			font-size: 24px;
+			font-weight: 700;
+			font-variant-numeric: tabular-nums
+		}
+
+		.event-timer.urgent {
+			animation: eventPulse .65s ease-in-out infinite alternate
+		}
+
+		.event-options {
+			display: grid;
+			gap: 10px
+		}
+
+		.event-option {
+			width: 100%;
+			padding: 13px 16px;
+			color: var(--ink);
+			background: rgba(255, 248, 218, .35);
+			border: 1px solid rgba(75, 53, 38, .35);
+			font-size: 18px;
+			line-height: 1.35;
+			text-align: left;
+			cursor: pointer
+		}
+
+		.event-option:hover {
+			background: rgba(123, 45, 40, .10);
+			border-color: var(--red-ink)
+		}
+
+		.event-option:disabled {
+			opacity: .5;
+			cursor: wait
+		}
+
+		.event-expired {
+			margin: 8px 0 0;
+			color: var(--red-ink);
+			font-family: var(--serif);
+			font-size: 18px;
+			font-weight: 700
+		}
+
+		@keyframes eventPulse {
+			from { transform: scale(1) }
+			to { transform: scale(1.06) }
+		}
+
+		@media(max-width:900px) {
+			body {
+				overflow-y: auto
+			}
+
+			.desk {
+				align-items: flex-start;
+				padding: 18px 16px 80px
+			}
+
+			.notebook {
+				width: min(720px, 100%);
+				height: auto;
+				min-height: 0;
+				display: block;
+				filter: drop-shadow(0 18px 18px rgba(0, 0, 0, .35))
+			}
+
+			.page {
+				min-height: 72vh;
+				transform: none;
+				border-radius: 8px;
+				margin-bottom: 10px
+			}
+
+			.page-content,
+			.page-right .page-content {
+				padding: 52px 34px 38px 46px
+			}
+
+			.spine {
+				display: none
+			}
+
+			.paperclip {
+				left: 8%;
+				top: -16px;
+				width: 58px
+			}
+
+			.tabs {
+				position: sticky;
+				top: 8px;
+				right: auto;
+				z-index: 40;
+				flex-direction: row;
+				gap: 5px;
+				margin: 0 4px 10px;
+				overflow-x: auto
+			}
+
+			.tab {
+				flex: 1 0 auto;
+				width: auto;
+				min-width: 92px;
+				min-height: 42px;
+				padding: 8px 12px;
+				border-radius: 5px;
+				text-align: center
+			}
+
+			.tab:hover,
+			.tab.active {
+				transform: translateY(-2px)
+			}
+
+			.page-scroll,
+			.answer-area,
+			.ending {
+				overflow: visible
+			}
+		}
+
+		@media(max-width:520px) {
+			.desk {
+				padding-left: 8px;
+				padding-right: 8px
+			}
+
+			.page-content,
+			.page-right .page-content {
+				padding: 48px 22px 34px 30px
+			}
+
+			.paperclip {
+				width: 48px
+			}
+
+			.case-title,
+			.section-title {
+				margin-bottom: 16px
+			}
+		}
+		.deduction-overlay {
+			position: fixed; inset: 0; z-index: 120;
+			display: flex; align-items: center; justify-content: center;
+			padding: 24px; background: rgba(24, 18, 12, .42);
+			backdrop-filter: blur(2px);
+		}
+		.deduction-overlay.hidden { display: none; }
+		.deduction-card {
+			position: relative; width: min(520px, 92vw);
+			padding: 34px 38px 30px;
+			background: #f3ead4;
+			border: 1px solid rgba(71, 48, 28, .35);
+			border-radius: 8px;
+			box-shadow: 0 24px 70px rgba(0, 0, 0, .38);
+			text-align: center;
+		}
+		.deduction-card h2 { margin: 0 30px 14px; }
+		.deduction-card p { margin: 0; line-height: 1.55; white-space: pre-line; }
+		.deduction-close {
+			position: absolute; top: 10px; right: 12px;
+			border: 0; background: transparent; cursor: pointer;
+			font-size: 28px; line-height: 1; color: inherit;
+		}
+
+	</style>
+</head>
+
+<body>
+	<div class="desk">
+		<main class="notebook">
+			<img class="paperclip" src="/static/images/paperclip.png" alt="">
+			<section class="page page-left">
+				<div class="page-content" id="left-page"></div>
+			</section>
+			<div class="spine"></div>
+			<section class="page page-right">
+				<div class="page-content" id="right-page"></div>
+			</section>
+			<nav class="tabs hidden" id="tabs" aria-label="Разделы расследования">
+				<button class="tab" data-view="rooms">Комнаты</button>
+				<button class="tab" data-view="talks">Допросы</button>
+				<button class="tab" data-view="case">Досье</button>
+				<button class="tab" data-view="accuse">Обвинить</button>
+			</nav>
+		</main>
+	</div>
+	<div class="toast" id="toast"></div>
+	<div class="event-overlay hidden" id="event-overlay" role="dialog" aria-modal="true" aria-labelledby="event-title">
+		<section class="event-card">
+			<p class="event-heading">Срочное событие</p>
+			<h2 class="event-title" id="event-title"></h2>
+			<p class="event-description" id="event-description"></p>
+			<div class="event-timer" id="event-timer">00:00</div>
+			<div class="event-options" id="event-options"></div>
+			<p class="event-expired hidden" id="event-expired">Время вышло. Возможность упущена.</p>
+		</section>
+	</div>
+
+	<div class="deduction-overlay hidden" id="deduction-overlay" role="dialog" aria-modal="true" aria-labelledby="deduction-popup-title">
+		<section class="deduction-card">
+			<button class="deduction-close" id="deduction-close" type="button" aria-label="Закрыть">×</button>
+			<h2 id="deduction-popup-title"></h2>
+			<p id="deduction-popup-text"></p>
+		</section>
+	</div>
+
+	<script>
+		const leftPage = document.getElementById("left-page");
+		const rightPage = document.getElementById("right-page");
+		const tabs = document.getElementById("tabs");
+		const toast = document.getElementById("toast");
+		const eventOverlay = document.getElementById("event-overlay");
+		const eventTitle = document.getElementById("event-title");
+		const eventDescription = document.getElementById("event-description");
+		const eventTimer = document.getElementById("event-timer");
+		const eventOptions = document.getElementById("event-options");
+		const eventExpired = document.getElementById("event-expired");
+		const deductionOverlay = document.getElementById("deduction-overlay");
+		const deductionPopupTitle = document.getElementById("deduction-popup-title");
+		const deductionPopupText = document.getElementById("deduction-popup-text");
+		const deductionClose = document.getElementById("deduction-close");
+		let eventTimerID = null;
+
+		const state = {
+			started: false,
+			startData: null,
+			selectedCase: null,
+			availableCases: [],
+			introStep: 0,
+			view: "landing",
+
+			locations: [],
+			selectedLocationID: null,
+
+			objects: [],
+			inspection: null,
+
+			suspects: [],
+			selectedSuspectID: null,
+
+			dialogues: [],
+			selectedDialogue: null,
+
+			caseData: null,
+			facts: [],
+			motives: [],
+			accuseSuspectID: null,
+			accuseMotiveID: null,
+			accuseFactIDs: [],
+			deductionMessage: "",
+			ending: null
+		};
+
+		function escapeHtml(value = "") {
+			return String(value)
+				.replaceAll("&", "&amp;")
+				.replaceAll("<", "&lt;")
+				.replaceAll(">", "&gt;")
+				.replaceAll('"', "&quot;")
+				.replaceAll("'", "&#039;");
+		}
+
+		function cleanStory(value = "") {
+			return String(value)
+				.split("\n")
+				.filter(line => !/^\s*[=-]{5,}\s*$/.test(line))
+				.join("\n")
+				.trim();
+		}
+
+		function storyHtml(value = "") {
+			return escapeHtml(cleanStory(value)).replaceAll("\n", "<br>");
+		}
+
+		function showError(error) {
+			toast.textContent = error?.message || "Что-то пошло не так";
+			toast.classList.add("show");
+
+			clearTimeout(showError.timer);
+
+			showError.timer = setTimeout(
+				() => toast.classList.remove("show"),
+				3200
+			);
+		}
+
+		function showDeductionPopup(title, text) {
+			deductionPopupTitle.textContent = title;
+			deductionPopupText.textContent = text;
+			deductionOverlay.classList.remove("hidden");
+		}
+
+		function closeDeductionPopup() {
+			deductionOverlay.classList.add("hidden");
+		}
+
+		deductionClose.addEventListener("click", closeDeductionPopup);
+
+		async function api(path, options = {}) {
+			const response = await fetch(path, options);
+			const text = await response.text();
+
+			if (!response.ok) {
+				throw new Error(text || `Ошибка ${response.status}`);
+			}
+
+			if (!text) {
+				return null;
+			}
+
+			try {
+				return JSON.parse(text);
+			} catch {
+				throw new Error("Сервер вернул ответ в неожиданном формате");
+			}
+		}
+
+		function setTabsVisible(visible) {
+			tabs.classList.toggle("hidden", !visible);
+		}
+
+		function setActiveTab(view) {
+			document.querySelectorAll(".tab").forEach(tab => {
+				tab.classList.toggle("active", tab.dataset.view === view);
+			});
+		}
+
+
+		// =========================================================
+		// LANDING
+		// =========================================================
+
+		function renderLanding() {
+			setTabsVisible(false);
+			state.view = "landing";
+
+			leftPage.innerHTML = `
+			<div class="intro-layout">
+				<p class="kicker">Архив расследований</p>
+				<h1 class="case-number">Частные дела</h1>
+				<h2 class="case-title">Архив следователя</h2>
+
+				<div class="landing-mark">
+					частное<br>дело
+				</div>
+
+				<p class="story compact">
+					Личные записи следователя.<br>
+					Не делайте выводов раньше времени.
+				</p>
+			</div>
+		`;
+
+			rightPage.innerHTML = `
+			<div class="intro-layout">
+				<p class="kicker">Архив</p>
+				<h2 class="section-title">Выбрать расследование</h2>
+
+				<p class="story">
+					Откройте архив, чтобы выбрать дело.
+				</p>
+
+				<button class="ink-button" id="start-game">
+					Открыть архив →
+				</button>
+			</div>
+		`;
+
+			document
+				.getElementById("start-game")
+				.addEventListener("click", openCaseSelection);
+		}
+
+		async function openCaseSelection() {
+			try {
+				state.availableCases = await api("/cases") || [];
+				renderCaseSelection();
+			} catch (error) {
+				showError(error);
+			}
+		}
+
+		function renderCaseSelection() {
+			setTabsVisible(false);
+			state.view = "case-selection";
+
+			leftPage.innerHTML = `
+			<div class="intro-layout">
+				<p class="kicker">Архив расследований</p>
+				<h1 class="case-number">Дела</h1>
+				<h2 class="case-title">Выберите расследование</h2>
+
+				<p class="story compact">
+					Каждое дело хранится отдельно и запускается одним игровым движком.
+				</p>
+
+				<button class="text-button ink-button" id="back-landing">
+					← назад
+				</button>
+			</div>
+		`;
+
+			rightPage.innerHTML = `
+			<div class="page-scroll">
+				<p class="kicker">Доступные дела</p>
+				<h2 class="section-title">Архив</h2>
+
+				<div class="list">
+					${state.availableCases.length
+						? state.availableCases.map(caseInfo => `
+							<button
+								class="list-button"
+								data-case="${escapeHtml(caseInfo.id)}"
+							>
+								${escapeHtml(caseInfo.title)}
+							</button>
+						`).join("")
+						: `
+							<p class="empty-note">
+								В архиве пока нет доступных дел.
+							</p>
+						`
+					}
+				</div>
+			</div>
+		`;
+
+			document
+				.querySelectorAll("[data-case]")
+				.forEach(button => {
+					button.addEventListener("click", () => {
+						startGame(button.dataset.case);
+					});
+				});
+
+			document
+				.getElementById("back-landing")
+				.addEventListener("click", renderLanding);
+		}
+
+		// =========================================================
+		// START GAME
+		// =========================================================
+
+		async function startGame(caseID) {
+			const button = document.querySelector(`[data-case="${CSS.escape(caseID)}"]`);
+
+			try {
+				if (button) {
+					button.disabled = true;
+					button.textContent = "Открываю дело...";
+				}
+
+				state.startData = await api(
+					"/start?caseID=" + encodeURIComponent(caseID),
+					{ method: "POST" }
+				);
+
+				state.selectedCase = caseID;
+				state.started = true;
+				state.introStep = 0;
+				state.view = "intro";
+
+				state.locations = [];
+				state.objects = [];
+				state.suspects = [];
+				state.dialogues = [];
+
+				state.inspection = null;
+				state.caseData = null;
+				state.facts = [];
+				state.motives = [];
+				state.ending = null;
+
+				state.selectedLocationID = null;
+				state.selectedSuspectID = null;
+				state.selectedDialogue = null;
+				state.accuseSuspectID = null;
+				state.accuseMotiveID = null;
+				state.accuseFactIDs = [];
+				state.deductionMessage = "";
+
+				clearInterval(eventTimerID);
+				eventTimerID = null;
+				eventOverlay.classList.add("hidden");
+
+				renderIntro();
+
+			} catch (error) {
+				showError(error);
+
+				if (button) {
+					button.disabled = false;
+					const caseInfo = state.availableCases.find(item => item.id === caseID);
+					button.textContent = caseInfo?.title || caseID;
+				}
+			}
+		}
+
+		// =========================================================
+		// INTRO
+		// =========================================================
+
+		function renderIntro() {
+			setTabsVisible(false);
+
+			const isFirst = state.introStep === 0;
+
+			const text = isFirst
+				? state.startData.intro
+				: state.startData.knownInfo;
+
+			const heading = isFirst
+				? "Первичная запись"
+				: "Что известно";
+
+			const currentCase = state.availableCases.find(
+				item => item.id === state.selectedCase
+			);
+			const caseTitle = currentCase?.title || state.selectedCase || "Дело";
+
+			leftPage.innerHTML = `
+			<div class="page-scroll">
+				<p class="kicker">Текущее расследование</p>
+				<h1 class="case-number">${escapeHtml(caseTitle)}</h1>
+				<h2 class="case-title">${heading}</h2>
+
+				<div class="hand-note">
+					<span class="note-label">Пометка</span>
+					${isFirst
+					? "Фиксирую исходную картину до осмотра дома и разговоров."
+					: "Версии пока нет. Только факты, которые предстоит проверить."
+				}
+				</div>
+			</div>
+		`;
+
+			rightPage.innerHTML = `
+			<div class="page-scroll">
+				<div class="story">
+					${storyHtml(text)}
+				</div>
+
+				<button class="ink-button" id="intro-next">
+					${isFirst ? "Следующая запись →" : "Начать осмотр →"}
+				</button>
+			</div>
+		`;
+
+			document
+				.getElementById("intro-next")
+				.addEventListener("click", async () => {
+
+					if (state.introStep === 0) {
+						state.introStep = 1;
+						renderIntro();
+						return;
+					}
+
+					await openRooms();
+				});
+		}
+
+
+		// =========================================================
+		// LOAD DATA
+		// =========================================================
+
+		async function ensureLocations() {
+			if (state.locations.length === 0) {
+				state.locations = await api("/locations");
+			}
+		}
+
+		async function ensureSuspects() {
+			if (state.suspects.length === 0) {
+				state.suspects = await api("/suspects");
+			}
+		}
+
+
+		// =========================================================
+		// ROOMS
+		// =========================================================
+
+		async function openRooms() {
+			try {
+				state.locations = await api("/locations");
+
+				state.view = "rooms";
+
+				setTabsVisible(true);
+				setActiveTab("rooms");
+
+				renderRooms();
+				await checkActiveEvent();
+
+			} catch (error) {
+				showError(error);
+			}
+		}
+
+
+		async function selectLocation(locID) {
+			try {
+				state.selectedLocationID = locID;
+				state.inspection = null;
+
+				state.objects = await api(
+					`/objects?locID=${locID}`
+				);
+
+				renderRooms();
+				await checkActiveEvent();
+
+			} catch (error) {
+				showError(error);
+			}
+		}
+
+
+		async function inspectObject(objID) {
+			try {
+				const data = await api(
+					`/inspect-object?objID=${objID}`,
+					{ method: "POST" }
+				);
+
+				state.inspection = data;
+
+				const object = state.objects.find(
+					item => item.obj_id === objID
+				);
+
+				if (object) {
+					object.searched = true;
+				}
+
+				state.locations = await api("/locations");
+				renderRooms();
+				await checkActiveEvent();
+
+			} catch (error) {
+				showError(error);
+			}
+		}
+
+
+		function renderRooms() {
+
+			const selectedLocation = state.locations.find(
+				location =>
+					location.loc_id === state.selectedLocationID
+			);
+
+			leftPage.innerHTML = `
+			<div class="page-scroll">
+
+				<p class="kicker">Осмотр дома</p>
+
+				<h2 class="section-title">
+					Комнаты
+				</h2>
+
+				<div class="list">
+
+					${state.locations.map(location => `
+						<button
+							class="suspect-button ${location.loc_id === state.selectedLocationID
+					? "selected"
+					: ""
+				}"
+							data-location="${location.loc_id}"
+						>
+							${escapeHtml(location.name)}
+						</button>
+					`).join("")}
+
+				</div>
+
+				${selectedLocation
+					? `
+							<div class="hand-note">
+								<span class="note-label">
+									Место
+								</span>
+
+								<strong>
+									${escapeHtml(selectedLocation.name)}
+								</strong>
+
+								<br>
+
+								${escapeHtml(selectedLocation.about || "")}
+							</div>
+						`
+					: `
+							<p class="empty-note">
+								Выберите комнату.
+								Осматривайте всё, даже если предмет кажется незначительным.
+							</p>
+						`
+				}
+
+			</div>
+		`;
+
+
+			if (!selectedLocation) {
+
+				rightPage.innerHTML = `
+				<div class="page-scroll">
+
+					<p class="kicker">
+						Рабочая страница
+					</p>
+
+					<h2 class="section-title">
+						Осмотр
+					</h2>
+
+					<p class="empty-note">
+						Здесь появится список предметов выбранной комнаты
+						и ваши новые записи.
+					</p>
+
+				</div>
+			`;
+
+			} else {
+
+				rightPage.innerHTML = `
+				<div class="page-scroll">
+
+					<p class="kicker">
+						Осматриваем
+					</p>
+
+					<h2 class="section-title">
+						${escapeHtml(selectedLocation.name)}
+					</h2>
+
+					<div class="list">
+
+						${state.objects.map(object => `
+							<button
+								class="list-button ${object.searched
+						? "checked"
+						: ""
+					}"
+								data-object="${object.obj_id}"
+							>
+								${objectEmoji(object.obj_id)} ${escapeHtml(object.name)}
+							</button>
+						`).join("")}
+
+					</div>
+
+					${state.inspection
+						? renderInspection(state.inspection)
+						: `
+								<p class="empty-note">
+									Нажмите на предмет,
+									чтобы осмотреть его и сделать запись.
+								</p>
+							`
+					}
+
+				</div>
+			`;
+			}
+
+
+			document
+				.querySelectorAll("[data-location]")
+				.forEach(button => {
+
+					button.addEventListener("click", () => {
+
+						selectLocation(
+							Number(button.dataset.location)
+						);
+
+					});
+				});
+
+
+			document
+				.querySelectorAll("[data-object]")
+				.forEach(button => {
+
+					button.addEventListener("click", () => {
+
+						inspectObject(
+							Number(button.dataset.object)
+						);
+
+					});
+				});
+		}
+
+
+		function renderInspection(data) {
+
+			/*
+				inspect-object пока может возвращать
+				старую Go-структуру Object.
+	
+				Поэтому здесь поддерживаем оба варианта:
+				Name/name, About/about.
+			*/
+
+			const objectName =
+				data.object?.name ??
+				data.object?.name ??
+				"";
+
+			const objectAbout =
+				data.object?.about ??
+				data.object?.about ??
+				"";
+
+			return `
+			<div class="object-description">
+
+				<strong>
+					${objectEmoji(data.object?.obj_id)} ${escapeHtml(objectName)}
+				</strong>
+
+				<br>
+
+				${escapeHtml(objectAbout)}
+
+			</div>
+
+			${data.clueFound
+					? `
+						<div class="clue-note">
+
+							<span class="note-label">
+								Найдена улика
+							</span>
+
+							<h3 class="clue-title">
+								${escapeHtml(data.clueName)}
+							</h3>
+
+							<div>
+								${escapeHtml(data.clueAbout)}
+							</div>
+
+						</div>
+					`
+					: ""
+				}
+
+			${data.dialogueUnlocked
+					? `
+						<div class="unlock-note">
+							↳ появилась новая линия допроса
+						</div>
+					`
+					: ""
+				}
+		`;
+		}
+
+
+		// =========================================================
+		// TALKS
+		// =========================================================
+
+		async function openTalks() {
+			try {
+				await ensureSuspects();
+
+				state.view = "talks";
+
+				setTabsVisible(true);
+				setActiveTab("talks");
+
+				renderTalks();
+
+			} catch (error) {
+				showError(error);
+			}
+		}
+
+
+		async function selectSuspect(susID) {
+			try {
+				state.selectedSuspectID = susID;
+				state.selectedDialogue = null;
+
+				state.dialogues = await api(
+					`/dialogues?susID=${susID}`
+				);
+
+				renderTalks();
+
+			} catch (error) {
+				showError(error);
+			}
+		}
+
+
+		async function confrontDialogue() {
+			try {
+				const dialogue = state.selectedDialogue;
+				if (!dialogue) return;
+				const data = await api(`/confront?susID=${state.selectedSuspectID}&dialID=${dialogue.dial_id}`, { method: "POST" });
+				dialogue.confrontation_result = data.answer || "Противоречие предъявлено.";
+				dialogue.confronted = true;
+				const cached = state.dialogues.find(item => item.dial_id === dialogue.dial_id);
+				if (cached) {
+					cached.confronted = true;
+					cached.confrontation_result = dialogue.confrontation_result;
+				}
+				renderTalks();
+				await checkActiveEvent();
+			} catch (error) { showError(error); }
+		}
+
+		async function askDialogue(dialID) {
+			try {
+
+				const data = await api(
+					`/ask-dialogue?susID=${state.selectedSuspectID}&dialID=${dialID}`,
+					{
+						method: "POST"
+					}
+				);
+
+				state.selectedDialogue = data;
+				const dialogue = state.dialogues.find(
+					item => item.dial_id === dialID
+				);
+
+				if (dialogue) {
+					dialogue.asked = true;
+				}
+
+				renderTalks();
+				await checkActiveEvent();
+
+			} catch (error) {
+				showError(error);
+			}
+		}
+
+
+		function renderTalks() {
+
+			const suspect = state.selectedSuspectID
+				? state.suspects.find(item => item.sus_id === state.selectedSuspectID)
+				: null;
+
+
+			leftPage.innerHTML = `
+			<div class="page-scroll">
+
+				<p class="kicker">
+					Допросы
+				</p>
+
+				<h2 class="section-title">
+					${suspect
+					? escapeHtml(suspect.name)
+					: "Подозреваемые"
+				}
+				</h2>
+
+				${!suspect
+					? `
+							<div class="list">
+
+								${state.suspects.map(item => `
+									<button
+										class="suspect-button"
+										data-suspect="${item.sus_id}"
+									>
+										${suspectEmoji(item.sus_id)} ${escapeHtml(item.name)}
+									</button>
+								`).join("")}
+
+							</div>
+
+							<p class="empty-note">
+								Выберите человека,
+								чтобы открыть записи допроса.
+							</p>
+						`
+					: `
+							<div class="suspect-head">
+
+								<p class="suspect-meta">
+									${escapeHtml(String(suspect.age || ""))}
+									${suspect.age ? " лет" : ""}
+								</p>
+
+								<p class="suspect-about">
+									${escapeHtml(suspect.about || "")}
+								</p>
+
+							</div>
+
+							<button
+								class="text-button ink-button"
+								id="back-suspects"
+							>
+								← к подозреваемым
+							</button>
+
+							<h3 class="sub-title">
+								Вопросы
+							</h3>
+
+							<div class="list">
+
+								${state.dialogues.map(dialogue => `
+									<button
+										class="question-button
+											${dialogue.asked ? "asked" : ""}
+											${state.selectedDialogue?.dial_id === dialogue.dial_id ? "selected" : ""}
+											${dialogue.is_clue && !dialogue.asked ? "new-question" : ""}
+										"
+										data-dialogue="${dialogue.dial_id}"
+									>
+										${escapeHtml(dialogue.question)}
+									</button>
+								`).join("")}
+
+							</div>
+						`
+				}
+
+			</div>
+		`;
+
+
+			rightPage.innerHTML = `
+			<div class="answer-sheet">
+
+				<p class="kicker">
+					Запись разговора
+				</p>
+
+				<h2 class="section-title">
+					Ответ
+				</h2>
+
+				<div class="answer-area">
+
+					${state.selectedDialogue
+					? `
+								<div class="answer-question">
+									${escapeHtml(state.selectedDialogue.question)}
+								</div>
+
+								<div class="answer-text">
+									${escapeHtml(state.selectedDialogue.answer || "")}
+								</div>
+								${state.selectedDialogue.confrontation && !state.selectedDialogue.confronted ? `
+									<div class="hand-note">
+										<span class="note-label">Противоречие</span>
+										${escapeHtml(state.selectedDialogue.confrontation.challenge || "")}
+										<br><button class="ink-button" id="confront-dialogue">Предъявить противоречие →</button>
+									</div>` : ""}
+								${state.selectedDialogue.confrontation_result ? `
+									<div class="clue-note"><span class="note-label">После конфронтации</span>
+									${escapeHtml(state.selectedDialogue.confrontation_result)}</div>` : ""}
+							`
+					: `
+								<p class="empty-note">
+									${suspect
+						? "Выберите вопрос слева. Ответ появится здесь и страница не будет прыгать вниз."
+						: "Сначала выберите подозреваемого на левой странице."
+					}
+								</p>
+							`
+				}
+
+				</div>
+
+			</div>
+		`;
+
+
+			document
+				.querySelectorAll("[data-suspect]")
+				.forEach(button => {
+
+					button.addEventListener("click", () => {
+
+						selectSuspect(
+							Number(button.dataset.suspect)
+						);
+
+					});
+				});
+
+
+			document
+				.querySelectorAll("[data-dialogue]")
+				.forEach(button => {
+
+					button.addEventListener("click", () => {
+
+						askDialogue(
+							Number(button.dataset.dialogue)
+						);
+
+					});
+				});
+
+
+			const confrontButton = document.getElementById("confront-dialogue");
+			if (confrontButton) confrontButton.addEventListener("click", confrontDialogue);
+
+			const backButton =
+				document.getElementById("back-suspects");
+
+			if (backButton) {
+				backButton.addEventListener("click", () => {
+
+					state.selectedSuspectID = null;
+					state.selectedDialogue = null;
+					state.dialogues = [];
+
+					renderTalks();
+				});
+			}
+		}
+
+
+		// =========================================================
+		// CASE
+		// =========================================================
+
+		async function openCase() {
+			try {
+				await ensureSuspects();
+
+				state.caseData = await api("/case");
+				state.facts = await api("/facts") || [];
+				state.motives = await api("/motives") || [];
+				state.view = "case";
+
+				setTabsVisible(true);
+				setActiveTab("case");
+
+				renderCase();
+
+			} catch (error) {
+				showError(error);
+			}
+		}
+
+
+		function groupFacts(dialogues = []) {
+
+			const groups = new Map();
+
+			for (const dialogue of dialogues) {
+
+				const susID = dialogue.sus_id;
+
+				const fact =
+					dialogue.fact ||
+					dialogue.answer;
+
+				if (!fact) {
+					continue;
+				}
+
+				if (!groups.has(susID)) {
+					groups.set(susID, []);
+				}
+
+				groups
+					.get(susID)
+					.push(fact);
+			}
+
+			return [...groups.entries()]
+				.sort((a, b) => a[0] - b[0]);
+		}
+
+
+		function suspectEmoji(susID) {
+			return ({ 1: "👩", 2: "👨‍💼", 3: "🧔", 4: "👩‍⚕️", 5: "👩‍💼", 6: "👨‍🔧" })[susID] || "👤";
+		}
+
+		function objectEmoji(objID) {
+			return ({ 1: "⚰️", 2: "🧪", 3: "🍽️", 5: "💊", 6: "🧰", 7: "📜", 8: "💼", 9: "🎙️", 10: "📝" })[objID] || "🔎";
+		}
+
+		function suspectNameByID(susID) {
+			return (
+				state.suspects.find(item => item.sus_id === susID)?.name ||
+				`Подозреваемый ${susID}`
+			);
+		}
+
+
+		async function tryDeduction() {
+			state.deductionMessage = "";
+			const selected = [...document.querySelectorAll("[data-fact-select]:checked")].map(item => Number(item.value));
+			if (selected.length < 2) { showError(new Error("Выберите минимум два факта")); return; }
+			try {
+				const data = await api("/deduce", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ fact_ids: selected }) });
+				state.facts = await api("/facts") || [];
+				state.motives = await api("/motives") || [];
+				if (data?.success) {
+					const opened = [
+						...(data.new_facts || []).map(item => item.title),
+						...(data.new_motives || []).map(item => `Мотив: ${item.title}`)
+					];
+					showDeductionPopup("НОВЫЙ ВЫВОД!", opened.length ? opened.join("\n") : (data.message || "Новый вывод получен"));
+				} else {
+					showDeductionPopup("ОШИБКА!", "Факты ни к чему не ведут");
+				}
+				renderCase();
+			} catch (error) { showError(error); }
+		}
+
+		function renderCase() {
+
+			const data = state.caseData;
+
+			const groups = groupFacts(
+				data.knownFacts ||
+				data.knownFacts ||
+				[]
+			);
+
+			const clues =
+				data.foundClues ||
+				data.foundClues ||
+				[];
+
+
+			leftPage.innerHTML = `
+			<div class="page-scroll">
+
+				<p class="kicker">
+					Досье
+				</p>
+
+				<h2 class="section-title">
+					Ход расследования
+				</h2>
+
+				<div class="progress-block">
+
+					<div class="progress-row">
+						<span>Найдено улик</span>
+
+						<span class="progress-value">
+							${data.cluesFound ?? data.cluesFound ?? 0}
+							/
+							${data.cluesTotal ?? data.cluesTotal ?? 0}
+						</span>
+					</div>
+
+					<div class="progress-row">
+						<span>Осмотрено объектов</span>
+
+						<span class="progress-value">
+							${data.objectsSearched ?? data.objectsSearched ?? 0}
+							/
+							${data.objectsTotal ?? data.objectsTotal ?? 0}
+						</span>
+					</div>
+
+					<div class="progress-row">
+						<span>Получено показаний</span>
+
+						<span class="progress-value">
+							${data.dialoguesAsked ?? data.dialoguesAsked ?? 0}
+						</span>
+					</div>
+
+				</div>
+
+
+				<h3 class="sub-title">
+					Кратко о деле
+				</h3>
+
+				<div class="story compact">
+					${storyHtml(
+				data.intro ??
+				data.Intro ??
+				""
+			)}
+				</div>
+
+
+				<h3 class="sub-title">
+					Известно
+				</h3>
+
+				<div class="story compact">
+					${storyHtml(
+				data.knownInfo ??
+				data.KnownInfo ??
+				""
+			)}
+				</div>
+
+			</div>
+		`;
+
+
+			rightPage.innerHTML = `
+			<div class="page-scroll">
+
+				<p class="kicker">
+					Собранные записи
+				</p>
+
+				<h2 class="section-title">
+					Улики
+				</h2>
+
+				${clues.length
+					? `
+							<ul class="clue-list">
+
+								${clues.map(clue => `
+									<li>
+										<strong>
+											${escapeHtml(clue.name ?? clue.name)}
+										</strong>
+
+										${escapeHtml(clue.about ?? clue.about ?? "")}
+									</li>
+								`).join("")}
+
+							</ul>
+						`
+					: `
+							<p class="empty-note">
+								Улики пока не найдены.
+							</p>
+						`
+				}
+
+
+				<h2 class="section-title">Факты и дедукция</h2>
+				${state.facts?.length ? `
+					<div class="list">
+						${state.facts.map(fact => `<label class="hand-note" style="margin:8px 0;display:block"><input type="checkbox" data-fact-select value="${fact.id}"> <strong>${escapeHtml(fact.title)}</strong><br><span>${escapeHtml(fact.about || "")}</span></label>`).join("")}
+					</div>
+					<button class="ink-button" id="deduce-button">Связать выбранные факты →</button>
+				` : `<p class="empty-note">Факты для дедукции пока не собраны.</p>`}
+
+				${state.motives?.length ? `<h3 class="sub-title">Открытые мотивы</h3><ul class="clue-list">${state.motives.map(m => `<li><strong>${escapeHtml(m.title)}</strong> — ${escapeHtml(m.description || "")}</li>`).join("")}</ul>` : ""}
+
+				<h2 class="section-title">
+					Показания
+				</h2>
+
+				${groups.length
+					? groups.map(([susID, facts]) => `
+							<section class="statement-group">
+
+								<h3 class="statement-name">
+									${escapeHtml(
+						suspectNameByID(susID)
+					)}
+								</h3>
+
+								<ul class="statement-list">
+
+									${facts.map(fact => `
+										<li>
+											${escapeHtml(fact)}
+										</li>
+									`).join("")}
+
+								</ul>
+
+							</section>
+						`).join("")
+					: `
+							<p class="empty-note">
+								Показаний пока нет.
+							</p>
+						`
+				}
+
+			</div>
+		`;
+
+			const deduceButton = document.getElementById("deduce-button");
+			if (deduceButton) deduceButton.addEventListener("click", tryDeduction);
+		}
+
+
+		// =========================================================
+		// ACCUSE
+		// =========================================================
+
+		async function openAccuse() {
+			try {
+				await ensureSuspects();
+				state.facts = await api("/facts") || [];
+				state.motives = await api("/motives") || [];
+
+				state.view = "accuse";
+				state.ending = null;
+				state.accuseSuspectID = null;
+				state.accuseMotiveID = null;
+				state.accuseFactIDs = [];
+
+				setTabsVisible(true);
+				setActiveTab("accuse");
+
+				renderAccuse();
+
+			} catch (error) {
+				showError(error);
+			}
+		}
+
+
+		function renderAccuse() {
+
+			if (state.ending) {
+
+				setTabsVisible(false);
+
+				const type =
+					state.ending.typeEnd ||
+					state.ending.TypeEnd ||
+					"fail";
+
+				const text =
+					state.ending.textEnd ||
+					state.ending.TextEnd ||
+					"";
+
+
+				leftPage.innerHTML = `
+				<div class="intro-layout">
+
+					<p class="kicker">
+						Окончательная запись
+					</p>
+
+					<h1 class="case-number">
+						${escapeHtml(
+							state.availableCases.find(item => item.id === state.selectedCase)?.title
+							|| state.selectedCase
+							|| "Дело"
+						)}
+					</h1>
+
+					<h2 class="case-title">
+						Расследование завершено
+					</h2>
+
+					<div class="ending ${escapeHtml(type)}">
+
+						<div class="ending-stamp">
+							${type === "win"
+						? "Дело закрыто"
+						: type === "unsolved"
+							? "Недостаточно улик"
+							: "Дело провалено"
+					}
+						</div>
+
+					</div>
+
+				</div>
+			`;
+
+
+				rightPage.innerHTML = `
+				<div class="ending ${escapeHtml(type)}">
+
+					<div class="story compact">
+						${storyHtml(text)}
+					</div>
+
+					<button
+						class="ink-button"
+						id="restart-game"
+					>
+						Вернуться в архив →
+					</button>
+
+				</div>
+			`;
+
+
+				document
+					.getElementById("restart-game")
+					.addEventListener("click", () => {
+						state.started = false;
+						state.selectedCase = null;
+						renderLanding();
+					});
+
+				return;
+			}
+
+
+			const suspect =
+				state.accuseSuspectID
+					? state.suspects.find(item => item.sus_id === state.accuseSuspectID)
+					: null;
+
+
+			leftPage.innerHTML = `
+			<div class="page-scroll">
+
+				<p class="kicker">
+					Финальное решение
+				</p>
+
+				<h2 class="section-title">
+					Обвинение
+				</h2>
+
+				<p class="story compact">
+					Выберите человека,
+					которого считаете убийцей.
+				</p>
+
+				<p class="accuse-warning">
+					После подтверждения расследование будет завершено.
+				</p>
+
+				<div class="list accuse-list">
+
+					${state.suspects.map(item => `
+						<button
+							class="suspect-button ${state.accuseSuspectID === item.sus_id
+					? "selected"
+					: ""
+				}"
+							data-accuse="${item.sus_id}"
+						>
+							${suspectEmoji(item.sus_id)} ${escapeHtml(item.name)}
+						</button>
+					`).join("")}
+
+				</div>
+
+			</div>
+		`;
+
+
+			rightPage.innerHTML = `
+			<div class="intro-layout">
+
+				${suspect
+					? `
+							<p class="kicker">
+								Вы выбрали
+							</p>
+
+							<h2 class="section-title">
+								${suspectEmoji(suspect.sus_id)} ${escapeHtml(suspect.name)}
+							</h2>
+
+							<p class="suspect-meta">
+								${escapeHtml(String(suspect.age || ""))}
+								${suspect.age ? " лет" : ""}
+							</p>
+
+							<p class="suspect-about">
+								${escapeHtml(suspect.about || "")}
+							</p>
+
+							<div class="hand-note">
+								<span class="note-label">Мотив</span>
+								${state.motives.filter(m => m.suspect_id === state.accuseSuspectID).length
+									? state.motives.filter(m => m.suspect_id === state.accuseSuspectID).map(m => `<label style="display:block;margin:7px 0"><input type="radio" name="accuse-motive" value="${m.id}" ${state.accuseMotiveID === m.id ? "checked" : ""}> <strong>${escapeHtml(m.title)}</strong></label>`).join("")
+									: '<span class="empty-note">Для этого человека мотив пока не найден.</span>'}
+							</div>
+							<div class="hand-note">
+								<span class="note-label">Факты, подтверждающие версию</span>
+								${state.facts.map(f => `<label style="display:block;margin:7px 0"><input type="checkbox" data-accuse-fact value="${f.id}" ${state.accuseFactIDs.includes(f.id) ? "checked" : ""}> <strong>${escapeHtml(f.title)}</strong></label>`).join("")}
+							</div>
+
+							<button
+								class="ink-button danger"
+								id="confirm-accuse"
+							>
+								Подтвердить обвинение
+							</button>
+						`
+					: `
+							<p class="kicker">
+								Решение
+							</p>
+
+							<h2 class="section-title">
+								Кого обвинить?
+							</h2>
+
+							<p class="empty-note">
+								Выберите подозреваемого
+								на левой странице.
+							</p>
+						`
+				}
+
+			</div>
+		`;
+
+
+			document
+				.querySelectorAll("[data-accuse]")
+				.forEach(button => {
+
+					button.addEventListener("click", () => {
+
+						state.accuseSuspectID =
+							Number(button.dataset.accuse);
+						state.accuseMotiveID = null;
+						state.accuseFactIDs = [];
+
+						renderAccuse();
+					});
+				});
+
+
+			document.querySelectorAll('input[name="accuse-motive"]').forEach(input => input.addEventListener("change", () => { state.accuseMotiveID = Number(input.value); }));
+			document.querySelectorAll("[data-accuse-fact]").forEach(input => input.addEventListener("change", () => {
+				const id = Number(input.value);
+				state.accuseFactIDs = input.checked ? [...new Set([...state.accuseFactIDs, id])] : state.accuseFactIDs.filter(item => item !== id);
+			}));
+
+			const confirm =
+				document.getElementById("confirm-accuse");
+
+			if (confirm) {
+				confirm.addEventListener(
+					"click",
+					submitAccusation
+				);
+			}
+		}
+
+
+		async function submitAccusation() {
+
+			if (!state.accuseSuspectID || !state.accuseMotiveID) {
+				showError(new Error("Выберите подозреваемого и найденный мотив"));
+				return;
+			}
+
+			const button =
+				document.getElementById("confirm-accuse");
+
+			try {
+
+				if (button) {
+					button.disabled = true;
+					button.textContent =
+						"Записываю решение...";
+				}
+
+				state.ending = await api(
+					"/accuse",
+					{
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({
+							suspect_id: state.accuseSuspectID,
+							motive_id: state.accuseMotiveID,
+							fact_ids: state.accuseFactIDs
+						})
+					}
+				);
+
+				renderAccuse();
+
+			} catch (error) {
+
+				showError(error);
+
+				if (button) {
+					button.disabled = false;
+					button.textContent =
+						"Подтвердить обвинение";
+				}
+			}
+		}
+
+
+		// =========================================================
+		// URGENT EVENTS
+		// =========================================================
+
+		async function checkActiveEvent() {
+			if (!state.started) return;
+
+			try {
+				const response = await fetch("/event");
+				if (response.status === 204) return;
+				if (!response.ok) throw new Error(await response.text() || `Ошибка ${response.status}`);
+
+				const event = await response.json();
+				showActiveEvent(event);
+			} catch (error) {
+				showError(error);
+			}
+		}
+
+		function showActiveEvent(event) {
+			clearInterval(eventTimerID);
+			eventTitle.textContent = event.event_title || "Срочное событие";
+			eventDescription.textContent = event.event_description || "";
+			eventExpired.classList.add("hidden");
+			eventOptions.innerHTML = "";
+
+			for (const option of event.event_options || []) {
+				const button = document.createElement("button");
+				button.className = "event-option";
+				button.textContent = option.event_option_text;
+				button.addEventListener("click", () => chooseEventOption(option.event_option_id));
+				eventOptions.appendChild(button);
+			}
+
+			eventOverlay.classList.remove("hidden");
+			startEventTimer(Number(event.time_limit) || 0);
+		}
+
+		function startEventTimer(seconds) {
+			let remaining = Math.max(0, seconds);
+
+			const render = () => {
+				const minutes = String(Math.floor(remaining / 60)).padStart(2, "0");
+				const secs = String(remaining % 60).padStart(2, "0");
+				eventTimer.textContent = `${minutes}:${secs}`;
+				eventTimer.classList.toggle("urgent", remaining > 0 && remaining <= 10);
+			};
+
+			render();
+			if (remaining <= 0) {
+				expireEvent();
+				return;
+			}
+
+			eventTimerID = setInterval(() => {
+				remaining -= 1;
+				render();
+				if (remaining <= 0) expireEvent();
+			}, 1000);
+		}
+
+		async function expireEvent() {
+			clearInterval(eventTimerID);
+			eventTimerID = null;
+			eventTimer.classList.remove("urgent");
+			eventOptions.querySelectorAll("button").forEach(button => button.disabled = true);
+			eventExpired.classList.remove("hidden");
+			try { await api("/event/expire", { method: "POST" }); } catch (error) { showError(error); }
+			setTimeout(() => eventOverlay.classList.add("hidden"), 1800);
+		}
+
+		async function chooseEventOption(optionID) {
+			const buttons = [...eventOptions.querySelectorAll("button")];
+			buttons.forEach(button => button.disabled = true);
+
+			try {
+				await api(`/event/choose?optionID=${optionID}`, { method: "POST" });
+				clearInterval(eventTimerID);
+				eventTimerID = null;
+				eventOverlay.classList.add("hidden");
+			} catch (error) {
+				buttons.forEach(button => button.disabled = false);
+				showError(error);
+			}
+		}
+
+
+		// =========================================================
+		// TABS
+		// =========================================================
+
+		tabs.addEventListener("click", async event => {
+
+			const tab = event.target.closest(".tab");
+
+			if (!tab || !state.started) {
+				return;
+			}
+
+			const view = tab.dataset.view;
+
+			if (view === "rooms") {
+				await openRooms();
+
+			} else if (view === "talks") {
+				await openTalks();
+
+			} else if (view === "case") {
+				await openCase();
+
+			} else if (view === "accuse") {
+				await openAccuse();
+			}
+		});
+
+
+		renderLanding();
+	</script>
+</body>
+
+</html>

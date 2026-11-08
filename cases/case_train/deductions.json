@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "title": "Происхождение воды",
+        "required_facts": [
+            1,
+            2
+        ],
+        "effects": [
+            {
+                "type": "discover_fact",
+                "id": 3
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "Подозрение в отношении проводника",
+        "required_facts": [
+            4,
+            5
+        ],
+        "effects": [
+            {
+                "type": "discover_motive",
+                "id": 1
+            }
+        ]
+    }
+]

@@ -1,0 +1,196 @@
+[
+  {
+    "obj_id": 1,
+    "loc_id": 2,
+    "name": "Тело",
+    "about": "Рана на затылке; положение похоже на падение.",
+    "key": true,
+    "is_open": true,
+    "inspect_action": {
+      "requirements": [],
+      "effects": [
+        {
+          "type": "discover_clue",
+          "id": 1
+        },
+        {
+          "type": "discover_fact",
+          "id": 1
+        }
+      ]
+    }
+  },
+  {
+    "obj_id": 2,
+    "loc_id": 2,
+    "name": "Флакон возле тела",
+    "about": "Использованный флакон лекарства.",
+    "key": true,
+    "is_open": true,
+    "inspect_action": {
+      "requirements": [],
+      "effects": [
+        {
+          "type": "discover_clue",
+          "id": 2
+        },
+        {
+          "type": "discover_fact",
+          "id": 3
+        },
+        {
+          "type": "discover_fact",
+          "id": 26
+        }
+      ]
+    }
+  },
+  {
+    "obj_id": 3,
+    "loc_id": 1,
+    "name": "Тарелка Воронцова",
+    "about": "Остатки блюда с аллергеном.",
+    "key": true,
+    "is_open": true,
+    "inspect_action": {
+      "requirements": [],
+      "effects": [
+        {
+          "type": "discover_clue",
+          "id": 3
+        },
+        {
+          "type": "discover_fact",
+          "id": 6
+        },
+        {
+          "type": "open_location",
+          "id": 5
+        }
+      ]
+    }
+  },
+  {
+    "obj_id": 5,
+    "loc_id": 4,
+    "name": "Запасной флакон",
+    "about": "Запечатанный запас.",
+    "key": true,
+    "is_open": false,
+    "inspect_action": {
+      "requirements": [],
+      "effects": [
+        {
+          "type": "discover_clue",
+          "id": 5
+        },
+        {
+          "type": "discover_fact",
+          "id": 27
+        }
+      ]
+    }
+  },
+  {
+    "obj_id": 6,
+    "loc_id": 4,
+    "name": "Шкатулка лекарств",
+    "about": "Здесь хранился ежедневный флакон.",
+    "key": false,
+    "is_open": true,
+    "inspect_action": {
+      "requirements": [],
+      "effects": [
+        {
+          "type": "discover_fact",
+          "id": 31
+        }
+      ]
+    }
+  },
+  {
+    "obj_id": 7,
+    "loc_id": 6,
+    "name": "Черновик завещания",
+    "about": "Доля Елены уменьшена; подписание утром.",
+    "key": true,
+    "is_open": true,
+    "inspect_action": {
+      "requirements": [],
+      "effects": [
+        {
+          "type": "discover_clue",
+          "id": 7
+        },
+        {
+          "type": "discover_fact",
+          "id": 14
+        },
+        {
+          "type": "discover_fact",
+          "id": 37
+        }
+      ]
+    }
+  },
+  {
+    "obj_id": 8,
+    "loc_id": 7,
+    "name": "Портфель Максима",
+    "about": "Документы о сомнительных подрядчиках.",
+    "key": false,
+    "is_open": true,
+    "inspect_action": {
+      "requirements": [],
+      "effects": [
+        {
+          "type": "discover_clue",
+          "id": 8
+        },
+        {
+          "type": "discover_fact",
+          "id": 8
+        }
+      ]
+    }
+  },
+  {
+    "obj_id": 9,
+    "loc_id": 3,
+    "name": "Диктофон Ирины",
+    "about": "Запись разговора о проверке аллергии.",
+    "key": true,
+    "is_open": false,
+    "inspect_action": {
+      "requirements": [],
+      "effects": [
+        {
+          "type": "discover_clue",
+          "id": 9
+        },
+        {
+          "type": "discover_fact",
+          "id": 16
+        }
+      ]
+    }
+  },
+  {
+    "obj_id": 10,
+    "loc_id": 5,
+    "name": "Записи Павла о меню",
+    "about": "Пометка подтверждает, что необычный ингредиент был добавлен по прямой просьбе Воронцова.",
+    "key": false,
+    "is_open": true,
+    "inspect_action": {
+      "requirements": [],
+      "effects": [
+        {
+          "type": "discover_fact",
+          "id": 15
+        }
+      ],
+      "time_cost": 0
+    }
+  }
+]

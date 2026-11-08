@@ -1,0 +1,253 @@
+[
+  {
+    "id": 1,
+    "title": "Начало приступа",
+    "required_facts": [
+      2,
+      5,
+      6
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 18
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Действия в кабинете",
+    "required_facts": [
+      3,
+      18
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 19
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Тайна Максима",
+    "required_facts": [
+      7,
+      8
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 20
+      },
+      {
+        "type": "discover_motive",
+        "id": 2
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Кровь Антона",
+    "required_facts": [
+      1,
+      9,
+      10
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 21
+      },
+      {
+        "type": "discover_motive",
+        "id": 3
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Причина раны",
+    "required_facts": [
+      1,
+      18
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 22
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Причина смерти",
+    "required_facts": [
+      18,
+      19,
+      22
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 23
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Аллерген",
+    "required_facts": [
+      15,
+      16
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 24
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Расчёт риска",
+    "required_facts": [
+      19,
+      24
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 25
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Неэффективное средство",
+    "required_facts": [
+      19,
+      23,
+      26
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 28
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Запас Марины",
+    "required_facts": [
+      27,
+      4
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 29
+      },
+      {
+        "type": "discover_motive",
+        "id": 4
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Время подмены",
+    "required_facts": [
+      26,
+      30,
+      31
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 32
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "title": "Ложь Елены",
+    "required_facts": [
+      11,
+      12
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 33
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "title": "Знание Елены",
+    "required_facts": [
+      16,
+      17
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 35
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "title": "Возможность",
+    "required_facts": [
+      32,
+      33,
+      34,
+      35
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 36
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Мотив Елены",
+    "required_facts": [
+      13,
+      14,
+      37
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 38
+      },
+      {
+        "type": "discover_motive",
+        "id": 1
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "title": "Реконструкция",
+    "required_facts": [
+      28,
+      32,
+      33,
+      35,
+      38
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 39
+      }
+    ]
+  }
+]

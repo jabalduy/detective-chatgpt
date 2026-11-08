@@ -1,0 +1,395 @@
+[
+  {
+    "is_clue": false,
+    "obj_id": 0,
+    "fact": "",
+    "key": false,
+    "requirements": [],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 13
+      },
+      {
+        "type": "open_location",
+        "id": 6
+      }
+    ],
+    "time_cost": 0,
+    "sus_id": 1,
+    "dial_id": 1,
+    "question": "Почему отношения с отцом испортились?",
+    "answer": "Он контролировал мою жизнь и деньги.",
+    "is_open": true
+  },
+  {
+    "is_clue": false,
+    "obj_id": 0,
+    "fact": "",
+    "key": false,
+    "requirements": [],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 11
+      }
+    ],
+    "time_cost": 0,
+    "sus_id": 1,
+    "dial_id": 2,
+    "question": "Вы заходили сегодня в спальню отца?",
+    "answer": "Нет. Мне там было нечего делать.",
+    "is_open": true
+  },
+  {
+    "is_clue": false,
+    "obj_id": 0,
+    "fact": "",
+    "key": false,
+    "requirements": [],
+    "effects": [
+      {
+        "type": "open_location",
+        "id": 7
+      }
+    ],
+    "time_cost": 0,
+    "sus_id": 2,
+    "dial_id": 1,
+    "question": "Где вы были, когда погас свет?",
+    "answer": "В гостиной. Никуда не уходил.",
+    "is_open": true
+  },
+  {
+    "is_clue": false,
+    "obj_id": 0,
+    "fact": "",
+    "key": false,
+    "requirements": [],
+    "effects": [],
+    "time_cost": 0,
+    "sus_id": 3,
+    "dial_id": 1,
+    "question": "Почему вы вернулись спустя столько лет?",
+    "answer": "Воронцов сам позвал меня.",
+    "is_open": true
+  },
+  {
+    "is_clue": false,
+    "obj_id": 0,
+    "fact": "",
+    "key": false,
+    "requirements": [],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 9
+      }
+    ],
+    "time_cost": 0,
+    "sus_id": 3,
+    "dial_id": 2,
+    "question": "Вы прикасались к Воронцову?",
+    "answer": "Нет. Я держался в стороне.",
+    "is_open": true
+  },
+  {
+    "is_clue": false,
+    "obj_id": 0,
+    "fact": "",
+    "key": false,
+    "requirements": [],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 5
+      }
+    ],
+    "time_cost": 0,
+    "sus_id": 4,
+    "dial_id": 1,
+    "question": "Насколько опасна аллергия?",
+    "answer": "Очень. Он всегда держал лекарство рядом.",
+    "is_open": true
+  },
+  {
+    "is_clue": false,
+    "obj_id": 0,
+    "fact": "",
+    "key": false,
+    "requirements": [],
+    "effects": [
+      {
+        "type": "discover_motive",
+        "id": 5
+      },
+      {
+        "type": "open_object",
+        "id": 9
+      }
+    ],
+    "time_cost": 0,
+    "sus_id": 5,
+    "dial_id": 1,
+    "question": "Зачем вы приехали?",
+    "answer": "Я журналист. Расследую старую аварию.",
+    "is_open": true
+  },
+  {
+    "is_clue": false,
+    "obj_id": 0,
+    "fact": "",
+    "key": false,
+    "requirements": [],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 2
+      }
+    ],
+    "time_cost": 0,
+    "sus_id": 5,
+    "dial_id": 2,
+    "question": "Что вы заметили перед его уходом?",
+    "answer": "Он прочистил горло и стал тяжело дышать.",
+    "is_open": true
+  },
+  {
+    "is_clue": false,
+    "obj_id": 0,
+    "fact": "",
+    "key": false,
+    "requirements": [
+      {
+        "type": "fact_found",
+        "id": 6
+      }
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 15
+      },
+      {
+        "type": "discover_motive",
+        "id": 6
+      }
+    ],
+    "time_cost": 0,
+    "sus_id": 6,
+    "dial_id": 1,
+    "question": "Что было в блюде?",
+    "answer": "Он сам попросил добавить немного аллергена для проверки.",
+    "is_open": false
+  },
+  {
+    "is_clue": false,
+    "obj_id": 0,
+    "fact": "",
+    "key": false,
+    "requirements": [],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 12
+      },
+      {
+        "type": "discover_fact",
+        "id": 34
+      }
+    ],
+    "time_cost": 0,
+    "sus_id": 6,
+    "dial_id": 2,
+    "question": "Кто заходил в спальню?",
+    "answer": "Я видел Елену у спальни.",
+    "is_open": true
+  },
+  {
+    "is_clue": false,
+    "obj_id": 0,
+    "fact": "",
+    "key": false,
+    "requirements": [
+      {
+        "type": "fact_found",
+        "id": 5
+      }
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 30
+      }
+    ],
+    "time_cost": 0,
+    "sus_id": 6,
+    "dial_id": 3,
+    "question": "Работало ли лекарство утром?",
+    "answer": "Да, утром обычный флакон помог.",
+    "is_open": false
+  },
+  {
+    "is_clue": false,
+    "obj_id": 0,
+    "fact": "",
+    "key": true,
+    "requirements": [
+      {
+        "type": "fact_found",
+        "id": 16
+      }
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 17
+      }
+    ],
+    "time_cost": 0,
+    "sus_id": 1,
+    "dial_id": 3,
+    "question": "Вы слышали разговор отца с Павлом о проверке аллергии?",
+    "answer": "Я знала об аллергии, но их разговор не слушала.",
+    "is_open": false,
+    "confrontation": {
+      "challenge": "На записи в начале слышен ваш голос. Вы были рядом.",
+      "answer": "Хорошо. Я слышала, что отец хотел проверить аллергию и рассчитывал на лекарство.",
+      "requirements": [
+        {
+          "type": "fact_found",
+          "id": 16
+        }
+      ],
+      "effects": [
+        {
+          "type": "discover_fact",
+          "id": 35
+        }
+      ],
+      "time_cost": 0
+    }
+  },
+  {
+    "is_clue": false,
+    "obj_id": 0,
+    "fact": "",
+    "key": true,
+    "requirements": [
+      {
+        "type": "fact_found",
+        "id": 8
+      }
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 7
+      }
+    ],
+    "time_cost": 0,
+    "sus_id": 2,
+    "dial_id": 2,
+    "question": "Почему у вас оказались документы Воронцова?",
+    "answer": "Это не то, чем кажется.",
+    "is_open": false,
+    "confrontation": {
+      "challenge": "Документы взяты из кабинета, а вы утверждали, что туда не заходили.",
+      "answer": "Ладно. Я вошёл во время отключения, чтобы забрать бумаги. Воронцов уже лежал.",
+      "requirements": [
+        {
+          "type": "fact_found",
+          "id": 8
+        }
+      ],
+      "effects": [
+        {
+          "type": "discover_fact",
+          "id": 7
+        },
+        {
+          "type": "trigger_event",
+          "id": 2
+        }
+      ],
+      "time_cost": 0
+    }
+  },
+  {
+    "is_clue": false,
+    "obj_id": 0,
+    "fact": "",
+    "key": true,
+    "requirements": [
+      {
+        "type": "fact_found",
+        "id": 3
+      }
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 4
+      },
+      {
+        "type": "open_location",
+        "id": 4
+      },
+      {
+        "type": "open_object",
+        "id": 5
+      }
+    ],
+    "time_cost": 0,
+    "sus_id": 4,
+    "dial_id": 2,
+    "question": "Вы недавно меняли ему лекарство?",
+    "answer": "Я привезла запечатанный запас. Ежедневный флакон не трогала.",
+    "is_open": false
+  },
+  {
+    "is_clue": false,
+    "obj_id": 0,
+    "fact": "",
+    "key": true,
+    "requirements": [
+      {
+        "type": "fact_found",
+        "id": 9
+      }
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 10
+      },
+      {
+        "type": "trigger_event",
+        "id": 1
+      }
+    ],
+    "time_cost": 0,
+    "sus_id": 3,
+    "dial_id": 3,
+    "question": "Почему вы солгали о крови?",
+    "answer": "Я не хочу это обсуждать.",
+    "is_open": false,
+    "confrontation": {
+      "challenge": "Кровь на внутренней стороне манжеты — это не случайное касание.",
+      "answer": "Я проверил пульс и попытался поднять его. Потом забрал старый документ.",
+      "requirements": [
+        {
+          "type": "fact_found",
+          "id": 9
+        }
+      ],
+      "effects": [
+        {
+          "type": "discover_fact",
+          "id": 10
+        }
+      ],
+      "time_cost": 0
+    }
+  }
+]

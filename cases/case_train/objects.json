@@ -1,0 +1,18 @@
+[
+    {
+        "loc_id": 1,
+        "obj_id": 1,
+        "name": "Окно купе",
+        "about": "Окно закрыто. На внутренней стороне стекла видны следы воды.",
+        "key": false,
+        "inspect_action": {
+            "requirements": [],
+            "effects": [
+                {
+                    "type": "discover_fact",
+                    "id": 2
+                }
+            ]
+        }
+    }
+]
