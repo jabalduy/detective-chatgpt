@@ -9,6 +9,8 @@ import (
 func StartServer() {
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/start", startHandler)
+	http.HandleFunc("/time", timeHandler)
+	http.HandleFunc("/dialogue/finish", finishDialogueHandler)
 	http.HandleFunc("/locations", locationsHandler)
 	http.HandleFunc("/objects", objectsHandler)
 	http.HandleFunc("/inspect-object", inspectObjectHandler)
