@@ -130,9 +130,17 @@ func askDialogueHandler(w http.ResponseWriter, r *http.Request) {
 			}
 
 			if !state.AskedDialogues[dialogue.ID()] {
-				state.AskedDialogues[dialogue.ID()] = true
-				game.PerformAction(state, dialogue.Action)
-			}
+                if state.Ending!=nil || state.ActiveEvent!=nil || state.ActiveConversation!="" || state.ActiveDialogue!=nil {
+                    http.Error(w, "finish active interaction first", http.StatusConflict)
+                    return
+                }
+                if !game.PerformAction(state, dialogue.Action) {
+                    http.Error(w, "dialogue action unavailable", http.StatusConflict)
+                    return
+                }
+                if state.AskedDialogues==nil {state.AskedDialogues=make(map[game.DialogueID]bool)}
+                state.AskedDialogues[dialogue.ID()] = true
+            }
 
 			response = state.Dialogues[i]
 			response.Asked = true
