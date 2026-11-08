@@ -34,6 +34,12 @@ func loadHandler(w http.ResponseWriter,r *http.Request){
  session.State=state
  game.TickTrain(state)
  game.TickEvents(state)
+ // Loading may catch up scheduled train/event transitions. Persist those
+ // changes immediately so another restart cannot replay them.
+ if err:=writeSave(savePath(id),snapshot(state));err!=nil{
+  http.Error(w,"save after load failed",http.StatusInternalServerError)
+  return
+ }
  w.Header().Set("Content-Type","application/json")
  _=json.NewEncoder(w).Encode(map[string]string{"status":"loaded","case_id":saved.CaseID})
 }
