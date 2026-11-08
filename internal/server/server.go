@@ -30,6 +30,7 @@ func StartServer() {
 	http.HandleFunc("/ask-dialogue", askDialogueHandler)
 	http.HandleFunc("/case", caseHandler)
 	http.HandleFunc("/accuse", accuseHandler)
+ http.HandleFunc("/ending", endingHandler)
 	http.HandleFunc("/cases", casesHandler)
 	http.HandleFunc("/deduce", deductionHandler)
 	http.HandleFunc("/facts", factsHandler)
