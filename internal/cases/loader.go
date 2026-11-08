@@ -103,6 +103,9 @@ func LoadCase(path string) (*CaseDefinition, error) {
  presentations,err:=LoadEvidencePresentations(filepath.Join(path,"evidence_presentations.json"))
  if err!=nil && !errors.Is(err,os.ErrNotExist){return nil,err}
  caseDef.EvidencePresentations=presentations
+ endingRules,err:=LoadEndingRules(filepath.Join(path,"ending_rules.json"))
+ if err!=nil && !errors.Is(err,os.ErrNotExist){return nil,err}
+ caseDef.EndingRules=endingRules
 
 	return &caseDef, nil
 }
@@ -297,5 +300,11 @@ func LoadExaminations(path string)([]game.Examination,error){
 func LoadEvidencePresentations(path string)([]game.EvidencePresentation,error){
  data,err:=os.ReadFile(path);if err!=nil{return nil,err}
  var items []game.EvidencePresentation
+ err=json.Unmarshal(data,&items);return items,err
+}
+
+func LoadEndingRules(path string)([]game.EndingRule,error){
+ data,err:=os.ReadFile(path);if err!=nil{return nil,err}
+ var items []game.EndingRule
  err=json.Unmarshal(data,&items);return items,err
 }
