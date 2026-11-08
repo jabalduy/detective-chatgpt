@@ -1,0 +1,44 @@
+[
+  {
+    "id": "corridor",
+    "title": "Коридор ночного поезда",
+    "background": "",
+    "description": "За окнами темно. Слышен стук колёс. Вы выбираете, куда направиться.",
+    "choices": [
+      {
+        "id": "enter_compartment",
+        "text": "Войти в соседнее купе",
+        "kind": "action",
+        "next_scene": "compartment",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 30
+      },
+      {
+        "id": "listen",
+        "text": "Прислушаться к разговору за дверью",
+        "kind": "action",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 15
+      }
+    ]
+  },
+  {
+    "id": "compartment",
+    "title": "Купе",
+    "background": "",
+    "description": "На столике стоит стакан. Свет лампы слегка мерцает.",
+    "choices": [
+      {
+        "id": "return_corridor",
+        "text": "Вернуться в коридор",
+        "kind": "action",
+        "next_scene": "corridor",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 30
+      }
+    ]
+  }
+]
