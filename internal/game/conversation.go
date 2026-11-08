@@ -47,6 +47,7 @@ func nodeByID(c *Conversation,id string) *ConversationNode {
  return nil
 }
 func StartConversation(s *GameState,id string) error {
+ if s.Ending!=nil {return fmt.Errorf("game finished")}
  if s.ActiveConversation!="" || s.ActiveDialogue!=nil || s.ActiveEvent!=nil {return fmt.Errorf("another interaction is active")}
  c:=conversationByID(s,id)
  if c==nil {return fmt.Errorf("conversation not found")}
@@ -68,6 +69,7 @@ func CurrentConversationView(s *GameState)(ConversationView,error){
  return v,nil
 }
 func ChooseConversationOption(s *GameState,id string)(bool,error){
+ if s.Ending!=nil {return false,fmt.Errorf("game finished")}
  c:=conversationByID(s,s.ActiveConversation)
  if c==nil {return false,fmt.Errorf("no active conversation")}
  node:=nodeByID(c,s.ConversationNode)
