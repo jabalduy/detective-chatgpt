@@ -48,7 +48,7 @@ func NewHandler() http.Handler {
 	fileServer := http.FileServer(http.Dir("static"))
 	mux.Handle("/static/", http.StripPrefix("/static/", fileServer))
 
- return investigationDeadlineGuard(saveAfterMutation(mux))
+ return settleAccusationDeadline(investigationDeadlineGuard(saveAfterMutation(mux)))
 }
 
 func StartServer() {
