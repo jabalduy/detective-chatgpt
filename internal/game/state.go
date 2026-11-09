@@ -3,6 +3,9 @@ package game
 import "time"
 
 type GameState struct {
+ Hints []Hint
+ UsedHints map[string]bool
+ HintCount int
  // Real-world deadlines are independent of the in-world train clock.
  InvestigationDeadline time.Time
  AccusationDeadline time.Time
