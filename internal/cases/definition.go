@@ -3,6 +3,7 @@ package cases
 import "detective/internal/game"
 
 type CaseDefinition struct {
+ Hints []game.Hint `json:"-"`
  EndingRules []game.EndingRule `json:"-"`
  Examinations []game.Examination `json:"-"`
  EvidencePresentations []game.EvidencePresentation `json:"-"`
