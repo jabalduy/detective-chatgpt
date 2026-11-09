@@ -13,6 +13,9 @@ import (
 type gameStateView struct {
  CaseID string `json:"case_id"`
  Started bool `json:"started"`
+ Phase game.RealTimePhase `json:"phase"`
+ InvestigationDeadline time.Time `json:"investigation_deadline,omitempty"`
+ AccusationDeadline time.Time `json:"accusation_deadline,omitempty"`
  Time string `json:"time,omitempty"`
  Paused bool `json:"paused"`
  Scene *game.SceneView `json:"scene,omitempty"`
@@ -46,6 +49,7 @@ func sortedFound(m map[int]bool)[]int{
 func buildGameStateView(s *game.GameState)(gameStateView,error){
  v:=gameStateView{
   CaseID:s.Case.ID,Started:true,
+  Phase:s.PhaseAt(time.Now()),InvestigationDeadline:s.InvestigationDeadline,AccusationDeadline:s.AccusationDeadline,
   FoundClueIDs:sortedFound(s.FoundClues),
   FoundFactIDs:sortedFound(s.FoundFacts),
   FoundMotiveIDs:sortedFound(s.FoundMotives),
