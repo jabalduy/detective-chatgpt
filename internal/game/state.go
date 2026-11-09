@@ -3,6 +3,9 @@ package game
 import "time"
 
 type GameState struct {
+ // Real-world deadlines are independent of the in-world train clock.
+ InvestigationDeadline time.Time
+ AccusationDeadline time.Time
  EndingRules []EndingRule
  Ending *GameEnding
  Examinations []Examination
