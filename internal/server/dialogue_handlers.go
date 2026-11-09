@@ -121,6 +121,11 @@ func askDialogueHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if err:=game.CanAskDialogue(state,susID);err!=nil {
+	 http.Error(w,err.Error(),http.StatusConflict)
+	 return
+	}
+
 	var response game.Dialogue
 
 	found := false
@@ -141,6 +146,7 @@ func askDialogueHandler(w http.ResponseWriter, r *http.Request) {
                 }
                 if state.AskedDialogues==nil {state.AskedDialogues=make(map[game.DialogueID]bool)}
                 state.AskedDialogues[dialogue.ID()] = true
+                game.RecordDialogueQuestion(state,susID)
             }
 
 			response = state.Dialogues[i]
