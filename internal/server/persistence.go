@@ -15,6 +15,8 @@ const saveVersion=1
 type saveData struct {
  Version int `json:"version"`
  CaseID string `json:"case_id"`
+ InvestigationDeadline time.Time `json:"investigation_deadline,omitempty"`
+ AccusationDeadline time.Time `json:"accusation_deadline,omitempty"`
  ClockTime time.Time `json:"clock_time"`
  ClockPaused bool `json:"clock_paused"`
  CurrentScene string `json:"current_scene"`
@@ -57,7 +59,7 @@ func snapshot(s *game.GameState)saveData{
  remaining:=0.0
  if s.ActiveEvent!=nil && !s.EventDeadline.IsZero(){remaining=time.Until(s.EventDeadline).Seconds();if remaining<0{remaining=0}}
  return saveData{
-  Version:saveVersion,CaseID:s.Case.ID,ClockTime:s.Clock.GetTime(),ClockPaused:s.Clock.IsPaused(),
+  Version:saveVersion,CaseID:s.Case.ID,InvestigationDeadline:s.InvestigationDeadline,AccusationDeadline:s.AccusationDeadline,ClockTime:s.Clock.GetTime(),ClockPaused:s.Clock.IsPaused(),
   CurrentScene:s.CurrentScene,Characters:s.Characters,ActiveConversation:s.ActiveConversation,ConversationNode:s.ConversationNode,
   ActiveEvent:s.ActiveEvent,EventDeadline:s.EventDeadline,EventRemainingSeconds:remaining,ActiveDialogue:s.ActiveDialogue,
   FoundClues:s.FoundClues,FoundFacts:s.FoundFacts,FoundMotives:s.FoundMotives,
@@ -70,6 +72,8 @@ func snapshot(s *game.GameState)saveData{
 func applySave(s *game.GameState,d saveData){
  s.Clock.StopTime()
  s.Clock=game.NewClock(d.ClockTime)
+ s.InvestigationDeadline=d.InvestigationDeadline
+ s.AccusationDeadline=d.AccusationDeadline
  s.CurrentScene=d.CurrentScene
  s.Characters=d.Characters
  s.ActiveConversation=d.ActiveConversation;s.ConversationNode=d.ConversationNode
