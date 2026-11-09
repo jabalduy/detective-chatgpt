@@ -107,6 +107,9 @@ func LoadCase(path string) (*CaseDefinition, error) {
  if err!=nil && !errors.Is(err,os.ErrNotExist){return nil,err}
  caseDef.EndingRules=endingRules
 
+	hintsData,hintsErr:=os.ReadFile(filepath.Join(path,"hints.json"))
+ if hintsErr!=nil && !errors.Is(hintsErr,os.ErrNotExist){return nil,hintsErr}
+ if hintsErr==nil {if err:=json.Unmarshal(hintsData,&caseDef.Hints);err!=nil{return nil,fmt.Errorf("parse hints: %w",err)}}
 	return &caseDef, nil
 }
 
