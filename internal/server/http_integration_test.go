@@ -62,6 +62,9 @@ func TestHTTPGameFlow(t *testing.T){
  response:=check("GET","/examinations",nil,200)
  var exams []game.ExaminationProgress
  if err:=json.Unmarshal(response.Body.Bytes(),&exams);err!=nil||len(exams)!=1||exams[0].Status!="completed"{t.Fatalf("examinations=%+v err=%v",exams,err)}
+ // The official accusation is only available after the investigation deadline.
+ session.State.InvestigationDeadline=time.Now().Add(-time.Second)
+ session.State.AccusationDeadline=time.Now().Add(5*time.Minute)
  payload:=[]byte(`{"suspect_id":1,"motive_id":2,"fact_ids":[3]}`)
  result:=check("POST","/accuse",payload,200)
  var verdict struct{TypeEnd string `json:"typeEnd"`}
