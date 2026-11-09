@@ -4,6 +4,7 @@ import (
  "detective/internal/game"
  "encoding/json"
  "net/http"
+ "time"
 )
 
 type AccusationRequest = game.Accusation
@@ -15,6 +16,7 @@ func accuseHandler(w http.ResponseWriter,r *http.Request){
  session.Mu.Lock()
  defer session.Mu.Unlock()
  if session.State==nil {http.Error(w,"game not started",409);return}
+ if !session.State.CanAccuseAt(time.Now()) {http.Error(w,"accusation unavailable in current phase",409);return}
  var request game.Accusation
  if err:=json.NewDecoder(http.MaxBytesReader(w,r.Body,1<<20)).Decode(&request);err!=nil {http.Error(w,"invalid accusation",400);return}
  ending,err:=game.SubmitAccusation(session.State,request)
