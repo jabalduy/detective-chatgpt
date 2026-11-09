@@ -109,6 +109,8 @@ func newGame(caseID string) (*game.GameState, error) {
 	clock := game.NewClock(caseDef.StartTime.StartTime)
 
 	gameState := &game.GameState{
+  Hints:caseDef.Hints,
+  UsedHints:make(map[string]bool),
   InvestigationDeadline:time.Now().Add(60*time.Minute),
   AccusationDeadline:time.Now().Add(65*time.Minute),
 		Case: caseDef.CaseInfo,
