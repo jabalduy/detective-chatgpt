@@ -4,6 +4,7 @@ import (
  "detective/internal/game"
  "encoding/json"
  "net/http"
+ "time"
 )
 
 func examinationsHandler(w http.ResponseWriter,r *http.Request){
@@ -21,6 +22,7 @@ func examinationStartHandler(w http.ResponseWriter,r *http.Request){
  if err!=nil {http.Error(w,"session error",http.StatusInternalServerError);return}
  session.Mu.Lock();defer session.Mu.Unlock()
  if session.State==nil {http.Error(w,"game not started",409);return}
+ if !session.State.CanInvestigateAt(time.Now()) {http.Error(w,"investigation time expired",409);return}
  if session.State.ActiveEvent!=nil {http.Error(w,"event active",409);return}
  if err:=game.StartExamination(session.State,r.URL.Query().Get("id"));err!=nil {http.Error(w,err.Error(),409);return}
  w.Header().Set("Content-Type","application/json")
@@ -41,6 +43,7 @@ func evidencePresentHandler(w http.ResponseWriter,r *http.Request){
  if err!=nil {http.Error(w,"session error",http.StatusInternalServerError);return}
  session.Mu.Lock();defer session.Mu.Unlock()
  if session.State==nil {http.Error(w,"game not started",409);return}
+ if !session.State.CanInvestigateAt(time.Now()) {http.Error(w,"investigation time expired",409);return}
  response,err:=game.PresentEvidence(session.State,r.URL.Query().Get("id"))
  if err!=nil {http.Error(w,err.Error(),409);return}
  w.Header().Set("Content-Type","application/json")
