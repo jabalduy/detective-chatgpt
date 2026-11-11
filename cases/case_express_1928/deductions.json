@@ -11,7 +11,9 @@
         "type": "discover_fact",
         "id": 10
       }
-    ]
+    ],
+    "requirements": [],
+    "time_cost": 20
   },
   {
     "id": 2,
@@ -25,22 +27,21 @@
         "type": "discover_fact",
         "id": 11
       }
-    ]
+    ],
+    "requirements": [],
+    "time_cost": 20
   },
   {
     "id": 3,
-    "title": "Время на часах ненадёжно",
+    "title": "Подозрение о неверном времени",
     "required_facts": [
       4,
       5,
       9
     ],
-    "effects": [
-      {
-        "type": "discover_fact",
-        "id": 12
-      }
-    ]
+    "effects": [],
+    "time_cost": 20,
+    "requirements": []
   },
   {
     "id": 4,
@@ -54,6 +55,41 @@
         "type": "discover_motive",
         "id": 1
       }
-    ]
+    ],
+    "requirements": [],
+    "time_cost": 20
+  },
+  {
+    "id": 5,
+    "title": "Почему записка вводит в заблуждение",
+    "required_facts": [
+      13,
+      14
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 15
+      }
+    ],
+    "time_cost": 20
+  },
+  {
+    "id": 6,
+    "title": "Подделка часов подтверждена",
+    "required_facts": [
+      5,
+      9,
+      16
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 12
+      }
+    ],
+    "time_cost": 20
   }
 ]
