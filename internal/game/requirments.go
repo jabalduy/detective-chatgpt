@@ -5,6 +5,8 @@ func requirementMet(state *GameState, req Requirement) bool {
 	switch req.Type {
  case "character_trust_at_least":
   c,ok:=state.Characters[req.ID];return ok && c.Trust>=req.MinTrust
+ case "character_trust_below":
+  c,ok:=state.Characters[req.ID];return ok && c.Trust<req.MinTrust
  case "examination_completed":
   return state.ExaminationCompleted[req.Key]
 	case "character_present":
