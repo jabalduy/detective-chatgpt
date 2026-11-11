@@ -39,3 +39,33 @@ func TestTrustRequirementRejectsMissingCharacter(t *testing.T){
   t.Fatal("missing character must not pass a zero threshold")
  }
 }
+
+func TestTrustBelowRequirementBlocksAndUnlocksChoice(t *testing.T) {
+ s:=&GameState{
+  CurrentScene:"carriage",
+  Characters:map[int]CharacterState{7:{Location:"carriage",Present:true,Trust:1}},
+  Conversations:[]Conversation{{ID:"witness",CharacterID:7,StartNode:"intro",Nodes:[]ConversationNode{{
+   ID:"intro",Choices:[]ConversationChoice{
+    {ID:"pressure",NextNode:"intro",Action:Action{Requirements:[]Requirement{{Type:"character_trust_below",ID:7,MinTrust:1}}}},
+    {ID:"insult",NextNode:"intro",Action:Action{Effects:[]Effect{{Type:"character_trust_down",ID:7}}}},
+    {ID:"apologize",NextNode:"intro",Action:Action{Effects:[]Effect{{Type:"character_trust_up",ID:7}}}},
+   },
+  }}}},
+ }
+ if err:=StartConversation(s,"witness");err!=nil{t.Fatal(err)}
+ hasChoice:=func(id string)bool{
+  t.Helper()
+  v,err:=CurrentConversationView(s);if err!=nil{t.Fatal(err)}
+  for _,ch:=range v.Choices{if ch.ID==id{return true}}
+  return false
+ }
+ if hasChoice("pressure"){t.Fatal("pressure must be hidden at high trust")}
+ if _,err:=ChooseConversationOption(s,"pressure");err==nil{t.Fatal("hidden pressure choice accepted")}
+ if _,err:=ChooseConversationOption(s,"insult");err!=nil{t.Fatal(err)}
+ if !hasChoice("pressure"){t.Fatal("pressure should unlock after trust loss")}
+ if _,err:=ChooseConversationOption(s,"apologize");err!=nil{t.Fatal(err)}
+ if hasChoice("pressure"){t.Fatal("pressure should relock after trust recovers")}
+ if RequirementsMet(s,[]Requirement{{Type:"character_trust_below",ID:999,MinTrust:1}}){
+  t.Fatal("missing character must never satisfy trust requirement")
+ }
+}
