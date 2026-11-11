@@ -14,6 +14,7 @@ func TestLegacyDialogueFailureDoesNotMarkAsked(t *testing.T){
  key:=game.DialogueID{SusID:7,DialID:2}
  session.State=&game.GameState{
   Case:game.CaseInfo{ID:"test"},Clock:game.NewClock(start),
+  Suspects:[]game.Suspect{{SusID:7}},
   Dialogues:[]game.Dialogue{{SusID:7,DialID:2,Action:game.Action{
    Requirements:[]game.Requirement{{Type:"clue_found",ID:9}},
    Effects:[]game.Effect{{Type:"discover_fact",ID:11}},
