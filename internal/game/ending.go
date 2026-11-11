@@ -30,7 +30,12 @@ func SubmitAccusation(s *GameState,a Accusation)(GameEnding,error){
  motiveValid:=false
  for _,m:=range s.Motives {if m.ID==a.MotiveID && m.SuspectID==a.SuspectID {motiveValid=true;break}}
  if !motiveValid{return GameEnding{},fmt.Errorf("motive does not match suspect")}
- for _,id:=range a.FactIDs {if !s.FoundFacts[id]{return GameEnding{},fmt.Errorf("fact %d not discovered",id)}}
+ seenFacts:=make(map[int]bool,len(a.FactIDs))
+ for _,id:=range a.FactIDs {
+  if seenFacts[id] {return GameEnding{},fmt.Errorf("duplicate fact %d",id)}
+  seenFacts[id]=true
+  if !s.FoundFacts[id]{return GameEnding{},fmt.Errorf("fact %d not discovered",id)}
+ }
  solution:=s.Case.Solution
  outcome:="win"
  if a.SuspectID!=solution.SuspectID {outcome="fail"
