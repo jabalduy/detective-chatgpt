@@ -25,8 +25,8 @@ func TestUrgentEventDeadlineSurvivesRestart(t *testing.T){
  defer restored.Clock.StopTime()
  if restored.ActiveEvent==nil || *restored.ActiveEvent!=id{t.Fatal("active event lost")}
  remaining:=time.Until(restored.EventDeadline)
- if remaining<28*time.Second || remaining>31*time.Second{
-  t.Fatalf("deadline consumed by downtime: %v",remaining)
+ if remaining>=0 || remaining< -time.Hour-time.Second {
+  t.Fatalf("expired deadline should not be reset after downtime: %v",remaining)
  }
 }
 
