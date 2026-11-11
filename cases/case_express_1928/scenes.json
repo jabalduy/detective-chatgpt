@@ -40,6 +40,33 @@
         "requirements": [],
         "effects": [],
         "time_cost": 20
+      },
+      {
+        "id": "pantry",
+        "text": "Осмотреть буфетный закуток",
+        "kind": "action",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 20,
+        "next_scene": "pantry"
+      },
+      {
+        "id": "vestibule",
+        "text": "Проверить тамбур и журнал обходов",
+        "kind": "action",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 20,
+        "next_scene": "vestibule"
+      },
+      {
+        "id": "luggage",
+        "text": "Осмотреть багажную нишу",
+        "kind": "action",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 20,
+        "next_scene": "luggage"
       }
     ]
   },
@@ -266,6 +293,145 @@
         "requirements": [],
         "effects": [],
         "time_cost": 20
+      }
+    ]
+  },
+  {
+    "id": "pantry",
+    "title": "Буфетный закуток",
+    "background": "",
+    "description": "За перегородкой пахнет чаем. Здесь Николя оставляет журнал заказов кипятка; записи можно сверить без срочных событий.",
+    "choices": [
+      {
+        "id": "tea_log",
+        "text": "Сверить журнал заказов и перемещения Марты",
+        "kind": "action",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 8
+          }
+        ],
+        "time_cost": 25
+      },
+      {
+        "id": "polish_inventory",
+        "text": "Сверить опись инвентаря с письменным столом Виктора",
+        "kind": "action",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 2
+          }
+        ],
+        "time_cost": 25
+      },
+      {
+        "id": "back",
+        "text": "Вернуться в коридор",
+        "kind": "action",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 20,
+        "next_scene": "corridor"
+      }
+    ]
+  },
+  {
+    "id": "vestibule",
+    "title": "Тамбур",
+    "background": "",
+    "description": "Через стеклянную дверь виден переход между вагонами. На внутренней стене — лист обходов охраны. Выходить наружу не требуется.",
+    "choices": [
+      {
+        "id": "guard_log",
+        "text": "Проверить запись о раннем обходе Бориса",
+        "kind": "action",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 4
+          }
+        ],
+        "time_cost": 25
+      },
+      {
+        "id": "time_notice",
+        "text": "Сверить часы с расписанием прохода тоннеля",
+        "kind": "action",
+        "requirements": [
+          {
+            "type": "fact_found",
+            "id": 5
+          }
+        ],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 9
+          }
+        ],
+        "time_cost": 25
+      },
+      {
+        "id": "back",
+        "text": "Вернуться в коридор",
+        "kind": "action",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 20,
+        "next_scene": "corridor"
+      }
+    ]
+  },
+  {
+    "id": "luggage",
+    "title": "Багажная ниша",
+    "background": "",
+    "description": "В сетке над чемоданами лежит старый конверт с фотографией Павла и семейной подписью.",
+    "choices": [
+      {
+        "id": "family_photo",
+        "text": "Сопоставить подпись на фотографии с документами Павла",
+        "kind": "action",
+        "requirements": [
+          {
+            "type": "fact_found",
+            "id": 6
+          }
+        ],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 7
+          }
+        ],
+        "time_cost": 25
+      },
+      {
+        "id": "brass_case",
+        "text": "Осмотреть пустой футляр от настольного латунного предмета",
+        "kind": "action",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 2
+          }
+        ],
+        "time_cost": 25
+      },
+      {
+        "id": "back",
+        "text": "Вернуться в коридор",
+        "kind": "action",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 20,
+        "next_scene": "corridor"
       }
     ]
   }
