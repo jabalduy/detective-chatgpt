@@ -69,7 +69,7 @@ func buildGameStateView(s *game.GameState)(gameStateView,error){
  if s.ActiveEvent!=nil {
   for _,e:=range s.Events {if e.ID==*s.ActiveEvent{
    ev:=&activeEventView{ID:e.ID,Title:e.Title,Description:e.Description,Options:make([]eventOptionView,0,len(e.Options))}
-   for _,option:=range e.Options{if game.RequirementsMet(s,option.Requirements){ev.Options=append(ev.Options,eventOptionView{ID:option.ID,Text:option.Text})}}
+   for _,option:=range e.Options{if game.CanPerformAction(s,option.Action){ev.Options=append(ev.Options,eventOptionView{ID:option.ID,Text:option.Text})}}
    if !s.EventDeadline.IsZero(){remaining:=time.Until(s.EventDeadline);if remaining>0{ev.RemainingSeconds=int((remaining+time.Second-1)/time.Second)}}
    v.ActiveEvent=ev
    break
@@ -82,8 +82,10 @@ func stateHandler(w http.ResponseWriter,r *http.Request){
  if r.Method!=http.MethodGet{http.Error(w,"method not allowed",http.StatusMethodNotAllowed);return}
  session,err:=getStartedGame(w,r)
  if err!=nil{http.Error(w,"game not started",http.StatusConflict);return}
- session.Mu.RLock()
- defer session.Mu.RUnlock()
+ session.Mu.Lock()
+ defer session.Mu.Unlock()
+ game.TickTrain(session.State)
+ game.TickEvents(session.State)
  view,err:=buildGameStateView(session.State)
  if err!=nil{http.Error(w,err.Error(),http.StatusInternalServerError);return}
  w.Header().Set("Content-Type","application/json")
