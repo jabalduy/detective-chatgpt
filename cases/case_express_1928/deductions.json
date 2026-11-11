@@ -91,5 +91,21 @@
       }
     ],
     "time_cost": 20
+  },
+  {
+    "id": 7,
+    "title": "Подозрение в адрес Бориса",
+    "required_facts": [
+      4,
+      13
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "type": "discover_motive",
+        "id": 2
+      }
+    ],
+    "time_cost": 20
   }
 ]
