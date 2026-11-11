@@ -1,1 +1,50 @@
-{}
+{
+  "1": {
+    "location": "staff",
+    "emotion": "neutral",
+    "trust": 0,
+    "present": true
+  },
+  "2": {
+    "location": "salon",
+    "emotion": "neutral",
+    "trust": 0,
+    "present": true
+  },
+  "3": {
+    "location": "salon",
+    "emotion": "neutral",
+    "trust": 0,
+    "present": true
+  },
+  "4": {
+    "location": "salon",
+    "emotion": "neutral",
+    "trust": 0,
+    "present": true
+  },
+  "5": {
+    "location": "salon",
+    "emotion": "neutral",
+    "trust": 0,
+    "present": true
+  },
+  "6": {
+    "location": "salon",
+    "emotion": "neutral",
+    "trust": 0,
+    "present": true
+  },
+  "7": {
+    "location": "salon",
+    "emotion": "neutral",
+    "trust": 0,
+    "present": true
+  },
+  "8": {
+    "location": "archive",
+    "emotion": "neutral",
+    "trust": 0,
+    "present": true
+  }
+}
