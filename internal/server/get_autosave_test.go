@@ -51,7 +51,7 @@ func TestGETExaminationCompletionIsAutosaved(t *testing.T){
 func TestAutosaveOnlyExpectedMethods(t *testing.T){
  for _,tc:=range []struct{method,path string;want bool}{
   {"GET","/train",true},{"GET","/event",true},{"GET","/examinations",true},
-  {"GET","/state",false},{"GET","/scene",false},{"POST","/scene/choose",true},
+  {"GET","/state",true},{"GET","/scene",false},{"POST","/scene/choose",true},
   {"POST","/save",false},{"POST","/load",false},{"DELETE","/train",false},
  }{
   req,_:=http.NewRequest(tc.method,tc.path,nil)
