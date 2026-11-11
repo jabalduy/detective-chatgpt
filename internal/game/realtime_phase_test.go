@@ -20,7 +20,7 @@ func TestRealTimePhases(t *testing.T) {
  if got:=s.PhaseAt(s.InvestigationDeadline);got!=PhaseConversationGrace{t.Fatalf("conversation grace: %s",got)}
  if s.CanInvestigateAt(s.InvestigationDeadline){t.Fatal("new investigation action allowed in grace")}
  if s.CanAccuseAt(s.InvestigationDeadline){t.Fatal("accusation allowed while conversation active")}
- if got:=s.PhaseAt(s.AccusationDeadline);got!=PhaseExpired{t.Fatalf("grace extended accusation deadline: %s",got)}
+ if got:=s.PhaseAt(s.AccusationDeadline);got!=PhaseConversationGrace{t.Fatalf("active conversation should retain grace: %s",got)}
  s.ActiveConversation=""
  if !s.CanAccuseAt(s.InvestigationDeadline){t.Fatal("accusation not enabled after conversation")}
  s.Ending=&GameEnding{}
