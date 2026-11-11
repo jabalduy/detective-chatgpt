@@ -9,7 +9,7 @@ type Deduction struct {
 }
 
 func CanSolveDeduction(state *GameState, deduction Deduction) bool {
-	if state.SolvedDeductions[deduction.ID] {
+	if state.Ending != nil || state.SolvedDeductions[deduction.ID] || !CanPerformAction(state, deduction.Action) {
 		return false
 	}
 
@@ -27,11 +27,13 @@ func SolveDeduction(state *GameState, deduction Deduction) bool {
 		return false
 	}
 
+	if !PerformAction(state, deduction.Action) {
+		return false
+	}
+	if state.SolvedDeductions == nil {
+		state.SolvedDeductions = make(map[int]bool)
+	}
 	state.SolvedDeductions[deduction.ID] = true
-
-	ApplyEffects(state, deduction.Effects)
-	UpdateOpenDialogues(state)
-
 	return true
 }
 
