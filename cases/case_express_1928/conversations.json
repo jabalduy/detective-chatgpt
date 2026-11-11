@@ -42,6 +42,23 @@
             "time_cost": 25
           },
           {
+            "id": "brother",
+            "text": "Документы называют Павла вашим братом. Почему вы скрыли это?",
+            "kind": "speech",
+            "next_node": "brother_answer",
+            "requirements": [
+              {
+                "type": "fact_found",
+                "id": 6
+              },
+              {
+                "type": "fact_found",
+                "id": 7
+              }
+            ],
+            "time_cost": 25
+          },
+          {
             "id": "leave",
             "text": "Закончить разговор",
             "kind": "action",
@@ -87,6 +104,26 @@
             "kind": "speech",
             "end": true,
             "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "brother_answer",
+        "text": "Вы нашли его имя. Значит, знаете и то, как Виктор с ним обошёлся. Но это ещё не ответ на ваш вопрос об убийстве.",
+        "emotion": "tense",
+        "choices": [
+          {
+            "id": "record_brother",
+            "text": "Записать ответ и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0,
+            "effects": [
+              {
+                "type": "character_trust_down",
+                "id": 1
+              }
+            ]
           }
         ]
       }
@@ -157,6 +194,23 @@
             "time_cost": 30
           },
           {
+            "id": "sophie_cancel",
+            "text": "Николя подтверждает отмену встречи Софи. Вы знали об этом, когда нашли записку?",
+            "kind": "speech",
+            "next_node": "sophie_cancel_answer",
+            "requirements": [
+              {
+                "type": "fact_found",
+                "id": 13
+              },
+              {
+                "type": "fact_found",
+                "id": 14
+              }
+            ],
+            "time_cost": 25
+          },
+          {
             "id": "leave",
             "text": "Закончить разговор",
             "kind": "action",
@@ -223,6 +277,26 @@
               }
             ],
             "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "sophie_cancel_answer",
+        "text": "Я видел приглашение. Об отмене тогда не знал. Мне казалось, Софи придётся оправдываться за встречу, которой не было.",
+        "emotion": "tense",
+        "choices": [
+          {
+            "id": "record_sophie_cancel",
+            "text": "Записать ответ и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0,
+            "effects": [
+              {
+                "type": "discover_fact",
+                "id": 15
+              }
+            ]
           }
         ]
       }
@@ -457,6 +531,19 @@
             "time_cost": 25
           },
           {
+            "id": "fraud_record",
+            "text": "В документах Павла есть ваша подпись. Что вы знали о деле 1918 года?",
+            "kind": "speech",
+            "next_node": "fraud_record_answer",
+            "requirements": [
+              {
+                "type": "fact_found",
+                "id": 6
+              }
+            ],
+            "time_cost": 25
+          },
+          {
             "id": "leave",
             "text": "Закончить разговор",
             "kind": "action",
@@ -502,6 +589,26 @@
             "kind": "speech",
             "end": true,
             "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "fraud_record_answer",
+        "text": "Подпись моя. Тогда я убедила себя, что исправляю чужую бухгалтерскую ошибку. Теперь понимаю: Виктор использовал нас всех.",
+        "emotion": "tense",
+        "choices": [
+          {
+            "id": "record_fraud_record",
+            "text": "Записать ответ и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0,
+            "effects": [
+              {
+                "type": "character_trust_up",
+                "id": 5
+              }
+            ]
           }
         ]
       }
@@ -643,6 +750,19 @@
             "time_cost": 25
           },
           {
+            "id": "clock_doubt",
+            "text": "Часы показывают 22:10. Можно ли считать это временем смерти?",
+            "kind": "speech",
+            "next_node": "clock_doubt_answer",
+            "requirements": [
+              {
+                "type": "fact_found",
+                "id": 5
+              }
+            ],
+            "time_cost": 25
+          },
+          {
             "id": "leave",
             "text": "Закончить разговор",
             "kind": "action",
@@ -685,6 +805,26 @@
           {
             "id": "followup",
             "text": "Записать показания и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0,
+            "effects": [
+              {
+                "type": "discover_fact",
+                "id": 9
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "clock_doubt_answer",
+        "text": "Нет. Остановленные часы — не медицинское заключение. Я не могу определить минуту смерти с такой точностью.",
+        "emotion": "tense",
+        "choices": [
+          {
+            "id": "record_clock_doubt",
+            "text": "Записать ответ и завершить разговор",
             "kind": "speech",
             "end": true,
             "time_cost": 0,
