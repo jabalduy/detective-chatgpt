@@ -14,7 +14,7 @@ func investigationDeadlineGuard(next http.Handler) http.Handler {
   switch r.URL.Path {
   case "/scene/choose", "/conversation/start", "/examinations/start",
    "/evidence/present", "/inspect-object", "/ask-dialogue",
-   "/dialogue/start", "/confront", "/deduce", "/event/choose":
+   "/dialogue/start", "/confront", "/deduce", "/event/choose", "/hint":
   default:
    next.ServeHTTP(w,r);return
   }
