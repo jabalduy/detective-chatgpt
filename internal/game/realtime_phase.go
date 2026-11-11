@@ -4,7 +4,7 @@ import "time"
 
 // RealTimePhase is based on wall-clock time, not the train clock.
 // A conversation already in progress may finish after the investigation
-// deadline, but it does not extend the accusation deadline.
+// deadline; the full accusation window is preserved after it finishes.
 type RealTimePhase string
 
 const (
@@ -20,11 +20,11 @@ func (s *GameState) PhaseAt(now time.Time) RealTimePhase {
  // Legacy/test states without deadlines remain compatible until migrated.
  if s.InvestigationDeadline.IsZero() { return PhaseInvestigation }
  if now.Before(s.InvestigationDeadline) { return PhaseInvestigation }
- if !s.AccusationDeadline.IsZero() && !now.Before(s.AccusationDeadline) {
-  return PhaseExpired
- }
  if s.ActiveConversation != "" || s.ActiveDialogue != nil {
   return PhaseConversationGrace
+ }
+ if !s.AccusationDeadline.IsZero() && !now.Before(s.AccusationDeadline) {
+  return PhaseExpired
  }
  return PhaseAccusation
 }
