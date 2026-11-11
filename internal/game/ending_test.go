@@ -42,3 +42,28 @@ func TestConditionalEndingVariant(t *testing.T){
  got,err:=SubmitAccusation(s,Accusation{1,2,[]int{3,4}})
  if err!=nil || got.Title!="Special" || got.Text!="Special ending" {t.Fatalf("ending=%+v err=%v",got,err)}
 }
+
+func TestAccusationRejectsDuplicateEvidenceWithoutEnding(t *testing.T) {
+ s:=endingTestState()
+ defer s.Clock.StopTime()
+ _,err:=SubmitAccusation(s,Accusation{SuspectID:1,MotiveID:2,FactIDs:[]int{3,3,4}})
+ if err==nil || s.Ending!=nil {t.Fatal("duplicate evidence must not end the game")}
+ if _,err:=SubmitAccusation(s,Accusation{SuspectID:1,MotiveID:2,FactIDs:[]int{4,3}});err!=nil {
+  t.Fatalf("valid accusation after rejected attempt failed: %v",err)
+ }
+}
+
+func TestEndingRulePriorityAndRequirements(t *testing.T) {
+ s:=endingTestState()
+ defer s.Clock.StopTime()
+ s.EndingRules=[]EndingRule{
+  {ID:"win",Title:"Low",Text:"Low priority",Priority:1},
+  {ID:"win",Title:"Locked",Text:"Missing clue",Priority:100,Requirements:[]Requirement{{Type:"clue_found",ID:99}}},
+  {ID:"win",Title:"High",Text:"High priority",Priority:5,Requirements:[]Requirement{{Type:"fact_found",ID:4}}},
+  {ID:"fail",Title:"Wrong verdict",Priority:1000},
+ }
+ got,err:=SubmitAccusation(s,Accusation{SuspectID:1,MotiveID:2,FactIDs:[]int{3,4}})
+ if err!=nil || got.Type!="win" || got.Title!="High" || got.Text!="High priority" {
+  t.Fatalf("incorrect ending rule selection: %+v %v",got,err)
+ }
+}
