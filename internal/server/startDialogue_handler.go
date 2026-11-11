@@ -62,6 +62,11 @@ func startDialogueHandler(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
+			if err := game.CanAskDialogue(state, susID); err != nil {
+				http.Error(w, err.Error(), http.StatusConflict)
+				return
+			}
+
 			if state.ActiveDialogue != nil {
 				http.Error(w, "Диалог уже открыт", http.StatusConflict)
 				return
@@ -161,7 +166,9 @@ func finishDialogueHandler(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
+			if state.AskedDialogues == nil { state.AskedDialogues = make(map[game.DialogueID]bool) }
 			state.AskedDialogues[dialogue.ID()] = true
+			game.RecordDialogueQuestion(state, susID)
 			state.ActiveDialogue = nil
 			state.FinishConversationGrace(time.Now())
 
