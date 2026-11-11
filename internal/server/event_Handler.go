@@ -73,6 +73,9 @@ func eventHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		for _, option := range event.Options {
+            if !game.CanPerformAction(state, option.Action) {
+                continue
+            }
 			eventOptionResponse := EventOptionResponse{
 				ID:   option.ID,
 				Text: option.Text,
