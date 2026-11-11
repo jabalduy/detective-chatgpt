@@ -1,6 +1,6 @@
 package game
 
-import "testing"
+import ("testing"; "time")
 
 func TestCanSolveDeductionCases(t *testing.T) {
 	tests := []struct {
@@ -143,4 +143,31 @@ func TestSolveDeductionDiscoversMotive(t *testing.T) {
 	if !state.SolvedDeductions[1] {
 		t.Fatal("expected deduction 1 to be marked as solved")
 	}
+}
+
+func TestDeductionRequiresEvidenceAndActionConditions(t *testing.T) {
+ start:=time.Date(2026,1,1,12,0,0,0,time.UTC)
+ s:=&GameState{
+  Clock:NewClock(start),
+  FoundFacts:map[int]bool{1:true,2:true},
+  FoundClues:map[int]bool{},
+ }
+ defer s.Clock.StopTime()
+ d:=Deduction{ID:7,Required:[]int{1,2},Action:Action{
+  Requirements:[]Requirement{{Type:"clue_found",ID:9}},
+  TimeCost:30,
+  Effects:[]Effect{{Type:"discover_fact",ID:3}},
+ }}
+ if CanSolveDeduction(s,d) || SolveDeduction(s,d) {t.Fatal("locked deduction accepted")}
+ if s.SolvedDeductions[7] || s.FoundFacts[3] {t.Fatal("rejected deduction mutated state")}
+ s.FoundClues[9]=true
+ if !SolveDeduction(s,d) {t.Fatal("unlocked deduction rejected")}
+ if !s.SolvedDeductions[7] || !s.FoundFacts[3] {t.Fatal("deduction consequences missing")}
+ if got:=s.Clock.GetTime();got.Before(start.Add(30*time.Second)) {t.Fatalf("time cost missing: %v",got)}
+ if SolveDeduction(s,d) {t.Fatal("deduction repeated")}
+}
+
+func TestDeductionRejectsDuplicateFactIDs(t *testing.T) {
+ if sameFacts([]int{1,2},[]int{1,1}) {t.Fatal("duplicate facts accepted as distinct evidence")}
+ if !sameFacts([]int{1,2},[]int{2,1}) {t.Fatal("order-independent evidence rejected")}
 }
