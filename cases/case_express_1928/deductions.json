@@ -1,0 +1,59 @@
+[
+  {
+    "id": 1,
+    "title": "Марта была в купе",
+    "required_facts": [
+      1,
+      8
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 10
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Орудие спрятано",
+    "required_facts": [
+      2,
+      3
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 11
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Время на часах ненадёжно",
+    "required_facts": [
+      4,
+      5,
+      9
+    ],
+    "effects": [
+      {
+        "type": "discover_fact",
+        "id": 12
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Мотив Марты",
+    "required_facts": [
+      6,
+      7
+    ],
+    "effects": [
+      {
+        "type": "discover_motive",
+        "id": 1
+      }
+    ]
+  }
+]
