@@ -121,11 +121,6 @@ func askDialogueHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err:=game.CanAskDialogue(state,susID);err!=nil {
-	 http.Error(w,err.Error(),http.StatusConflict)
-	 return
-	}
-
 	var response game.Dialogue
 
 	found := false
@@ -140,6 +135,10 @@ func askDialogueHandler(w http.ResponseWriter, r *http.Request) {
 			}
 
 			if !state.AskedDialogues[dialogue.ID()] {
+                if err := game.CanAskDialogue(state, susID); err != nil {
+                    http.Error(w, err.Error(), http.StatusConflict)
+                    return
+                }
                 if !game.PerformAction(state, dialogue.Action) {
                     http.Error(w, "dialogue action unavailable", http.StatusConflict)
                     return
