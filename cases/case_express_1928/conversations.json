@@ -59,6 +59,23 @@
             "time_cost": 25
           },
           {
+            "id": "ribbon_vs_route",
+            "text": "Николя видел вас возле купе Виктора, а в купе найдена часть вашей ленты. Как это объяснить?",
+            "kind": "speech",
+            "next_node": "ribbon_vs_route_answer",
+            "requirements": [
+              {
+                "type": "fact_found",
+                "id": 1
+              },
+              {
+                "type": "fact_found",
+                "id": 8
+              }
+            ],
+            "time_cost": 30
+          },
+          {
             "id": "leave",
             "text": "Закончить разговор",
             "kind": "action",
@@ -115,6 +132,26 @@
           {
             "id": "record_brother",
             "text": "Записать ответ и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0,
+            "effects": [
+              {
+                "type": "character_trust_down",
+                "id": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ribbon_vs_route_answer",
+        "text": "Я проходила мимо купе по служебным делам. Лента могла зацепиться раньше. Николя не видел, чтобы я входила.",
+        "emotion": "tense",
+        "choices": [
+          {
+            "id": "finish_ribbon_vs_route",
+            "text": "Зафиксировать противоречие и завершить разговор",
             "kind": "speech",
             "end": true,
             "time_cost": 0,
@@ -211,6 +248,27 @@
             "time_cost": 25
           },
           {
+            "id": "watch_vs_rosa",
+            "text": "Вы утверждаете, что часы показывают время смерти. Роза говорит, что это невозможно установить. Что вы скрываете?",
+            "kind": "speech",
+            "next_node": "watch_vs_rosa_answer",
+            "requirements": [
+              {
+                "type": "fact_found",
+                "id": 4
+              },
+              {
+                "type": "fact_found",
+                "id": 5
+              },
+              {
+                "type": "fact_found",
+                "id": 9
+              }
+            ],
+            "time_cost": 30
+          },
+          {
             "id": "leave",
             "text": "Закончить разговор",
             "kind": "action",
@@ -299,6 +357,26 @@
             ]
           }
         ]
+      },
+      {
+        "id": "watch_vs_rosa_answer",
+        "text": "Я не врач. Я видел часы, когда вошёл. Если они остановились раньше или позже, не мне судить.",
+        "emotion": "tense",
+        "choices": [
+          {
+            "id": "finish_watch_vs_rosa",
+            "text": "Зафиксировать противоречие и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0,
+            "effects": [
+              {
+                "type": "character_trust_down",
+                "id": 2
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -343,6 +421,23 @@
               }
             ],
             "time_cost": 25
+          },
+          {
+            "id": "note_vs_cancel",
+            "text": "В кармане Виктора осталось приглашение, хотя вы отменили встречу через Николя. Что произошло?",
+            "kind": "speech",
+            "next_node": "note_vs_cancel_answer",
+            "requirements": [
+              {
+                "type": "fact_found",
+                "id": 13
+              },
+              {
+                "type": "fact_found",
+                "id": 14
+              }
+            ],
+            "time_cost": 30
           },
           {
             "id": "leave",
@@ -390,6 +485,26 @@
             "kind": "speech",
             "end": true,
             "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "note_vs_cancel_answer",
+        "text": "Я передала отмену заранее. Почему Виктор сохранил записку, я не знаю. После этого я к нему не ходила.",
+        "emotion": "tense",
+        "choices": [
+          {
+            "id": "finish_note_vs_cancel",
+            "text": "Зафиксировать противоречие и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0,
+            "effects": [
+              {
+                "type": "character_trust_up",
+                "id": 3
+              }
+            ]
           }
         ]
       }
@@ -544,6 +659,23 @@
             "time_cost": 25
           },
           {
+            "id": "clara_vs_pavel",
+            "text": "Вы утверждали, что дело Павла вас не касалось, но в документах стоит ваша подпись. Почему?",
+            "kind": "speech",
+            "next_node": "clara_vs_pavel_answer",
+            "requirements": [
+              {
+                "type": "fact_found",
+                "id": 6
+              },
+              {
+                "type": "fact_found",
+                "id": 7
+              }
+            ],
+            "time_cost": 30
+          },
+          {
             "id": "leave",
             "text": "Закончить разговор",
             "kind": "action",
@@ -606,6 +738,26 @@
             "effects": [
               {
                 "type": "character_trust_up",
+                "id": 5
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "clara_vs_pavel_answer",
+        "text": "Я подписала бумаги по требованию Виктора. Тогда не понимала, что Павел станет единственным виновным.",
+        "emotion": "tense",
+        "choices": [
+          {
+            "id": "finish_clara_vs_pavel",
+            "text": "Зафиксировать противоречие и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0,
+            "effects": [
+              {
+                "type": "character_trust_down",
                 "id": 5
               }
             ]
