@@ -135,6 +135,28 @@
             "time_cost": 25
           },
           {
+            "id": "clock_confront",
+            "text": "Софи отменила встречу, а вы скрыли посещение купе. Зачем вы изменили время?",
+            "kind": "speech",
+            "next_node": "clock_answer",
+            "requirements": [
+              {
+                "type": "fact_found",
+                "id": 15
+              },
+              {
+                "type": "fact_found",
+                "id": 4
+              },
+              {
+                "type": "fact_found",
+                "id": 9
+              }
+            ],
+            "effects": [],
+            "time_cost": 30
+          },
+          {
             "id": "leave",
             "text": "Закончить разговор",
             "kind": "action",
@@ -179,6 +201,27 @@
             "text": "Записать показания и завершить разговор",
             "kind": "speech",
             "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "clock_answer",
+        "text": "Я нашёл записку и подумал, что Софи окажется первой подозреваемой. Я остановил часы и перевёл стрелки на 22:10. Это было глупо. Виктора я не убивал.",
+        "emotion": "ashamed",
+        "choices": [
+          {
+            "id": "record",
+            "text": "Записать признание и завершить допрос",
+            "kind": "speech",
+            "end": true,
+            "requirements": [],
+            "effects": [
+              {
+                "type": "discover_fact",
+                "id": 16
+              }
+            ],
             "time_cost": 0
           }
         ]
