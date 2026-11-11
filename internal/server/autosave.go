@@ -54,7 +54,7 @@ func shouldAutosave(r *http.Request) bool {
  if r.Method==http.MethodPost{return r.URL.Path!="/save" && r.URL.Path!="/load"}
  if r.Method!=http.MethodGet{return false}
  switch r.URL.Path{
- case "/event","/train","/examinations":return true
+ case "/event","/train","/examinations","/state":return true
  default:return false
  }
 }
