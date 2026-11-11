@@ -49,7 +49,13 @@ func TestAccusationWaitsForConversationToFinish(t *testing.T){
  if response.Code!=204 || session.State.Ending!=nil {t.Fatal("conversation interrupted by timeout")}
  response=requestWithCookie(handler,cookie,http.MethodPost,"/conversation/choose?choiceID=finish",nil)
  if response.Code!=200 {t.Fatalf("could not finish conversation: %d %s",response.Code,response.Body.String())}
- if session.State.Ending==nil || session.State.Ending.Type!="unsolved"{
-  t.Fatal("timeout not settled after conversation ended")
+ if session.State.Ending!=nil {t.Fatal("conversation grace must not immediately expire the game")}
+ if session.State.AccusationDeadline.Before(time.Now().Add(4*time.Minute)) {
+  t.Fatal("conversation ending after deadline must grant five minutes")
+ }
+ if session.State.PhaseAt(time.Now())!=game.PhaseAccusation {t.Fatal("accusation phase not started")}
+ saved,err:=readSave(savePath(cookie.Value))
+ if err!=nil || !saved.AccusationDeadline.Equal(session.State.AccusationDeadline) {
+  t.Fatalf("extended deadline not persisted: %v",err)
  }
 }
