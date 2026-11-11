@@ -27,7 +27,7 @@ func conversationChooseHandler(w http.ResponseWriter,r *http.Request){
  if session.State==nil {http.Error(w,"game not started",409);return}
  ended,err:=game.ChooseConversationOption(session.State,r.URL.Query().Get("choiceID"))
  if err!=nil {http.Error(w,err.Error(),409);return}
- if ended {w.Header().Set("Content-Type","application/json");_=json.NewEncoder(w).Encode(map[string]bool{"ended":true});return}
+ if ended {session.State.FinishConversationGrace(time.Now());w.Header().Set("Content-Type","application/json");_=json.NewEncoder(w).Encode(map[string]bool{"ended":true});return}
  writeConversation(w,session.State)
 }
 func writeConversation(w http.ResponseWriter,s *game.GameState){
