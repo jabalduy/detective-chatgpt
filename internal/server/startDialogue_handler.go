@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 func startDialogueHandler(w http.ResponseWriter, r *http.Request) {
@@ -162,6 +163,7 @@ func finishDialogueHandler(w http.ResponseWriter, r *http.Request) {
 
 			state.AskedDialogues[dialogue.ID()] = true
 			state.ActiveDialogue = nil
+			state.FinishConversationGrace(time.Now())
 
 			state.Clock.Resume()
 
