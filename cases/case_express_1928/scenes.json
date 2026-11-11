@@ -89,6 +89,19 @@
         "time_cost": 20
       },
       {
+        "id": "note",
+        "text": "Изучить записку из кармана Виктора",
+        "kind": "action",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 13
+          }
+        ],
+        "time_cost": 25
+      },
+      {
         "id": "back",
         "text": "Вернуться в коридор",
         "kind": "action",
@@ -135,6 +148,24 @@
           }
         ],
         "time_cost": 20
+      },
+      {
+        "id": "cancellation",
+        "text": "Спросить Николя, передавала ли Софи отмену встречи",
+        "kind": "action",
+        "requirements": [
+          {
+            "type": "fact_found",
+            "id": 13
+          }
+        ],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 14
+          }
+        ],
+        "time_cost": 30
       },
       {
         "id": "back",
