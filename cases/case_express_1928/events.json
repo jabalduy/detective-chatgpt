@@ -1,1 +1,178 @@
-[]
+[
+  {
+    "id": 101,
+    "title": "Ссора Макса и Клары",
+    "description": "Макс громко обвиняет Клару в сокрытии письма. Через десять секунд спорящие разойдутся.",
+    "at": "21:12",
+    "time_limit": 10,
+    "default_option_id": 3,
+    "options": [
+      {
+        "id": 1,
+        "text": "Попросить Макса объяснить, о каком письме речь",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 17
+          }
+        ],
+        "time_cost": 0
+      },
+      {
+        "id": 2,
+        "text": "Остановить спор и дать слово Кларе",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "character_trust_up",
+            "id": 5
+          }
+        ],
+        "time_cost": 0
+      },
+      {
+        "id": 3,
+        "text": "Не вмешиваться",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 0
+      }
+    ]
+  },
+  {
+    "id": 102,
+    "title": "Софи покидает салон",
+    "description": "Борис резко обрывает разговор Софи с пассажирами. Она направляется к выходу.",
+    "at": "21:24",
+    "time_limit": 10,
+    "default_option_id": 3,
+    "options": [
+      {
+        "id": 1,
+        "text": "Спокойно попросить Софи остаться",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "character_trust_up",
+            "id": 3
+          }
+        ],
+        "time_cost": 0
+      },
+      {
+        "id": 2,
+        "text": "Спросить Бориса, почему он вмешивается",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "character_trust_down",
+            "id": 2
+          }
+        ],
+        "time_cost": 0
+      },
+      {
+        "id": 3,
+        "text": "Позволить Софи уйти",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 0
+      }
+    ]
+  },
+  {
+    "id": 103,
+    "title": "Граф у наружной площадки",
+    "description": "Фигура в капюшоне уходит к наружной переходной площадке с письмом. Впереди тоннель; выход на крышу не требуется.",
+    "at": "21:43",
+    "time_limit": 10,
+    "default_option_id": 4,
+    "options": [
+      {
+        "id": 1,
+        "text": "Окликнуть Графа из безопасного тамбура",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 18
+          }
+        ],
+        "time_cost": 0
+      },
+      {
+        "id": 2,
+        "text": "Позвать Бориса и перекрыть путь внутрь",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 18
+          }
+        ],
+        "time_cost": 0
+      },
+      {
+        "id": 3,
+        "text": "Предложить Графу оставить письмо и вернуться в вагон",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "character_trust_up",
+            "id": 4
+          }
+        ],
+        "time_cost": 0
+      },
+      {
+        "id": 4,
+        "text": "Остаться в вагоне и дать ему вернуться самостоятельно",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 0
+      }
+    ]
+  },
+  {
+    "id": 104,
+    "title": "Марта у служебного журнала",
+    "description": "Марта закрывает журнал проводников и собирается унести его на служебный пост.",
+    "at": "21:51",
+    "time_limit": 10,
+    "default_option_id": 3,
+    "options": [
+      {
+        "id": 1,
+        "text": "Попросить Николя сохранить журнал для расследования",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 19
+          }
+        ],
+        "time_cost": 0
+      },
+      {
+        "id": 2,
+        "text": "Спросить Марту, почему журнал понадобился сейчас",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "character_trust_down",
+            "id": 1
+          }
+        ],
+        "time_cost": 0
+      },
+      {
+        "id": 3,
+        "text": "Не препятствовать ей",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 0
+      }
+    ]
+  }
+]
