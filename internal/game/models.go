@@ -43,6 +43,7 @@ type Suspect struct {
 	About  string `json:"about"`
 	SusID  int    `json:"sus_id"`
 	IsClue bool   `json:"is_clue"`
+	MaxQuestions int `json:"max_questions,omitempty"`
 }
 
 type Dialogue struct {
