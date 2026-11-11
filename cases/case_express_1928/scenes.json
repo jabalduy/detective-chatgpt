@@ -1,0 +1,231 @@
+[
+  {
+    "id": "corridor",
+    "title": "Коридор экспресса",
+    "description": "Пассажиры перешёптываются. Алекс выбирает направление расследования.",
+    "background": "",
+    "choices": [
+      {
+        "id": "victor",
+        "text": "Осмотреть купе Виктора",
+        "kind": "action",
+        "next_scene": "compartment",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 20
+      },
+      {
+        "id": "staff",
+        "text": "Зайти на служебный пост",
+        "kind": "action",
+        "next_scene": "staff",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 20
+      },
+      {
+        "id": "salon",
+        "text": "Поговорить в салоне",
+        "kind": "action",
+        "next_scene": "salon",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 20
+      },
+      {
+        "id": "archive",
+        "text": "Проверить бумаги Лео",
+        "kind": "action",
+        "next_scene": "archive",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 20
+      }
+    ]
+  },
+  {
+    "id": "compartment",
+    "title": "Купе Виктора",
+    "description": "На столе лежат остановленные часы. Рядом пустое место от тяжёлого пресс-папье.",
+    "background": "",
+    "choices": [
+      {
+        "id": "ribbon",
+        "text": "Осмотреть щель у стола",
+        "kind": "action",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 1
+          }
+        ],
+        "time_cost": 20
+      },
+      {
+        "id": "paperweight",
+        "text": "Осмотреть письменный стол",
+        "kind": "action",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 2
+          }
+        ],
+        "time_cost": 20
+      },
+      {
+        "id": "watch",
+        "text": "Осмотреть часы",
+        "kind": "action",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 5
+          }
+        ],
+        "time_cost": 20
+      },
+      {
+        "id": "back",
+        "text": "Вернуться в коридор",
+        "kind": "action",
+        "next_scene": "corridor",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 20
+      }
+    ]
+  },
+  {
+    "id": "staff",
+    "title": "Служебный пост",
+    "description": "В ящике для полировки обнаруживается предмет с инициалами Виктора.",
+    "background": "",
+    "choices": [
+      {
+        "id": "box",
+        "text": "Осмотреть служебный ящик",
+        "kind": "action",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 3
+          }
+        ],
+        "time_cost": 20
+      },
+      {
+        "id": "nikola",
+        "text": "Проверить запись Николя",
+        "kind": "action",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 8
+          }
+        ],
+        "time_cost": 20
+      },
+      {
+        "id": "back",
+        "text": "Вернуться в коридор",
+        "kind": "action",
+        "next_scene": "corridor",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 20
+      }
+    ]
+  },
+  {
+    "id": "salon",
+    "title": "Общий салон",
+    "description": "Роза сомневается во времени смерти. Николя рассказывает о раннем посещении купе Борисом.",
+    "background": "",
+    "choices": [
+      {
+        "id": "boris",
+        "text": "Проверить маршрут Бориса",
+        "kind": "action",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 4
+          }
+        ],
+        "time_cost": 20
+      },
+      {
+        "id": "rosa",
+        "text": "Записать оценку Розы",
+        "kind": "action",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 9
+          }
+        ],
+        "time_cost": 20
+      },
+      {
+        "id": "back",
+        "text": "Вернуться в коридор",
+        "kind": "action",
+        "next_scene": "corridor",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 20
+      }
+    ]
+  },
+  {
+    "id": "archive",
+    "title": "Купе Лео",
+    "description": "Журналист показывает копии документов десятилетней давности и семейную фотографию.",
+    "background": "",
+    "choices": [
+      {
+        "id": "fraud",
+        "text": "Изучить бумаги Павла",
+        "kind": "action",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 6
+          }
+        ],
+        "time_cost": 20
+      },
+      {
+        "id": "family",
+        "text": "Изучить фотографию",
+        "kind": "action",
+        "requirements": [],
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 7
+          }
+        ],
+        "time_cost": 20
+      },
+      {
+        "id": "back",
+        "text": "Вернуться в коридор",
+        "kind": "action",
+        "next_scene": "corridor",
+        "requirements": [],
+        "effects": [],
+        "time_cost": 20
+      }
+    ]
+  }
+]
