@@ -1,1 +1,530 @@
-[]
+[
+  {
+    "id": "marta_intro",
+    "character_id": 1,
+    "start_node": "hello",
+    "nodes": [
+      {
+        "id": "hello",
+        "text": "Я знаю каждую дверь этого поезда. Но это не значит, что я знаю все чужие тайны.",
+        "choices": [
+          {
+            "id": "q1",
+            "text": "Где вы были после девяти?",
+            "kind": "speech",
+            "next_node": "a1",
+            "time_cost": 15,
+            "effects": [
+              {
+                "type": "character_trust_up",
+                "id": 1
+              }
+            ]
+          },
+          {
+            "id": "q2",
+            "text": "Вы знали Виктора?",
+            "kind": "speech",
+            "next_node": "a2",
+            "time_cost": 15
+          },
+          {
+            "id": "leave",
+            "text": "Закончить разговор",
+            "kind": "action",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "a1",
+        "text": "Работала. На этом поезде всегда кто-то требует кипятка.",
+        "choices": [
+          {
+            "id": "end",
+            "text": "Поблагодарить и закончить",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "a2",
+        "text": "Он не любил, когда ему задают вопросы. Особенно простые.",
+        "choices": [
+          {
+            "id": "end",
+            "text": "Закончить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "boris_intro",
+    "character_id": 2,
+    "start_node": "hello",
+    "nodes": [
+      {
+        "id": "hello",
+        "text": "Вы хотите выяснить правду или собрать слухи?",
+        "choices": [
+          {
+            "id": "q1",
+            "text": "Почему вы охраняли купе?",
+            "kind": "speech",
+            "next_node": "a1",
+            "time_cost": 15,
+            "effects": [
+              {
+                "type": "character_trust_up",
+                "id": 2
+              }
+            ]
+          },
+          {
+            "id": "q2",
+            "text": "Что вы думаете о записке?",
+            "kind": "speech",
+            "next_node": "a2",
+            "time_cost": 15
+          },
+          {
+            "id": "leave",
+            "text": "Закончить разговор",
+            "kind": "action",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "a1",
+        "text": "Я отвечал за безопасность. С этим сегодня вышло плохо.",
+        "choices": [
+          {
+            "id": "end",
+            "text": "Поблагодарить и закончить",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "a2",
+        "text": "Чужую переписку я обсуждать не собираюсь.",
+        "choices": [
+          {
+            "id": "end",
+            "text": "Закончить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sophie_intro",
+    "character_id": 3,
+    "start_node": "hello",
+    "nodes": [
+      {
+        "id": "hello",
+        "text": "Сегодня я не пою. Не просите.",
+        "choices": [
+          {
+            "id": "q1",
+            "text": "Вы собирались встретиться с Виктором?",
+            "kind": "speech",
+            "next_node": "a1",
+            "time_cost": 15,
+            "effects": [
+              {
+                "type": "character_trust_up",
+                "id": 3
+              }
+            ]
+          },
+          {
+            "id": "q2",
+            "text": "Почему Борис вас защищает?",
+            "kind": "speech",
+            "next_node": "a2",
+            "time_cost": 15
+          },
+          {
+            "id": "leave",
+            "text": "Закончить разговор",
+            "kind": "action",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "a1",
+        "text": "Собиралась. Потом передумала. Это не преступление.",
+        "choices": [
+          {
+            "id": "end",
+            "text": "Поблагодарить и закончить",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "a2",
+        "text": "Лучше спросите его. Он слишком часто решает за других.",
+        "choices": [
+          {
+            "id": "end",
+            "text": "Закончить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "graf_intro",
+    "character_id": 4,
+    "start_node": "hello",
+    "nodes": [
+      {
+        "id": "hello",
+        "text": "Чай был холодным. Убийство — ещё хуже, но чай я заметил раньше.",
+        "choices": [
+          {
+            "id": "q1",
+            "text": "Что вы слышали вечером?",
+            "kind": "speech",
+            "next_node": "a1",
+            "time_cost": 15,
+            "effects": [
+              {
+                "type": "character_trust_up",
+                "id": 4
+              }
+            ]
+          },
+          {
+            "id": "q2",
+            "text": "Почему вас тревожат бумаги?",
+            "kind": "speech",
+            "next_node": "a2",
+            "time_cost": 15
+          },
+          {
+            "id": "leave",
+            "text": "Закончить разговор",
+            "kind": "action",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "a1",
+        "text": "Спор. Кто-то сказал «ваш брат». Я не видел собеседников.",
+        "choices": [
+          {
+            "id": "end",
+            "text": "Поблагодарить и закончить",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "a2",
+        "text": "Потому что бумага хранит ошибки лучше памяти.",
+        "choices": [
+          {
+            "id": "end",
+            "text": "Закончить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "klara_intro",
+    "character_id": 5,
+    "start_node": "hello",
+    "nodes": [
+      {
+        "id": "hello",
+        "text": "Виктор нажил врагов. Это не делает каждого из нас убийцей.",
+        "choices": [
+          {
+            "id": "q1",
+            "text": "О чём вы говорили в малом салоне?",
+            "kind": "speech",
+            "next_node": "a1",
+            "time_cost": 15,
+            "effects": [
+              {
+                "type": "character_trust_up",
+                "id": 5
+              }
+            ]
+          },
+          {
+            "id": "q2",
+            "text": "Кто такой Павел?",
+            "kind": "speech",
+            "next_node": "a2",
+            "time_cost": 15
+          },
+          {
+            "id": "leave",
+            "text": "Закончить разговор",
+            "kind": "action",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "a1",
+        "text": "О делах десятилетней давности. Я ушла до конца разговора.",
+        "choices": [
+          {
+            "id": "end",
+            "text": "Поблагодарить и закончить",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "a2",
+        "text": "Человек, которому мы задолжали правду.",
+        "choices": [
+          {
+            "id": "end",
+            "text": "Закончить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "max_intro",
+    "character_id": 6,
+    "start_node": "hello",
+    "nodes": [
+      {
+        "id": "hello",
+        "text": "Я наследник, а не преступник. Не путайте эти слова.",
+        "choices": [
+          {
+            "id": "q1",
+            "text": "Вы взяли письмо?",
+            "kind": "speech",
+            "next_node": "a1",
+            "time_cost": 15,
+            "effects": [
+              {
+                "type": "character_trust_up",
+                "id": 6
+              }
+            ]
+          },
+          {
+            "id": "q2",
+            "text": "Где вы были?",
+            "kind": "speech",
+            "next_node": "a2",
+            "time_cost": 15
+          },
+          {
+            "id": "leave",
+            "text": "Закончить разговор",
+            "kind": "action",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "a1",
+        "text": "Да. Я хотел знать, собирается ли дядя оставить меня ни с чем.",
+        "choices": [
+          {
+            "id": "end",
+            "text": "Поблагодарить и закончить",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "a2",
+        "text": "Спорил с Кларой. На весь вагон, если вам нужны свидетели.",
+        "choices": [
+          {
+            "id": "end",
+            "text": "Закончить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rosa_intro",
+    "character_id": 7,
+    "start_node": "hello",
+    "nodes": [
+      {
+        "id": "hello",
+        "text": "По часам нельзя ставить диагноз. Особенно по чужим.",
+        "choices": [
+          {
+            "id": "q1",
+            "text": "Время смерти — 22:10?",
+            "kind": "speech",
+            "next_node": "a1",
+            "time_cost": 15,
+            "effects": [
+              {
+                "type": "character_trust_up",
+                "id": 7
+              }
+            ]
+          },
+          {
+            "id": "q2",
+            "text": "Мог ли он умереть раньше?",
+            "kind": "speech",
+            "next_node": "a2",
+            "time_cost": 15
+          },
+          {
+            "id": "leave",
+            "text": "Закончить разговор",
+            "kind": "action",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "a1",
+        "text": "Это показание механизма, а не заключение врача.",
+        "choices": [
+          {
+            "id": "end",
+            "text": "Поблагодарить и закончить",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "a2",
+        "text": "Да. Но минуту смерти я не назову без оснований.",
+        "choices": [
+          {
+            "id": "end",
+            "text": "Закончить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "leo_intro",
+    "character_id": 8,
+    "start_node": "hello",
+    "nodes": [
+      {
+        "id": "hello",
+        "text": "Если я расскажу всё сразу, вы лишите меня лучшей статьи.",
+        "choices": [
+          {
+            "id": "q1",
+            "text": "Почему вы изучаете дело Павла?",
+            "kind": "speech",
+            "next_node": "a1",
+            "time_cost": 15,
+            "effects": [
+              {
+                "type": "character_trust_up",
+                "id": 8
+              }
+            ]
+          },
+          {
+            "id": "q2",
+            "text": "Вы знали Виктора?",
+            "kind": "speech",
+            "next_node": "a2",
+            "time_cost": 15
+          },
+          {
+            "id": "leave",
+            "text": "Закончить разговор",
+            "kind": "action",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "a1",
+        "text": "Документы противоречат друг другу. Это обычно означает чью-то выгоду.",
+        "choices": [
+          {
+            "id": "end",
+            "text": "Поблагодарить и закончить",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "a2",
+        "text": "Я знал его подпись. Этого было достаточно, чтобы приехать.",
+        "choices": [
+          {
+            "id": "end",
+            "text": "Закончить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      }
+    ]
+  }
+]
