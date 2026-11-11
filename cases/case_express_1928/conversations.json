@@ -29,6 +29,19 @@
             "time_cost": 15
           },
           {
+            "id": "evidence",
+            "text": "В купе найдена лента, похожая на вашу. Как она там оказалась?",
+            "kind": "speech",
+            "next_node": "evidence_answer",
+            "requirements": [
+              {
+                "type": "fact_found",
+                "id": 1
+              }
+            ],
+            "time_cost": 25
+          },
+          {
             "id": "leave",
             "text": "Закончить разговор",
             "kind": "action",
@@ -57,6 +70,20 @@
           {
             "id": "end",
             "text": "Закончить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "evidence_answer",
+        "text": "Я работаю в каждом купе. Лента могла зацепиться за мебель. Вы же не считаете это признанием?",
+        "emotion": "tense",
+        "choices": [
+          {
+            "id": "followup",
+            "text": "Записать показания и завершить разговор",
             "kind": "speech",
             "end": true,
             "time_cost": 0
@@ -95,6 +122,19 @@
             "time_cost": 15
           },
           {
+            "id": "evidence",
+            "text": "Николя видел вас в купе до официального обнаружения. Почему вы это скрыли?",
+            "kind": "speech",
+            "next_node": "evidence_answer",
+            "requirements": [
+              {
+                "type": "fact_found",
+                "id": 4
+              }
+            ],
+            "time_cost": 25
+          },
+          {
             "id": "leave",
             "text": "Закончить разговор",
             "kind": "action",
@@ -123,6 +163,20 @@
           {
             "id": "end",
             "text": "Закончить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "evidence_answer",
+        "text": "Я заходил туда раньше. Нашёл Виктора и испугался за Софи. Но я не убивал его.",
+        "emotion": "tense",
+        "choices": [
+          {
+            "id": "followup",
+            "text": "Записать показания и завершить разговор",
             "kind": "speech",
             "end": true,
             "time_cost": 0
@@ -161,6 +215,19 @@
             "time_cost": 15
           },
           {
+            "id": "evidence",
+            "text": "На часах Виктора 22:10. В это время вы были с пассажирами?",
+            "kind": "speech",
+            "next_node": "evidence_answer",
+            "requirements": [
+              {
+                "type": "fact_found",
+                "id": 5
+              }
+            ],
+            "time_cost": 25
+          },
+          {
             "id": "leave",
             "text": "Закончить разговор",
             "kind": "action",
@@ -189,6 +256,20 @@
           {
             "id": "end",
             "text": "Закончить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "evidence_answer",
+        "text": "Да. Но я не собираюсь делать вид, что часы — свидетель. Я отменила встречу ещё раньше.",
+        "emotion": "worried",
+        "choices": [
+          {
+            "id": "followup",
+            "text": "Записать показания и завершить разговор",
             "kind": "speech",
             "end": true,
             "time_cost": 0
@@ -227,6 +308,19 @@
             "time_cost": 15
           },
           {
+            "id": "evidence",
+            "text": "В документах Павла есть ваша подпись. Вы знали о подставе?",
+            "kind": "speech",
+            "next_node": "evidence_answer",
+            "requirements": [
+              {
+                "type": "fact_found",
+                "id": 6
+              }
+            ],
+            "time_cost": 25
+          },
+          {
             "id": "leave",
             "text": "Закончить разговор",
             "kind": "action",
@@ -255,6 +349,20 @@
           {
             "id": "end",
             "text": "Закончить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "evidence_answer",
+        "text": "Я подписал бумаги, не задав вопросов. Позднее понял, что молчал, когда должен был говорить.",
+        "emotion": "ashamed",
+        "choices": [
+          {
+            "id": "followup",
+            "text": "Записать показания и завершить разговор",
             "kind": "speech",
             "end": true,
             "time_cost": 0
@@ -293,6 +401,19 @@
             "time_cost": 15
           },
           {
+            "id": "evidence",
+            "text": "В документах Павла даты не совпадают. Кто подготовил эти бумаги?",
+            "kind": "speech",
+            "next_node": "evidence_answer",
+            "requirements": [
+              {
+                "type": "fact_found",
+                "id": 6
+              }
+            ],
+            "time_cost": 25
+          },
+          {
             "id": "leave",
             "text": "Закончить разговор",
             "kind": "action",
@@ -321,6 +442,20 @@
           {
             "id": "end",
             "text": "Закончить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "evidence_answer",
+        "text": "Виктор распоряжался ими. Я заметила несоответствие и промолчала. Этого мне не простить.",
+        "emotion": "ashamed",
+        "choices": [
+          {
+            "id": "followup",
+            "text": "Записать показания и завершить разговор",
             "kind": "speech",
             "end": true,
             "time_cost": 0
@@ -359,6 +494,19 @@
             "time_cost": 15
           },
           {
+            "id": "evidence",
+            "text": "Старая афера связана с вашим наследством?",
+            "kind": "speech",
+            "next_node": "evidence_answer",
+            "requirements": [
+              {
+                "type": "fact_found",
+                "id": 6
+              }
+            ],
+            "time_cost": 25
+          },
+          {
             "id": "leave",
             "text": "Закончить разговор",
             "kind": "action",
@@ -387,6 +535,20 @@
           {
             "id": "end",
             "text": "Закончить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "evidence_answer",
+        "text": "Я не знал о Павле. Письмо я взял из страха остаться ни с чем, не ради убийства.",
+        "emotion": "defensive",
+        "choices": [
+          {
+            "id": "followup",
+            "text": "Записать показания и завершить разговор",
             "kind": "speech",
             "end": true,
             "time_cost": 0
@@ -425,6 +587,19 @@
             "time_cost": 15
           },
           {
+            "id": "evidence",
+            "text": "Что именно можно заключить по остановившимся часам?",
+            "kind": "speech",
+            "next_node": "evidence_answer",
+            "requirements": [
+              {
+                "type": "fact_found",
+                "id": 5
+              }
+            ],
+            "time_cost": 25
+          },
+          {
             "id": "leave",
             "text": "Закончить разговор",
             "kind": "action",
@@ -456,6 +631,26 @@
             "kind": "speech",
             "end": true,
             "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "evidence_answer",
+        "text": "Лишь то, что механизм показывает 22:10. Время смерти требует других свидетельств.",
+        "emotion": "neutral",
+        "choices": [
+          {
+            "id": "followup",
+            "text": "Записать показания и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0,
+            "effects": [
+              {
+                "type": "discover_fact",
+                "id": 9
+              }
+            ]
           }
         ]
       }
@@ -491,6 +686,19 @@
             "time_cost": 15
           },
           {
+            "id": "evidence",
+            "text": "Эти документы действительно доказывают, что Павла подставили?",
+            "kind": "speech",
+            "next_node": "evidence_answer",
+            "requirements": [
+              {
+                "type": "fact_found",
+                "id": 6
+              }
+            ],
+            "time_cost": 25
+          },
+          {
             "id": "leave",
             "text": "Закончить разговор",
             "kind": "action",
@@ -519,6 +727,20 @@
           {
             "id": "end",
             "text": "Закончить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "evidence_answer",
+        "text": "Они показывают несовместимые даты и подписи. Проверьте их у Клары и Графа.",
+        "emotion": "focused",
+        "choices": [
+          {
+            "id": "followup",
+            "text": "Записать показания и завершить разговор",
             "kind": "speech",
             "end": true,
             "time_cost": 0
