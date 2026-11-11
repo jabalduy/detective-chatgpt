@@ -32,7 +32,7 @@ func TestExpress1928CanSolveWithoutTimedEvents(t *testing.T) {
  move("back");move("salon")
  for _,id:=range []string{"boris","rosa"}{move(id)}
  if err:=game.StartConversation(s,"boris_intro");err!=nil {t.Fatal(err)}
- if err:=game.ChooseConversationOption(s,"leave");err!=nil {t.Fatal(err)}
+ if _,err:=game.ChooseConversationOption(s,"leave");err!=nil {t.Fatal(err)}
  move("back");move("archive")
  for _,id:=range []string{"fraud","family"}{move(id)}
  for _,id:=range []int{1,2,4,5}{
