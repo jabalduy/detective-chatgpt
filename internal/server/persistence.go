@@ -86,10 +86,9 @@ func applySave(s *game.GameState,d saveData){
  s.Characters=d.Characters
  s.ActiveConversation=d.ActiveConversation;s.ConversationNode=d.ConversationNode
  s.ActiveEvent=d.ActiveEvent;s.EventDeadline=d.EventDeadline;s.ActiveDialogue=d.ActiveDialogue
- // Preserve the remaining decision time rather than counting server downtime.
- if d.ActiveEvent!=nil && !d.EventDeadline.IsZero(){
-  if d.EventRemainingSeconds>0 {s.EventDeadline=time.Now().Add(time.Duration(d.EventRemainingSeconds*float64(time.Second)))} else {s.EventDeadline=time.Now()}
- }
+ // Urgent decisions use wall-clock deadlines. A server restart must not
+ // replenish the countdown; overdue events resolve on the next event tick.
+ // EventRemainingSeconds is retained only for compatibility with old saves.
  s.FoundClues=d.FoundClues;s.FoundFacts=d.FoundFacts;s.FoundMotives=d.FoundMotives
  s.SearchedObjects=d.SearchedObjects;s.SolvedDeductions=d.SolvedDeductions
  s.OpenLocations=d.OpenLocations;s.OpenObjects=d.OpenObjects
