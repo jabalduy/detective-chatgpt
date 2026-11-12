@@ -65,7 +65,7 @@ func TestExpress1928CriticalPathTimeBudget(t *testing.T) {
 func TestExpress1928TimedEventsHaveNonBlockingDefaults(t *testing.T){
  def,err:=LoadCase(filepath.Join("..","..","cases","case_express_1928"))
  if err!=nil {t.Fatal(err)}
- if len(def.Events)!=4 {t.Fatalf("expected 4 timed events, got %d",len(def.Events))}
+ if len(def.Events)!=5 {t.Fatalf("expected 5 timed events, got %d",len(def.Events))}
  for _,event:=range def.Events {
   if event.TimeLimit!=10 {t.Errorf("event %d: want 10s decision window, got %d",event.ID,event.TimeLimit)}
   found:=false
