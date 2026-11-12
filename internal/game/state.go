@@ -3,6 +3,10 @@ package game
 import "time"
 
 type GameState struct {
+ // NarrativeAct is separate from wall-clock investigation/accusation phases.
+ // Empty is treated as investigation for existing sessions.
+ NarrativeAct NarrativeAct
+ DiscoveryCompleted bool
  Hints []Hint
  UsedHints map[string]bool
  HintCount int
