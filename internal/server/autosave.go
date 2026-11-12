@@ -2,6 +2,7 @@ package server
 
 import (
  "log"
+ "os"
  "net/http"
  "strings"
 )
@@ -35,6 +36,13 @@ func saveAfterMutation(next http.Handler) http.Handler {
   session.Mu.RLock()
   defer session.Mu.RUnlock()
   if session.State==nil || session.State.Clock==nil{return}
+  if r.Method==http.MethodPost && r.URL.Path!="/start" {
+   // Preserve the previous durable state as a recovery point before replacing it.
+   // Do not rotate recovery on GET /state polling.
+   if previous,err:=readSave(savePath(cookie.Value));err==nil {
+    if err:=writeSave(recoveryPath(cookie.Value),previous);err!=nil {log.Printf("recovery checkpoint failed: %v",err)}
+   } else if !os.IsNotExist(err) {log.Printf("recovery checkpoint unreadable: %v",err)}
+  }
   if err:=writeSave(savePath(cookie.Value),snapshot(session.State));err!=nil{
    log.Printf("autosave session %s failed: %v",cookie.Value,err)
   }
