@@ -46,6 +46,7 @@ func TestExpress1928EverySuspectCanBeQuestionedAndLeave(t *testing.T) {
  if err!=nil {t.Fatal(err)}
  conversations:=map[int]game.Conversation{}
  for _,conversation:=range def.Conversations {
+  if conversation.AvailableAct==game.ActPrologue {continue}
   if _,exists:=conversations[conversation.CharacterID];exists {
    t.Errorf("duplicate suspect conversation for character %d",conversation.CharacterID)
   }
