@@ -25,6 +25,10 @@ func loadHandler(w http.ResponseWriter,r *http.Request){
  id:=getSessionID(w,r)
  session.Mu.Lock();defer session.Mu.Unlock()
  saved,err:=readSave(savePath(id))
+ if r.URL.Query().Get("recovery")=="1" {
+  checkpoint,checkpointErr:=readSave(recoveryPath(id))
+  if checkpointErr==nil {saved,err=checkpoint,nil} else if !errors.Is(checkpointErr,os.ErrNotExist) {http.Error(w,"invalid recovery checkpoint",422);return}
+ }
  if errors.Is(err,os.ErrNotExist){http.Error(w,"save not found",404);return}
  if err!=nil{http.Error(w,"invalid save",422);return}
  state,err:=newGame(saved.CaseID)
