@@ -5,6 +5,8 @@ import "fmt"
 // Conversation is a branching dialogue tree. Nodes can contain spoken or physical choices.
 type Conversation struct {
  ID string `json:"id"`
+ // AvailableAct limits conversations to a narrative act; empty means investigation-only.
+ AvailableAct NarrativeAct `json:"available_act,omitempty"`
  CharacterID int `json:"character_id"`
  StartNode string `json:"start_node"`
  Nodes []ConversationNode `json:"nodes"`
@@ -51,6 +53,7 @@ func StartConversation(s *GameState,id string) error {
  if s.ActiveConversation!="" || s.ActiveDialogue!=nil || s.ActiveEvent!=nil {return fmt.Errorf("another interaction is active")}
  c:=conversationByID(s,id)
  if c==nil {return fmt.Errorf("conversation not found")}
+ if !ConversationAvailableInAct(s,c) {return fmt.Errorf("conversation unavailable in current narrative act")}
  character,ok:=s.Characters[c.CharacterID]
  if !ok || !character.Present || character.Location!=s.CurrentScene {return fmt.Errorf("character unavailable")}
  if nodeByID(c,c.StartNode)==nil {return fmt.Errorf("start node missing")}
@@ -89,4 +92,13 @@ func ChooseConversationOption(s *GameState,id string)(bool,error){
   return false,nil
  }
  return false,fmt.Errorf("choice not found")
+}
+
+// ConversationAvailableInAct never exposes unclassified investigation dialogues
+// during the prologue. Legacy sessions still default to investigation.
+func ConversationAvailableInAct(s *GameState,c *Conversation) bool {
+ if s==nil || c==nil {return false}
+ act:=c.AvailableAct
+ if act=="" {act=ActInvestigation}
+ return s.CurrentNarrativeAct()==act
 }
