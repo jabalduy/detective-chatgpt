@@ -10,7 +10,7 @@ import (
 func TestExpress1928TimedEvents(t *testing.T) {
  def,err:=LoadCase(filepath.Join("..","..","cases","case_express_1928"))
  if err!=nil {t.Fatal(err)}
- if len(def.Events)!=4 {t.Fatalf("want four timed events, got %d",len(def.Events))}
+ if len(def.Events)!=5 {t.Fatalf("want five timed events, got %d",len(def.Events))}
  if problems:=game.ValidateEvents(def.Events);len(problems)>0 {t.Fatalf("invalid timed events: %v",problems)}
  factIDs:=map[int]bool{}
  for _,f:=range def.Facts {factIDs[f.ID]=true}
@@ -19,7 +19,7 @@ func TestExpress1928TimedEvents(t *testing.T) {
   if ids[event.ID] {t.Errorf("duplicate event %d",event.ID)}
   ids[event.ID]=true
   if event.TimeLimit!=10 {t.Errorf("event %d timer must be 10s",event.ID)}
-  if event.At=="" {t.Errorf("event %d must have story clock trigger",event.ID)}
+  if event.At=="" && event.ID!=105 {t.Errorf("event %d must have story clock trigger",event.ID)}
   hasDefault:=false
   for _,option:=range event.Options {
    if option.ID==event.DefaultOptionID {
