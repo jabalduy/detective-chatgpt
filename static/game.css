@@ -23,3 +23,8 @@
 .timebox .countdown{display:block;background:transparent;border:0;box-shadow:none;padding:0;font-size:clamp(25px,4.2vw,72px)}
 .timebox .countdown:empty{display:none}
 .story-clock{display:inline-flex;align-items:center;font:clamp(12px,1.3vw,19px) monospace;background:#15121bdc;border:1px solid #bc9162;padding:.8vmin 1.2vmin;color:#e6cfa7}
+
+/* Subtle scene transition without changing the approved layout. */
+.backdrop-scene.scene-enter{animation:sceneReveal .45s ease-out both}
+@keyframes sceneReveal{from{filter:brightness(.35);transform:scale(1.025)}to{filter:brightness(1);transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.backdrop-scene.scene-enter{animation:none}}
