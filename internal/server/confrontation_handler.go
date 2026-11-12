@@ -31,6 +31,7 @@ func confrontationHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Игра не запущена", http.StatusConflict)
 		return
 	}
+	if !requireInvestigationAct(w,state) { return }
 	susID, err := strconv.Atoi(r.URL.Query().Get("susID"))
 	if err != nil {
 		http.Error(w, "Некорректный susID", http.StatusBadRequest)
