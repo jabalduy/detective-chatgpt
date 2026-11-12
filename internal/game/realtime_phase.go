@@ -8,6 +8,7 @@ import "time"
 type RealTimePhase string
 
 const (
+ PhasePrologue RealTimePhase = "prologue"
  PhaseInvestigation RealTimePhase = "investigation"
  PhaseConversationGrace RealTimePhase = "conversation_grace"
  PhaseAccusation RealTimePhase = "accusation"
@@ -17,6 +18,7 @@ const (
 
 func (s *GameState) PhaseAt(now time.Time) RealTimePhase {
  if s.Ending != nil { return PhaseFinished }
+ if s.CurrentNarrativeAct() == ActPrologue { return PhasePrologue }
  // Legacy/test states without deadlines remain compatible until migrated.
  if s.InvestigationDeadline.IsZero() { return PhaseInvestigation }
  if now.Before(s.InvestigationDeadline) { return PhaseInvestigation }
