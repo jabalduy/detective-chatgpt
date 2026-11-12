@@ -10,7 +10,10 @@ import (
 // gameStateView is a read-only snapshot for a single-operator frontend.
 // It intentionally excludes hidden evidence, action effects, solution data,
 // and unrevealed event definitions.
+type availableConversationView struct { ID string `json:"id"`; CharacterID int `json:"character_id"`; Name string `json:"name"` }
 type gameStateView struct {
+ CurrentScene string `json:"current_scene,omitempty"`
+ AvailableConversations []availableConversationView `json:"available_conversations"`
  CaseID string `json:"case_id"`
  Started bool `json:"started"`
  Phase game.RealTimePhase `json:"phase"`
@@ -49,7 +52,8 @@ func sortedFound(m map[int]bool)[]int{
 }
 func buildGameStateView(s *game.GameState)(gameStateView,error){
  v:=gameStateView{
-  CaseID:s.Case.ID,Started:true,
+  CaseID:s.Case.ID,Started:true,CurrentScene:s.CurrentScene,
+  AvailableConversations:make([]availableConversationView,0),
   Phase:s.PhaseAt(time.Now()),NarrativeAct:s.CurrentNarrativeAct(),InvestigationDeadline:s.InvestigationDeadline,AccusationDeadline:s.AccusationDeadline,
   FoundClueIDs:sortedFound(s.FoundClues),
   FoundFactIDs:sortedFound(s.FoundFacts),
@@ -65,6 +69,18 @@ func buildGameStateView(s *game.GameState)(gameStateView,error){
   v.FoundMotiveIDs=[]int{}
  }
  for id,c:=range s.Characters{v.Characters[id]=c}
+ // Only publish conversations that can be started here and in this act.
+ if s.ActiveEvent==nil && s.ActiveConversation=="" && s.ActiveDialogue==nil {
+  for _,conv:=range s.Conversations {
+   if !game.ConversationAvailableInAct(s,&conv) {continue}
+   ch,ok:=s.Characters[conv.CharacterID]
+   if !ok || !ch.Present || ch.Location!=s.CurrentScene {continue}
+   names:=map[int]string{1:"Марта",2:"Борис",3:"Софи",4:"Граф Антон",5:"Клара",6:"Макс",7:"Роза",8:"Лео"}
+   name:=names[conv.CharacterID]
+   if name=="" {name="Пассажир"}
+   v.AvailableConversations=append(v.AvailableConversations,availableConversationView{ID:conv.ID,CharacterID:conv.CharacterID,Name:name})
+  }
+ }
  if s.Clock!=nil {v.Time=s.Clock.GetTime().Format(time.RFC3339);v.Paused=s.Clock.IsPaused();train:=game.TrainView(s);v.Train=&train}
  if s.CurrentNarrativeAct()==game.ActInvestigation && len(s.Scenes)>0 {
   scene,err:=game.CurrentSceneView(s);if err!=nil{return v,err}
