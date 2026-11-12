@@ -25,6 +25,8 @@ func caseHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if !requireInvestigationAct(w,state) { return }
+
 	response := CaseResponse{}
 
 	for _, clue := range state.Clues {
