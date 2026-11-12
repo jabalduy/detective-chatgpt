@@ -11,10 +11,7 @@ func conversationStartHandler(w http.ResponseWriter,r *http.Request){
  if r.Method!=http.MethodPost {http.Error(w,"method not allowed",405);return}
  session,_:=getGame(w,r);session.Mu.Lock();defer session.Mu.Unlock()
  if session.State==nil {http.Error(w,"game not started",409);return}
- if session.State.CurrentNarrativeAct()==game.ActPrologue {
-  // Only explicitly prologue-classified conversations are permitted.
-  // The game layer performs the final availability check.
- } else if !session.State.CanInvestigateAt(time.Now()) {http.Error(w,"investigation time expired",409);return}
+ if session.State.CurrentNarrativeAct()!=game.ActPrologue && !session.State.CanInvestigateAt(time.Now()) {http.Error(w,"investigation time expired",409);return}
  if err:=game.StartConversation(session.State,r.URL.Query().Get("id"));err!=nil {http.Error(w,err.Error(),409);return}
  writeConversation(w,session.State)
 }
