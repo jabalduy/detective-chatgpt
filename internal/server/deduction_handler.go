@@ -53,6 +53,8 @@ func deductionHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if !requireInvestigationAct(w,state) { return }
+
 	// 1. Ищем дедукцию по выбранным фактам
 	deduction := game.FindDeduction(state, request.FactIDs)
 
