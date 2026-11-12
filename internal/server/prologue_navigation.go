@@ -18,7 +18,7 @@ func prologueTravelHandler(w http.ResponseWriter,r *http.Request) {
  if s.ActiveEvent!=nil || s.ActiveConversation!="" || s.ActiveDialogue!=nil {http.Error(w,"finish active interaction first",http.StatusConflict);return}
  destination:=r.URL.Query().Get("destination")
  allowed:=false
- for _,id:=range []string{"corridor","salon","staff","vestibule"} {if destination==id {allowed=true;break}}
+ for _,id:=range []string{"corridor","salon","staff","archive","vestibule"} {if destination==id {allowed=true;break}}
  if !allowed || game.SceneByID(s,destination)==nil {http.Error(w,"destination unavailable",http.StatusConflict);return}
  s.CurrentScene=destination
  w.Header().Set("Content-Type","application/json")
