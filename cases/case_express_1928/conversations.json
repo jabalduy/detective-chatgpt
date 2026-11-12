@@ -739,6 +739,10 @@
               {
                 "type": "character_trust_up",
                 "id": 5
+              },
+              {
+                "type": "discover_fact",
+                "id": 20
               }
             ]
           }
@@ -853,7 +857,13 @@
             "text": "Записать показания и завершить разговор",
             "kind": "speech",
             "end": true,
-            "time_cost": 0
+            "time_cost": 0,
+            "effects": [
+              {
+                "type": "discover_fact",
+                "id": 21
+              }
+            ]
           }
         ]
       }
