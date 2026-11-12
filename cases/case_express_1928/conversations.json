@@ -1130,5 +1130,127 @@
         ]
       }
     ]
+  },
+  {
+    "id": "prologue_marta_service",
+    "available_act": "prologue",
+    "character_id": 1,
+    "start_node": "hello",
+    "nodes": [
+      {
+        "id": "hello",
+        "text": "Марте приходится придерживать поднос, пока поезд проходит поворот. «Чай, кипяток, чистые полотенца — сегодня все чего-то требуют», — замечает она.",
+        "choices": [
+          {
+            "id": "shift",
+            "text": "Давно вы работаете на этом маршруте?",
+            "kind": "speech",
+            "next_node": "shift_answer",
+            "time_cost": 15
+          },
+          {
+            "id": "passengers",
+            "text": "Много хлопот с пассажирами сегодня?",
+            "kind": "speech",
+            "next_node": "passengers_answer",
+            "time_cost": 15
+          },
+          {
+            "id": "leave",
+            "text": "Не отвлекать Марту от работы",
+            "kind": "action",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "shift_answer",
+        "text": "«Достаточно давно, чтобы узнавать шаги постоянных пассажиров. Но чужие разговоры я не пересказываю».",
+        "choices": [
+          {
+            "id": "finish",
+            "text": "Поблагодарить и закончить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "passengers_answer",
+        "text": "«Вечер только начался. Кто-то просит чаю, кто-то — тишины. А некоторым и того и другого мало».",
+        "choices": [
+          {
+            "id": "finish",
+            "text": "Поблагодарить и закончить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "prologue_sophie_salon",
+    "available_act": "prologue",
+    "character_id": 3,
+    "start_node": "hello",
+    "nodes": [
+      {
+        "id": "hello",
+        "text": "Софи стоит у окна салона и тихо перебирает страницы нот. Увидев Алекса, она закрывает папку. «Публика сегодня слишком внимательная», — говорит она.",
+        "choices": [
+          {
+            "id": "music",
+            "text": "Вы собираетесь выступать сегодня?",
+            "kind": "speech",
+            "next_node": "music_answer",
+            "time_cost": 15
+          },
+          {
+            "id": "journey",
+            "text": "Вам нравится путешествовать ночными поездами?",
+            "kind": "speech",
+            "next_node": "journey_answer",
+            "time_cost": 15
+          },
+          {
+            "id": "leave",
+            "text": "Пожелать приятного вечера",
+            "kind": "action",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "music_answer",
+        "text": "«Возможно, позже. Пока лучше послушать, как стучат колёса. У них хотя бы нет требований к репертуару».",
+        "choices": [
+          {
+            "id": "finish",
+            "text": "Поблагодарить и закончить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "journey_answer",
+        "text": "«Ночью все вагоны похожи на маленький театр. Только зрители не знают, кто какую роль играет».",
+        "choices": [
+          {
+            "id": "finish",
+            "text": "Поблагодарить и закончить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      }
+    ]
   }
 ]
