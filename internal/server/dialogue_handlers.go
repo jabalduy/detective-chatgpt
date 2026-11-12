@@ -52,6 +52,8 @@ func dialoguesHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if !requireInvestigationAct(w,state) { return }
+
 	susIDstr := r.URL.Query().Get("susID")
 
 	susID, err := strconv.Atoi(susIDstr)
@@ -101,6 +103,8 @@ func askDialogueHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Некорректная команда", http.StatusMethodNotAllowed)
 		return
 	}
+
+	if !requireInvestigationAct(w,state) { return }
 
 	susIDstr := r.URL.Query().Get("susID")
 	susID, err := strconv.Atoi(susIDstr)
