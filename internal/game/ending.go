@@ -18,6 +18,7 @@ type GameEnding struct {
 }
 type EndingRule struct {
  ID string `json:"id"`
+ SuspectID int `json:"suspect_id,omitempty"`
  Title string `json:"title"`
  Text string `json:"text"`
  Requirements []Requirement `json:"requirements,omitempty"`
@@ -51,7 +52,7 @@ func SubmitAccusation(s *GameState,a Accusation)(GameEnding,error){
  bestPriority:=0
  matched:=false
  for _,rule:=range s.EndingRules {
-  if rule.ID!=outcome || !RequirementsMet(s,rule.Requirements){continue}
+  if rule.ID!=outcome || (rule.SuspectID!=0 && rule.SuspectID!=a.SuspectID) || !RequirementsMet(s,rule.Requirements){continue}
   if !matched || rule.Priority>bestPriority {
    result.Title=rule.Title;result.Text=rule.Text;bestPriority=rule.Priority;matched=true
   }
