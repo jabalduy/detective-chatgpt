@@ -14,7 +14,7 @@ func TestLegacyDialogueRoutesRejectPrologue(t *testing.T) {
  session.Mu.Unlock()
  for _,tc:=range []struct{method,path string}{
   {http.MethodGet,"/dialogues?susID=1"},
-  {http.MethodPost,"/askDialogue?susID=1&dialID=1"},
+  {http.MethodPost,"/ask-dialogue?susID=1&dialID=1"},
  } {
   r:=requestWithCookie(handler,cookie,tc.method,tc.path,nil)
   if r.Code!=http.StatusConflict {
