@@ -4,6 +4,7 @@ import (
  "encoding/json"
  "net/http"
  "path/filepath"
+ "path/filepath"
  "testing"
  "time"
 
@@ -12,6 +13,7 @@ import (
 
 func TestDiscoveryEndpointIsGuardedAndIdempotent(t *testing.T) {
  t.Setenv("GAME_SAVE_DIR",t.TempDir())
+ t.Setenv("GAME_CASE_DIR",filepath.Join("..","..","cases"))
  t.Setenv("GAME_CASE_DIR",filepath.Join("..","..","cases"))
  handler,cookie,session:=testSession(t)
  r:=requestWithCookie(handler,cookie,http.MethodPost,"/start?caseID=case_express_1928",nil)
