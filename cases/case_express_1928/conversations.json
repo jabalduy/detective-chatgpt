@@ -1252,5 +1252,127 @@
         ]
       }
     ]
+  },
+  {
+    "id": "prologue_boris_duty",
+    "available_act": "prologue",
+    "character_id": 2,
+    "start_node": "hello",
+    "nodes": [
+      {
+        "id": "hello",
+        "text": "Борис стоит у двери салона и внимательно следит за проходящими пассажирами. «На ночном рейсе спокойствие — лучшая новость», — замечает он.",
+        "choices": [
+          {
+            "id": "duty",
+            "text": "Трудно следить за порядком в поезде?",
+            "kind": "speech",
+            "next_node": "duty_answer",
+            "time_cost": 15
+          },
+          {
+            "id": "journey",
+            "text": "Часто возникают споры между пассажирами?",
+            "kind": "speech",
+            "next_node": "journey_answer",
+            "time_cost": 15
+          },
+          {
+            "id": "leave",
+            "text": "Не мешать обходу",
+            "kind": "action",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "duty_answer",
+        "text": "«Сложнее всего не шум, а люди, которые уверены, что правила написаны для остальных».",
+        "choices": [
+          {
+            "id": "finish",
+            "text": "Поблагодарить и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "journey_answer",
+        "text": "«Бывает всякое. Но сегодня я надеюсь довезти всех без происшествий».",
+        "choices": [
+          {
+            "id": "finish",
+            "text": "Поблагодарить и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "prologue_graf_tea",
+    "available_act": "prologue",
+    "character_id": 4,
+    "start_node": "hello",
+    "nodes": [
+      {
+        "id": "hello",
+        "text": "Граф с недовольным видом рассматривает остывающую чашку. «В этом поезде чай подают так, словно время принадлежит железной дороге», — произносит он.",
+        "choices": [
+          {
+            "id": "tea",
+            "text": "Вы недовольны обслуживанием?",
+            "kind": "speech",
+            "next_node": "tea_answer",
+            "time_cost": 15
+          },
+          {
+            "id": "papers",
+            "text": "Вы путешествуете по делам?",
+            "kind": "speech",
+            "next_node": "papers_answer",
+            "time_cost": 15
+          },
+          {
+            "id": "leave",
+            "text": "Оставить графа с его чаем",
+            "kind": "action",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "tea_answer",
+        "text": "«Я недоволен лишь тем, что никто не считает пунктуальность добродетелью. Даже кипяток».",
+        "choices": [
+          {
+            "id": "finish",
+            "text": "Поблагодарить и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "papers_answer",
+        "text": "«Бумаги, встречи, обязательства. Скучные вещи. Куда интереснее наблюдать за теми, кто делает вид, что никуда не спешит».",
+        "choices": [
+          {
+            "id": "finish",
+            "text": "Поблагодарить и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      }
+    ]
   }
 ]
