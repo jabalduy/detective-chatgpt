@@ -68,7 +68,7 @@ func buildGameStateView(s *game.GameState)(gameStateView,error){
  // IDs restored from an inconsistent or older save.
  if s.CurrentNarrativeAct()==game.ActPrologue {
   // Navigation only: never expose investigation scene descriptions or choices.
-  for _,target:=range []prologueDestinationView{{"corridor","Коридор поезда"},{"salon","Общий салон"},{"staff","Служебный пост"},{"vestibule","Тамбур"}} {
+  for _,target:=range []prologueDestinationView{{"corridor","Коридор поезда"},{"salon","Общий салон"},{"staff","Служебный пост"},{"archive","Купе Лео"},{"vestibule","Тамбур"}} {
    if target.ID!=s.CurrentScene && game.SceneByID(s,target.ID)!=nil {v.PrologueDestinations=append(v.PrologueDestinations,target)}
   }
   v.FoundClueIDs=[]int{}
