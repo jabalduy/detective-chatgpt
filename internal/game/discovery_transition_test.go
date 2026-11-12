@@ -49,3 +49,21 @@ func TestLegacyInvestigationDoesNotRestart(t *testing.T) {
   t.Fatalf("legacy investigation unexpectedly transitioned: %v %v",changed,err)
  }
 }
+
+func TestBeginInvestigationReplacesStalePrologueDeadlines(t *testing.T) {
+ clock:=NewClock(time.Date(1928,10,1,22,17,0,0,time.UTC))
+ defer clock.StopTime()
+ now:=time.Date(2026,11,12,12,0,0,0,time.UTC)
+ s:=&GameState{
+  NarrativeAct:ActPrologue,Clock:clock,
+  InvestigationDeadline:now.Add(-time.Hour),
+  AccusationDeadline:now.Add(-55*time.Minute),
+ }
+ changed,err:=s.BeginInvestigation(now)
+ if err!=nil || !changed {t.Fatalf("transition failed: changed=%v err=%v",changed,err)}
+ want:=now.Add(time.Hour)
+ if !s.InvestigationDeadline.Equal(want) {t.Fatalf("deadline=%v want %v",s.InvestigationDeadline,want)}
+ if !s.AccusationDeadline.Equal(want.Add(5*time.Minute)) {t.Fatalf("accusation deadline=%v",s.AccusationDeadline)}
+ changed,err=s.BeginInvestigation(now.Add(10*time.Minute))
+ if err!=nil || changed || !s.InvestigationDeadline.Equal(want) {t.Fatal("repeat transition modified deadline")}
+}
