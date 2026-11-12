@@ -2,6 +2,7 @@ package server
 
 import (
 	"detective/internal/cases"
+ "detective/internal/game"
 	"encoding/json"
 	"errors"
 	"log"
@@ -83,6 +84,12 @@ func startHandler(w http.ResponseWriter, r *http.Request) {
 		Intro:     state.Case.Intro,
 		KnownInfo: state.Case.KnownInfo,
 	}
+
+	if state.CurrentNarrativeAct()==game.ActPrologue {
+  response.Message="Путешествие началось"
+  response.Intro="Ночной экспресс отправляется в путь. Познакомьтесь с пассажирами и осмотритесь в вагоне."
+  response.KnownInfo=nil
+ }
 
 	w.Header().Set("Content-Type", "application/json")
 
