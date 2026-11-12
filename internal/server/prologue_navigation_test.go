@@ -13,6 +13,7 @@ func TestPrologueTravelDoesNotRevealInvestigationScene(t *testing.T) {
  session.State=&game.GameState{NarrativeAct:game.ActPrologue,CurrentScene:"corridor",Scenes:[]game.Scene{
   {ID:"corridor",Title:"Secret murder scene",Description:"SPOILER"},
   {ID:"salon",Title:"Secret investigation",Description:"SPOILER"},
+  {ID:"archive",Title:"Leo compartment",Description:"SPOILER"},
   {ID:"compartment",Title:"Murder room",Description:"SPOILER"},
  }}
  session.Mu.Unlock()
@@ -21,7 +22,7 @@ func TestPrologueTravelDoesNotRevealInvestigationScene(t *testing.T) {
  var view gameStateView
  if err:=json.Unmarshal(response.Body.Bytes(),&view);err!=nil {t.Fatal(err)}
  if view.Scene!=nil {t.Fatal("prologue leaked investigation scene")}
- if len(view.PrologueDestinations)!=1 || view.PrologueDestinations[0].ID!="salon" {t.Fatalf("destinations: %+v",view.PrologueDestinations)}
+ if len(view.PrologueDestinations)!=2 || view.PrologueDestinations[0].ID!="salon" || view.PrologueDestinations[1].ID!="archive" {t.Fatalf("destinations: %+v",view.PrologueDestinations)}
  response=requestWithCookie(handler,cookie,http.MethodPost,"/prologue/travel?destination=compartment",nil)
  if response.Code!=409 {t.Fatalf("restricted room: %d",response.Code)}
  response=requestWithCookie(handler,cookie,http.MethodPost,"/prologue/travel?destination=salon",nil)
