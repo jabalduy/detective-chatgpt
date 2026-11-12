@@ -11,6 +11,9 @@ import (
 func TestExpress1928RooftopChaseBranchesAndReturnsSafely(t *testing.T) {
  def,err:=LoadCase(filepath.Join("..","..","cases","case_express_1928"))
  if err!=nil {t.Fatal(err)}
+ var opening *game.Event
+ for i:=range def.Events {if def.Events[i].ID==103 {opening=&def.Events[i];break}}
+ if opening==nil || opening.At!="22:09" {t.Fatalf("rooftop chase must begin one minute before 22:10 tunnel: %+v",opening)}
  makeState:=func()*game.GameState {
   return &game.GameState{
    Events:def.Events,Characters:def.Characters,
