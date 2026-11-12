@@ -503,6 +503,10 @@
               {
                 "type": "character_trust_up",
                 "id": 3
+              },
+              {
+                "type": "discover_fact",
+                "id": 24
               }
             ]
           }
@@ -544,6 +548,19 @@
             "text": "В документах Павла есть ваша подпись. Вы знали о подставе?",
             "kind": "speech",
             "next_node": "evidence_answer",
+            "requirements": [
+              {
+                "type": "fact_found",
+                "id": 6
+              }
+            ],
+            "time_cost": 25
+          },
+          {
+            "id": "hidden_letter",
+            "text": "Вы скрывали письмо со своей подписью. Зачем пытались унести его?",
+            "kind": "speech",
+            "next_node": "hidden_letter_answer",
             "requirements": [
               {
                 "type": "fact_found",
@@ -598,6 +615,26 @@
             "kind": "speech",
             "end": true,
             "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "hidden_letter_answer",
+        "text": "Письмо могло показать, что я подписал тогда. Я хотел скрыть свой позор, а не убийство. В тот вечер я слышал слова «ваш брат», но не видел, кто говорил.",
+        "emotion": "ashamed",
+        "choices": [
+          {
+            "id": "record_hidden_letter",
+            "text": "Записать объяснение и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0,
+            "effects": [
+              {
+                "type": "discover_fact",
+                "id": 23
+              }
+            ]
           }
         ]
       }
