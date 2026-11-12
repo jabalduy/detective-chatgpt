@@ -10,9 +10,11 @@ import (
 // gameStateView is a read-only snapshot for a single-operator frontend.
 // It intentionally excludes hidden evidence, action effects, solution data,
 // and unrevealed event definitions.
+type prologueDestinationView struct { ID string `json:"id"`; Title string `json:"title"` }
 type availableConversationView struct { ID string `json:"id"`; CharacterID int `json:"character_id"`; Name string `json:"name"` }
 type gameStateView struct {
  CurrentScene string `json:"current_scene,omitempty"`
+ PrologueDestinations []prologueDestinationView `json:"prologue_destinations"`
  AvailableConversations []availableConversationView `json:"available_conversations"`
  CaseID string `json:"case_id"`
  Started bool `json:"started"`
@@ -54,6 +56,7 @@ func buildGameStateView(s *game.GameState)(gameStateView,error){
  v:=gameStateView{
   CaseID:s.Case.ID,Started:true,CurrentScene:s.CurrentScene,
   AvailableConversations:make([]availableConversationView,0),
+  PrologueDestinations:make([]prologueDestinationView,0),
   Phase:s.PhaseAt(time.Now()),NarrativeAct:s.CurrentNarrativeAct(),InvestigationDeadline:s.InvestigationDeadline,AccusationDeadline:s.AccusationDeadline,
   FoundClueIDs:sortedFound(s.FoundClues),
   FoundFactIDs:sortedFound(s.FoundFacts),
@@ -64,6 +67,10 @@ func buildGameStateView(s *game.GameState)(gameStateView,error){
  // The prologue must not disclose investigation evidence IDs, including
  // IDs restored from an inconsistent or older save.
  if s.CurrentNarrativeAct()==game.ActPrologue {
+  // Navigation only: never expose investigation scene descriptions or choices.
+  for _,target:=range []prologueDestinationView{{"corridor","Коридор поезда"},{"salon","Общий салон"},{"staff","Служебный пост"},{"vestibule","Тамбур"}} {
+   if target.ID!=s.CurrentScene && game.SceneByID(s,target.ID)!=nil {v.PrologueDestinations=append(v.PrologueDestinations,target)}
+  }
   v.FoundClueIDs=[]int{}
   v.FoundFactIDs=[]int{}
   v.FoundMotiveIDs=[]int{}
