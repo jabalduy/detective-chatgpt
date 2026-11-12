@@ -67,3 +67,18 @@ func TestBeginInvestigationReplacesStalePrologueDeadlines(t *testing.T) {
  changed,err=s.BeginInvestigation(now.Add(10*time.Minute))
  if err!=nil || changed || !s.InvestigationDeadline.Equal(want) {t.Fatal("repeat transition modified deadline")}
 }
+
+func TestBeginInvestigationAfterMidnightUsesDepartureDay(t *testing.T) {
+ departure:=time.Date(1928,10,1,21,0,0,0,time.UTC)
+ clock:=NewClock(time.Date(1928,10,2,0,5,0,0,time.UTC))
+ defer clock.StopTime()
+ s:=&GameState{NarrativeAct:ActPrologue,Clock:clock,RouteStart:departure}
+ now:=time.Date(2026,11,12,10,0,0,0,time.UTC)
+ changed,err:=s.BeginInvestigation(now)
+ if err!=nil || !changed {
+  t.Fatalf("delayed discovery blocked after midnight: changed=%v err=%v",changed,err)
+ }
+ if want:=now.Add(time.Hour);!s.InvestigationDeadline.Equal(want) {
+  t.Fatalf("deadline=%v want %v",s.InvestigationDeadline,want)
+ }
+}
