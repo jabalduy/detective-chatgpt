@@ -23,3 +23,16 @@ func TestLegacyDialogueRoutesRejectPrologue(t *testing.T) {
   }
  }
 }
+
+func TestSuspectsEndpointRejectsNonGETMethods(t *testing.T) {
+ handler,cookie,session:=testSession(t)
+ session.Mu.Lock()
+ session.State=&game.GameState{NarrativeAct:game.ActInvestigation}
+ session.Mu.Unlock()
+ for _,method:=range []string{http.MethodPost,http.MethodPut,http.MethodDelete} {
+  response:=requestWithCookie(handler,cookie,method,"/suspects",nil)
+  if response.Code!=http.StatusMethodNotAllowed {
+   t.Errorf("%s /suspects: status=%d want 405",method,response.Code)
+  }
+ }
+}
