@@ -2,6 +2,7 @@ package server
 
 import (
  "net/http"
+ "path/filepath"
  "os"
  "path/filepath"
  "testing"
@@ -13,6 +14,7 @@ import (
 // Failed restores must never replace a running investigation or its clock.
 func TestCorruptLoadPreservesActiveInvestigation(t *testing.T) {
  t.Setenv("GAME_SAVE_DIR",t.TempDir())
+ t.Setenv("GAME_CASE_DIR",filepath.Join("..","..","cases"))
  handler,cookie,session:=testSession(t)
  start:=time.Date(1928,10,1,21,0,0,0,time.UTC)
  session.State=&game.GameState{
