@@ -49,3 +49,41 @@ func TestStatePollingAutomaticallyBeginsInvestigationAndAutosaves(t *testing.T) 
  defer session.Mu.RUnlock()
  if !session.State.InvestigationDeadline.Equal(deadline) {t.Fatal("poll reset investigation timer")}
 }
+
+func TestStatePollingDefersDiscoveryUntilActiveEventEnds(t *testing.T) {
+ t.Setenv("GAME_SAVE_DIR",t.TempDir())
+ handler,cookie,session:=testSession(t)
+ departure:=time.Date(1928,10,1,21,0,0,0,time.UTC)
+ clock:=game.NewClock(departure)
+ defer clock.StopTime()
+ eventID:=42
+ session.Mu.Lock()
+ session.State=&game.GameState{
+  NarrativeAct:game.ActPrologue,
+  Case:game.CaseInfo{ID:"test"},
+  Clock:clock,
+  RouteStart:departure,
+  ActiveEvent:&eventID,
+  Events:[]game.Event{{ID:eventID,Title:"Urgent choice"}},
+ }
+ session.Mu.Unlock()
+ clock.Add(77*time.Minute)
+ response:=requestWithCookie(handler,cookie,http.MethodGet,"/state",nil)
+ if response.Code!=http.StatusOK {t.Fatalf("active event poll status=%d: %s",response.Code,response.Body.String())}
+ session.Mu.RLock()
+ if session.State.CurrentNarrativeAct()!=game.ActPrologue || !session.State.InvestigationDeadline.IsZero() {
+  session.Mu.RUnlock()
+  t.Fatal("active event was interrupted by automatic discovery")
+ }
+ session.Mu.RUnlock()
+ session.Mu.Lock()
+ session.State.ActiveEvent=nil
+ session.Mu.Unlock()
+ response=requestWithCookie(handler,cookie,http.MethodGet,"/state",nil)
+ if response.Code!=http.StatusOK {t.Fatalf("post-event poll status=%d: %s",response.Code,response.Body.String())}
+ session.Mu.RLock()
+ defer session.Mu.RUnlock()
+ if session.State.CurrentNarrativeAct()!=game.ActInvestigation || session.State.InvestigationDeadline.IsZero() {
+  t.Fatal("investigation did not start after active event ended")
+ }
+}
