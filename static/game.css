@@ -37,3 +37,7 @@
 .evidence-item{padding:1vmin .2vmin;border-bottom:1px dashed #987d60}
 .evidence-item strong{font-size:clamp(12px,1.25vw,18px)}
 .evidence-item p{font-size:clamp(11px,1.05vw,16px);line-height:1.3;margin:.5vmin 0;color:#5d4938}
+
+/* Three compact tabs remain legible on a shared TV screen. */
+.notebook-tabs{gap:0}
+.notebook-tabs button{min-width:0;font-size:clamp(10px,1vw,14px);padding:.8vmin .1vmin}
