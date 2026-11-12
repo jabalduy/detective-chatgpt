@@ -10,8 +10,10 @@ import (
 func TestExpressEvidenceConfrontations(t *testing.T) {
  def, err := LoadCase(filepath.Join("..", "..", "cases", "case_express_1928"))
  if err != nil { t.Fatal(err) }
- if len(def.Conversations) != 8 { t.Fatalf("want 8 conversations, got %d", len(def.Conversations)) }
+ investigationCount := 0
  for _, c := range def.Conversations {
+  if c.AvailableAct == game.ActPrologue { continue }
+  investigationCount++
   if c.StartNode == "" { t.Errorf("%s missing start", c.ID);continue }
   nodes := make(map[string]bool)
   for _, n := range c.Nodes {nodes[n.ID]=true}
@@ -28,6 +30,7 @@ func TestExpressEvidenceConfrontations(t *testing.T) {
   }
   if !guarded {t.Errorf("%s has no evidence confrontation",c.ID)}
  }
+ if investigationCount != 8 {t.Fatalf("want 8 investigation conversations, got %d",investigationCount)}
 }
 
 func TestExpressConfrontationRequiresEvidence(t *testing.T) {
