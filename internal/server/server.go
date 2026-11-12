@@ -14,6 +14,7 @@ func NewHandler() http.Handler {
  mux.HandleFunc("/load", loadHandler)
 	mux.HandleFunc("/time", timeHandler)
  mux.HandleFunc("/state", stateHandler)
+ mux.HandleFunc("/discovery/start", discoveryHandler)
  mux.HandleFunc("/hint", hintHandler)
 	mux.HandleFunc("/train", trainHandler)
  mux.HandleFunc("/examinations", examinationsHandler)
