@@ -37,8 +37,8 @@ func TestExpress1928OperatorAPIContract(t *testing.T){
  for _,id:=range progress.FoundFactIDs {if id==1 {hasRibbon=true}}
  if !hasRibbon {t.Fatal("new clue missing from operator state")}
  if len(progress.FoundMotiveIDs)!=0 {t.Fatal("hidden motive exposed")}
- check(http.MethodPost,"/deduction",[]byte(`{"fact_ids":[1]}`),400)
- check(http.MethodPost,"/deduction",[]byte(`{"fact_ids":[1,999]}`),200)
+ check(http.MethodPost,"/deduce",[]byte(`{"fact_ids":[1]}`),400)
+ check(http.MethodPost,"/deduce",[]byte(`{"fact_ids":[1,999]}`),200)
  if session.State.FoundFacts[10] {t.Fatal("invalid deduction unlocked final proof")}
  check(http.MethodPost,"/accuse",[]byte(`{"suspect_id":1,"motive_id":1,"fact_ids":[10,11,12]}`),409)
  check(http.MethodPost,"/scene/choose?choiceID=back",nil,200)
