@@ -13,6 +13,7 @@ func TestLegacyDialogueRoutesRejectPrologue(t *testing.T) {
  session.State=&game.GameState{NarrativeAct:game.ActPrologue}
  session.Mu.Unlock()
  for _,tc:=range []struct{method,path string}{
+  {http.MethodGet,"/suspects"},
   {http.MethodGet,"/dialogues?susID=1"},
   {http.MethodPost,"/ask-dialogue?susID=1&dialID=1"},
  } {
