@@ -16,11 +16,12 @@ The game is operated from one laptop; no multiplayer synchronization is required
   (`/train`, `/event`, `/examinations`) can advance scheduled game
   mechanics and also autosave.
 - `GAME_SAVE_DIR` overrides the default `data/saves` directory.
+- `GAME_CASE_DIR` optionally points to the parent directory containing the case folders (for example, `cases/case_express_1928`). Without it, case paths are relative to the server working directory.
 
 ## Read-only snapshot
 
 `GET /state` returns a single JSON object for the currently running case.
-It does not advance game mechanics. Representative response:
+It also processes due train stops and timed events before returning the snapshot, and autosaves the resulting state. Representative response:
 
 ```json
 {
@@ -106,5 +107,4 @@ These are **common statuses, not a universal schema**: some older endpoints
 use different error messages/statuses. Error bodies are currently often plain
 text rather than structured JSON. The API is not yet frozen.
 
-`GET /state` does not tick timed events or examinations; consumers must
-not treat it as a substitute for the appropriate progression endpoints.
+`GET /state` processes due train stops and timed events, but not examination completion. Consumers should poll `/examinations` for examination progress.
