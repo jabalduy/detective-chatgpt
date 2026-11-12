@@ -29,6 +29,8 @@ func motivesHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if !requireInvestigationAct(w,state) { return }
+
 	foundMotives := make([]game.Motive, 0)
 
 	for _, motive := range state.Motives {
