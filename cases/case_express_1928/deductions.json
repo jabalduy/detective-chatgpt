@@ -107,5 +107,37 @@
       }
     ],
     "time_cost": 20
+  },
+  {
+    "id": 8,
+    "title": "Возможный мотив Клары",
+    "required_facts": [
+      6,
+      20
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "type": "discover_motive",
+        "id": 3
+      }
+    ],
+    "time_cost": 20
+  },
+  {
+    "id": 9,
+    "title": "Возможный мотив Макса",
+    "required_facts": [
+      21,
+      22
+    ],
+    "requirements": [],
+    "effects": [
+      {
+        "type": "discover_motive",
+        "id": 4
+      }
+    ],
+    "time_cost": 20
   }
 ]
