@@ -25,11 +25,9 @@ func (s *GameState) BeginInvestigation(now time.Time) (bool,error) {
  }
  s.NarrativeAct=ActInvestigation
  s.DiscoveryCompleted=true
- if s.InvestigationDeadline.IsZero() {
-  s.InvestigationDeadline=now.Add(60*time.Minute)
- }
- if s.AccusationDeadline.IsZero() {
-  s.AccusationDeadline=s.InvestigationDeadline.Add(5*time.Minute)
- }
+ // The timer begins at official discovery, never at the start of the train ride.
+ // A prologue may have stale deadlines from an older initialization path.
+ s.InvestigationDeadline=now.Add(60*time.Minute)
+ s.AccusationDeadline=s.InvestigationDeadline.Add(5*time.Minute)
  return true,nil
 }
