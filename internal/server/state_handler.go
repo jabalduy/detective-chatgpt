@@ -57,6 +57,13 @@ func buildGameStateView(s *game.GameState)(gameStateView,error){
   Characters:make(map[int]game.CharacterState,len(s.Characters)),
   Ending:s.Ending,
  }
+ // The prologue must not disclose investigation evidence IDs, including
+ // IDs restored from an inconsistent or older save.
+ if s.CurrentNarrativeAct()==game.ActPrologue {
+  v.FoundClueIDs=[]int{}
+  v.FoundFactIDs=[]int{}
+  v.FoundMotiveIDs=[]int{}
+ }
  for id,c:=range s.Characters{v.Characters[id]=c}
  if s.Clock!=nil {v.Time=s.Clock.GetTime().Format(time.RFC3339);v.Paused=s.Clock.IsPaused();train:=game.TrainView(s);v.Train=&train}
  if s.CurrentNarrativeAct()==game.ActInvestigation && len(s.Scenes)>0 {
