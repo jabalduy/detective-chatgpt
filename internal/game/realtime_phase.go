@@ -30,9 +30,9 @@ func (s *GameState) PhaseAt(now time.Time) RealTimePhase {
 }
 
 func (s *GameState) CanInvestigateAt(now time.Time) bool {
- return s.PhaseAt(now) == PhaseInvestigation
+ return s.CurrentNarrativeAct() == ActInvestigation && s.PhaseAt(now) == PhaseInvestigation
 }
 
 func (s *GameState) CanAccuseAt(now time.Time) bool {
- return s.PhaseAt(now) == PhaseAccusation
+ return s.CurrentNarrativeAct() == ActInvestigation && s.PhaseAt(now) == PhaseAccusation
 }
