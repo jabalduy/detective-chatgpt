@@ -30,6 +30,8 @@ func factsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if !requireInvestigationAct(w,state) { return }
+
 	foundFacts := make([]game.Fact, 0)
 
 	for _, fact := range state.Facts {
