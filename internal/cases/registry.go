@@ -3,6 +3,8 @@ package cases
 import (
 	"errors"
 	"fmt"
+ "os"
+ "path/filepath"
 )
 
 var ErrCaseNotFound = errors.New("case not found")
@@ -53,7 +55,8 @@ func (r *CaseRegistry) GetPath(caseID string) (string, error) {
 		return "", fmt.Errorf("%w: %s", ErrCaseNotFound, caseID)
 	}
 
-	return entry.Path, nil
+	if root:=os.Getenv("GAME_CASE_DIR");root!="" {return filepath.Join(root,filepath.Base(entry.Path)),nil}
+ return entry.Path, nil
 }
 
 func (r *CaseRegistry) List() []CaseEntry {
