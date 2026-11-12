@@ -40,7 +40,7 @@ func TestExpress1928GrafAndSophieFairPlay(t *testing.T) {
  if !foundMotive {t.Fatal("Graf alternative motive deduction missing")}
  var graf *game.Conversation
  for i:=range def.Conversations {
-  if def.Conversations[i].CharacterID==4 {graf=&def.Conversations[i]}
+  if def.Conversations[i].CharacterID==4 && def.Conversations[i].AvailableAct!=game.ActPrologue {graf=&def.Conversations[i]}
  }
  if graf==nil {t.Fatal("Graf interrogation missing")}
  gated:=false
