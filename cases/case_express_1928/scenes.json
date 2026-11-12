@@ -425,6 +425,18 @@
         "time_cost": 25
       },
       {
+        "id": "inheritance_copy",
+        "text": "Изучить копию наследственного распоряжения",
+        "kind": "action",
+        "effects": [
+          {
+            "type": "discover_fact",
+            "id": 22
+          }
+        ],
+        "time_cost": 30
+      },
+      {
         "id": "back",
         "text": "Вернуться в коридор",
         "kind": "action",
