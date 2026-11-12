@@ -59,7 +59,7 @@ func buildGameStateView(s *game.GameState)(gameStateView,error){
  }
  for id,c:=range s.Characters{v.Characters[id]=c}
  if s.Clock!=nil {v.Time=s.Clock.GetTime().Format(time.RFC3339);v.Paused=s.Clock.IsPaused();train:=game.TrainView(s);v.Train=&train}
- if len(s.Scenes)>0 {
+ if s.CurrentNarrativeAct()==game.ActInvestigation && len(s.Scenes)>0 {
   scene,err:=game.CurrentSceneView(s);if err!=nil{return v,err}
   v.Scene=&scene
  }
