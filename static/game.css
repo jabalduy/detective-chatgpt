@@ -28,3 +28,12 @@
 .backdrop-scene.scene-enter{animation:sceneReveal .45s ease-out both}
 @keyframes sceneReveal{from{filter:brightness(.35);transform:scale(1.025)}to{filter:brightness(1);transform:scale(1)}}
 @media(prefers-reduced-motion:reduce){.backdrop-scene.scene-enter{animation:none}}
+
+/* Notebook evidence index: stays inside the existing fixed-size paper. */
+.notebook-tabs{display:flex;gap:.5vmin;margin-bottom:1vmin;border-bottom:1px solid #997957}
+.notebook-tabs button{flex:1;border:0;background:transparent;color:#71543e;font:clamp(10px,1.1vw,15px) Georgia,serif;padding:.7vmin .2vmin;white-space:nowrap}
+.notebook-tabs button.selected{font-weight:bold;color:#3c261d;border-bottom:3px solid #7d4332}
+.notebook-tabs button[hidden]{display:none}
+.evidence-item{padding:1vmin .2vmin;border-bottom:1px dashed #987d60}
+.evidence-item strong{font-size:clamp(12px,1.25vw,18px)}
+.evidence-item p{font-size:clamp(11px,1.05vw,16px);line-height:1.3;margin:.5vmin 0;color:#5d4938}
