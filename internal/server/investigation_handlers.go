@@ -144,6 +144,7 @@ func inspectObjectHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if !requireInvestigationAct(w,state) { return }
 	objIDstr := r.URL.Query().Get("objID")
 
 	objID, err := strconv.Atoi(objIDstr)
