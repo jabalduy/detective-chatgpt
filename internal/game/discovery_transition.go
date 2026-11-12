@@ -16,9 +16,10 @@ var (
 func (s *GameState) BeginInvestigation(now time.Time) (bool,error) {
  if s.Ending!=nil {return false,errors.New("game already finished")}
  if s.CurrentNarrativeAct()!=ActPrologue {return false,nil}
- if s.Clock==nil || s.Clock.GetTime().Before(time.Date(1928,10,1,22,17,0,0,time.UTC)) {
-  return false,ErrDiscoveryTooEarly
- }
+ if s.Clock==nil {return false,ErrDiscoveryTooEarly}
+ storyNow:=s.Clock.GetTime()
+ discovery:=time.Date(storyNow.Year(),storyNow.Month(),storyNow.Day(),22,17,0,0,storyNow.Location())
+ if storyNow.Before(discovery) {return false,ErrDiscoveryTooEarly}
  if s.ActiveEvent!=nil || s.ActiveConversation!="" || s.ActiveDialogue!=nil {
   return false,ErrDiscoveryInteractionActive
  }
