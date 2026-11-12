@@ -10,7 +10,7 @@ import (
 func TestExpressPrologueConversationsAreSafeAndPlayable(t *testing.T) {
  c,err:=LoadCase(filepath.Join("..","..","cases","case_express_1928"))
  if err!=nil {t.Fatal(err)}
- want:=map[string]int{"prologue_marta_service":1,"prologue_sophie_salon":3}
+ want:=map[string]int{"prologue_marta_service":1,"prologue_sophie_salon":3,"prologue_boris_duty":2,"prologue_graf_tea":4}
  for _,conversation:=range c.Conversations {
   id,ok:=want[conversation.ID]
   if !ok {continue}
