@@ -94,6 +94,15 @@ func stateHandler(w http.ResponseWriter,r *http.Request){
  defer session.Mu.Unlock()
  game.TickTrain(session.State)
  game.TickEvents(session.State)
+ // Polling /state advances the narrative once the official discovery is due.
+ // BeginInvestigation keeps urgent interactions intact and is idempotent.
+ // GET /state is already covered by saveAfterMutation.
+ if session.State.CurrentNarrativeAct()==game.ActPrologue {
+  _,transitionErr:=session.State.BeginInvestigation(time.Now())
+  if transitionErr!=nil && transitionErr!=game.ErrDiscoveryTooEarly && transitionErr!=game.ErrDiscoveryInteractionActive {
+   http.Error(w,transitionErr.Error(),http.StatusInternalServerError);return
+  }
+ }
  view,err:=buildGameStateView(session.State)
  if err!=nil{http.Error(w,err.Error(),http.StatusInternalServerError);return}
  w.Header().Set("Content-Type","application/json")
