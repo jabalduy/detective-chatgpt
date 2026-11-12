@@ -1374,5 +1374,249 @@
         ]
       }
     ]
+  },
+  {
+    "id": "prologue_klara_salon",
+    "available_act": "prologue",
+    "character_id": 5,
+    "start_node": "hello",
+    "nodes": [
+      {
+        "id": "hello",
+        "text": "Клара закрывает книгу, заметив взгляд Алекса. «В поезде даже тишина кажется общей собственностью».",
+        "choices": [
+          {
+            "id": "reading",
+            "text": "Что вы читаете?",
+            "kind": "speech",
+            "next_node": "reading_answer",
+            "time_cost": 15
+          },
+          {
+            "id": "travel",
+            "text": "Вам нравится этот маршрут?",
+            "kind": "speech",
+            "next_node": "travel_answer",
+            "time_cost": 15
+          },
+          {
+            "id": "leave",
+            "text": "Закончить разговор",
+            "kind": "action",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "reading_answer",
+        "text": "«Историю людей, которые слишком много скрывают. Впрочем, это описание подходит почти любой книге».",
+        "choices": [
+          {
+            "id": "finish",
+            "text": "Поблагодарить и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "travel_answer",
+        "text": "«Дорога даёт время подумать. Главное, чтобы никто не мешал».",
+        "choices": [
+          {
+            "id": "finish",
+            "text": "Поблагодарить и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "prologue_max_salon",
+    "available_act": "prologue",
+    "character_id": 6,
+    "start_node": "hello",
+    "nodes": [
+      {
+        "id": "hello",
+        "text": "Макс барабанит пальцами по подлокотнику и смотрит на часы. «Удивительно, как медленно тянется вечер, когда спешишь».",
+        "choices": [
+          {
+            "id": "hurry",
+            "text": "Вы куда-то торопитесь?",
+            "kind": "speech",
+            "next_node": "hurry_answer",
+            "time_cost": 15
+          },
+          {
+            "id": "train",
+            "text": "Вам не по душе поезд?",
+            "kind": "speech",
+            "next_node": "train_answer",
+            "time_cost": 15
+          },
+          {
+            "id": "leave",
+            "text": "Закончить разговор",
+            "kind": "action",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "hurry_answer",
+        "text": "«К утру нужно быть на месте. Остальное — неважно».",
+        "choices": [
+          {
+            "id": "finish",
+            "text": "Поблагодарить и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "train_answer",
+        "text": "«Поезд мне нравится. А вот ждать — нет».",
+        "choices": [
+          {
+            "id": "finish",
+            "text": "Поблагодарить и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "prologue_rosa_salon",
+    "available_act": "prologue",
+    "character_id": 7,
+    "start_node": "hello",
+    "nodes": [
+      {
+        "id": "hello",
+        "text": "Роза аккуратно складывает медицинский журнал. «Ночной рейс обычно спокойнее дневного. Надеюсь, сегодня тоже».",
+        "choices": [
+          {
+            "id": "work",
+            "text": "Вы врач?",
+            "kind": "speech",
+            "next_node": "work_answer",
+            "time_cost": 15
+          },
+          {
+            "id": "sleep",
+            "text": "Как переносите ночные поездки?",
+            "kind": "speech",
+            "next_node": "sleep_answer",
+            "time_cost": 15
+          },
+          {
+            "id": "leave",
+            "text": "Закончить разговор",
+            "kind": "action",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "work_answer",
+        "text": "«Да. Но сегодня я пассажир, и мне хотелось бы им остаться».",
+        "choices": [
+          {
+            "id": "finish",
+            "text": "Поблагодарить и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "sleep_answer",
+        "text": "«Читаю, пока хватает света. Потом стараюсь уснуть раньше остальных».",
+        "choices": [
+          {
+            "id": "finish",
+            "text": "Поблагодарить и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "prologue_leo_archive",
+    "available_act": "prologue",
+    "character_id": 8,
+    "start_node": "hello",
+    "nodes": [
+      {
+        "id": "hello",
+        "text": "Лео отодвигает блокнот и прикрывает его ладонью. «Если вы ищете новости, боюсь, пока ничего не произошло».",
+        "choices": [
+          {
+            "id": "writing",
+            "text": "Вы что-то записываете?",
+            "kind": "speech",
+            "next_node": "writing_answer",
+            "time_cost": 15
+          },
+          {
+            "id": "interviews",
+            "text": "Вы журналист?",
+            "kind": "speech",
+            "next_node": "interviews_answer",
+            "time_cost": 15
+          },
+          {
+            "id": "leave",
+            "text": "Закончить разговор",
+            "kind": "action",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "writing_answer",
+        "text": "«Путевые заметки. Люди в дороге говорят больше, чем собирались».",
+        "choices": [
+          {
+            "id": "finish",
+            "text": "Поблагодарить и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      },
+      {
+        "id": "interviews_answer",
+        "text": "«Иногда. Но не всякий разговор превращается в статью».",
+        "choices": [
+          {
+            "id": "finish",
+            "text": "Поблагодарить и завершить разговор",
+            "kind": "speech",
+            "end": true,
+            "time_cost": 0
+          }
+        ]
+      }
+    ]
   }
 ]
