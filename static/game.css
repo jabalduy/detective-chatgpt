@@ -17,3 +17,9 @@
 #urgentCountdown{font:900 clamp(110px,23vmin,320px)/.9 monospace;color:#fff0bc;text-shadow:0 0 3vmin #ff9d25,8px 8px #45121a;font-variant-numeric:tabular-nums}
 @keyframes urgentPulse{from{box-shadow:inset 0 0 4vmin #ff8c2c50}to{box-shadow:inset 0 0 12vmin #ff8c2ca0}}
 @media(prefers-reduced-motion:reduce){.conversation.urgent{animation:none}}
+
+/* Clock positions: investigation countdown on the left, story time on the right. */
+.timebox{min-width:clamp(140px,18vw,300px);align-items:center;opacity:1}
+.timebox .countdown{display:block;background:transparent;border:0;box-shadow:none;padding:0;font-size:clamp(25px,4.2vw,72px)}
+.timebox .countdown:empty{display:none}
+.story-clock{display:inline-flex;align-items:center;font:clamp(12px,1.3vw,19px) monospace;background:#15121bdc;border:1px solid #bc9162;padding:.8vmin 1.2vmin;color:#e6cfa7}
