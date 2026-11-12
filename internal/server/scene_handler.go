@@ -14,6 +14,7 @@ func sceneHandler(w http.ResponseWriter,r *http.Request) {
  session.Mu.RLock()
  defer session.Mu.RUnlock()
  if session.State==nil { http.Error(w,"game not started",409);return }
+ if !requireInvestigationAct(w,session.State) {return}
  if len(session.State.Scenes)==0 { http.Error(w,"no scenes defined",404);return }
  view,err:=game.CurrentSceneView(session.State)
  if err!=nil { http.Error(w,err.Error(),500);return }
