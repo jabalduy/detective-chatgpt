@@ -3,6 +3,7 @@ package server
 import (
  "encoding/json"
  "net/http"
+ "path/filepath"
  "testing"
  "time"
 )
@@ -11,6 +12,7 @@ import (
 // operator screen, including visibility rules and phase restrictions.
 func TestExpress1928OperatorAPIContract(t *testing.T){
  t.Setenv("GAME_SAVE_DIR",t.TempDir())
+ t.Setenv("GAME_CASE_DIR",filepath.Join("..","..","cases"))
  handler,cookie,session:=testSession(t)
  check:=func(method,path string,body []byte,want int)[]byte{
   t.Helper()
