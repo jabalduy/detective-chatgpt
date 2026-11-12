@@ -2,6 +2,8 @@ package server
 
 import (
  "net/http"
+ "path/filepath"
+ "detective/internal/cases"
  "testing"
  "time"
 
@@ -11,8 +13,9 @@ import (
 func TestRecoveryRestoresPreviousActionAndSurvivesStatePolling(t *testing.T) {
  t.Setenv("GAME_SAVE_DIR",t.TempDir())
  handler,cookie,session:=testSession(t)
- state,err:=newGame("case_express_1928")
+ def,err:=cases.LoadCase(filepath.Join("..","..","cases","case_express_1928"))
  if err!=nil {t.Fatal(err)}
+ state:=&game.GameState{Case:def.CaseInfo,Clock:game.NewClock(time.Date(1928,10,1,21,0,0,0,time.UTC)),Scenes:def.Scenes,Conversations:def.Conversations,Characters:def.Characters,CurrentScene:"corridor",FoundFacts:map[int]bool{},FoundMotives:map[int]bool{},SolvedDeductions:map[int]bool{}}
  defer state.Clock.StopTime()
  session.Mu.Lock()
  session.State=state
