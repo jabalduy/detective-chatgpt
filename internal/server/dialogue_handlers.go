@@ -10,6 +10,10 @@ import (
 
 // ПОДОЗРЕВАЕМЫЕ, ДИАЛОГИ
 func suspectsHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
 	session, err := getGame(w, r)
 	if err != nil {
 		log.Printf("new game: %v", err)
