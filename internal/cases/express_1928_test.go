@@ -14,7 +14,9 @@ func TestExpress1928PrototypeLoads(t *testing.T) {
  if def.ID != "case_express_1928" { t.Fatalf("unexpected case ID %q", def.ID) }
  if def.Solution.SuspectID != 1 || def.Solution.MotiveID != 1 { t.Fatalf("unexpected solution: %+v", def.Solution) }
  if len(def.Suspects) != 8 { t.Fatalf("expected 8 suspects, got %d", len(def.Suspects)) }
- if len(def.Conversations) != 8 { t.Fatalf("expected eight conversations, got %d", len(def.Conversations)) }
+ investigationCount:=0
+ for _,conversation:=range def.Conversations {if conversation.AvailableAct!=game.ActPrologue {investigationCount++}}
+ if investigationCount != 8 { t.Fatalf("expected eight investigation conversations, got %d", investigationCount) }
  if len(def.Characters) != 8 { t.Fatalf("expected eight character states, got %d", len(def.Characters)) }
  if len(def.Scenes) < 4 { t.Fatalf("expected navigable scenes, got %d", len(def.Scenes)) }
  if issues := game.ValidateNarrative(def.Scenes, def.Conversations); len(issues) > 0 { t.Fatalf("invalid narrative: %v", issues) }
