@@ -26,6 +26,8 @@ func locationsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if !requireInvestigationAct(w,state) { return }
+
 	openLocations := []game.Location{}
 
 	for _, location := range state.Locations {
@@ -61,6 +63,8 @@ func objectsHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Игра не запущена", http.StatusConflict)
 		return
 	}
+
+	if !requireInvestigationAct(w,state) { return }
 
 	// ОБРАБРОТКА ВЫБОРА КОМНАТЫ
 	locIDStr := r.URL.Query().Get("locID")
