@@ -35,6 +35,7 @@ func TestRecoveryRestoresPreviousActionAndSurvivesStatePolling(t *testing.T) {
  saved,err:=readSave(recoveryPath(cookie.Value))
  if err!=nil {t.Fatal(err)}
  if saved.CurrentScene!="corridor" {t.Fatalf("checkpoint overwritten by polling: %q",saved.CurrentScene)}
+ t.Chdir(filepath.Join("..",".."))
  check(http.MethodPost,"/load?recovery=1",200)
  session.Mu.RLock()
  scene:=session.State.CurrentScene
