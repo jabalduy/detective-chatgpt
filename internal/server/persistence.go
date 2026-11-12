@@ -120,6 +120,7 @@ func applySave(s *game.GameState,d saveData){
  if d.ClockPaused || d.ActiveConversation!="" || d.ActiveDialogue!=nil || d.Ending!=nil {s.Clock.Pause()}
  go s.Clock.RunTime()
 }
+func recoveryPath(sessionID string)string{return filepath.Join(saveDirectory(),sessionID+".recovery.json")}
 func savePath(sessionID string)string{return filepath.Join(saveDirectory(),sessionID+".json")}
 func saveDirectory()string{
  if v:=os.Getenv("GAME_SAVE_DIR");v!=""{return v}
