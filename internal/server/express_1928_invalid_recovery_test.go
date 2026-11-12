@@ -47,6 +47,7 @@ func TestCorruptLoadPreservesActiveInvestigation(t *testing.T) {
 
 func TestInvalidExpressActionsDoNotAwardEvidence(t *testing.T){
  t.Setenv("GAME_SAVE_DIR",t.TempDir())
+ t.Setenv("GAME_CASE_DIR",filepath.Join("..","..","cases"))
  handler,cookie,session:=testSession(t)
  state,err:=newGame("case_express_1928")
  if err!=nil {t.Fatal(err)}
