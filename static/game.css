@@ -41,3 +41,7 @@
 /* Three compact tabs remain legible on a shared TV screen. */
 .notebook-tabs{gap:0}
 .notebook-tabs button{min-width:0;font-size:clamp(10px,1vw,14px);padding:.8vmin .1vmin}
+
+/* Four compact notebook tabs. */
+.notebook-tabs button{font-size:clamp(9px,.9vw,13px);letter-spacing:-.015em}
+#testimonyList .evidence-item p{overflow-wrap:anywhere}
