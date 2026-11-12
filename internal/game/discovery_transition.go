@@ -18,7 +18,11 @@ func (s *GameState) BeginInvestigation(now time.Time) (bool,error) {
  if s.CurrentNarrativeAct()!=ActPrologue {return false,nil}
  if s.Clock==nil {return false,ErrDiscoveryTooEarly}
  storyNow:=s.Clock.GetTime()
- discovery:=time.Date(storyNow.Year(),storyNow.Month(),storyNow.Day(),22,17,0,0,storyNow.Location())
+ // Discovery is anchored to the departure day, not the current calendar
+ // day: a delayed prologue can continue past midnight.
+ discoveryDay:=storyNow
+ if !s.RouteStart.IsZero() {discoveryDay=s.RouteStart.In(storyNow.Location())}
+ discovery:=time.Date(discoveryDay.Year(),discoveryDay.Month(),discoveryDay.Day(),22,17,0,0,storyNow.Location())
  if storyNow.Before(discovery) {return false,ErrDiscoveryTooEarly}
  if s.ActiveEvent!=nil || s.ActiveConversation!="" || s.ActiveDialogue!=nil {
   return false,ErrDiscoveryInteractionActive
